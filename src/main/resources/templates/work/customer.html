@@ -1,0 +1,246 @@
+<section id="customer-layout">
+    <div id="customer-tile-layout"></div>
+</section>
+<script th:src="@{/js/work/customer.js}"></script>
+
+
+<script type="text/x-kendo-template" id="customer-merge-tile-layout-template">
+    <div id="customer-merge-div" class="c-splitter" style="width: 100%;position: absolute;z-index: 10;height: calc(100% - 40px);">
+        <div id="customer-merge-splitter" class="pane-content" style="height: 100%;border: 0">
+            <div id="customer-merge-divSearch">
+                <div class="c-search-box" style="padding: 5px">
+                    <div id="customer-merge-search-element1" class="c-search-btn-closed">
+                        <div id="customer-merge-print-search-options">
+                            <span></span>
+                        </div>
+                        <div>
+                            <button sec:authorize="hasRole('ROLE_WORK_CUSTOMER_MGR_SELECT')"
+                                    id="customer-merge-btn-open-search-box">
+                            </button>
+                        </div>
+                    </div>
+                    <div id="customer-merge-search-element2" style="display: none;">
+                        <div class="c-search-btn-opened">
+                            <button sec:authorize="hasRole('ROLE_WORK_CUSTOMER_MGR_SELECT')"
+                                    id="customer-merge-btn-search"></button>
+                            <button sec:authorize="hasRole('ROLE_WORK_CUSTOMER_MGR_SELECT')"
+                                    id="customer-merge-btn-close-search-box"></button>
+                        </div>
+                    </div>
+                    <div id="customer-merge-search-box" style="display: none;">
+                        <div class="c-grid-search-box">
+                            <div class="c-grid-search-row">
+                                <div class="c-grid-search-item" style="width: 340px;">
+                                    <label>등록일자</label>
+                                    <input id="customer-merge-search-date-start" style="width: 124px;margin-right:5px;"> ~ <input id="customer-merge-search-date-end" style="width: 124px;margin-left: 5px;">
+                                </div>
+                                <div class="c-grid-search-item c-search-txt-group">
+                                    <input id="customer-merge-search-type">
+                                    <input id="customer-merge-search-type-detail">
+                                </div>
+                                <div class="c-grid-search-item">
+                                    <label>고객구분</label>
+                                    <input id="customer-merge-customer-type">
+                                </div>
+                                <div class="c-grid-search-item">
+                                    <label>SMS수신</label>
+                                    <div id="customer-merge-smsYn"></div>
+                                </div>
+                                <div class="c-grid-search-item" style="margin-left: 10px;">
+                                    <label>해피콜</label>
+                                    <div id="customer-merge-telYn"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pane-content">
+                <div id="customer-merge-grid" style="cursor: copy;"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/x-kendo-template" id="customer-black-tile-layout-template">
+    <div id="customer-black-div" style="width: 100%;position: absolute;z-index: 10;height: calc(100% - 40px);">
+        <div id="customer-black-splitter" style="height: 100%;border: 0">
+            <div id="customer-black-divSearch">
+                <div class="c-search-box" style="padding: 5px">
+                    <div id="customer-black-search-element1" class="c-search-btn-closed">
+                        <div id="customer-black-print-search-options">
+                            <span></span>
+                        </div>
+                        <div>
+                            <button sec:authorize="hasRole('ROLE_WORK_CUSTOMER_MGR_SELECT')"
+                                    id="customer-black-btn-open-search-box">
+                            </button>
+                        </div>
+                    </div>
+                    <div id="customer-black-search-element2" style="display: none;">
+                        <div class="c-search-btn-opened">
+                            <button sec:authorize="hasRole('ROLE_WORK_CUSTOMER_MGR_SELECT')"
+                                    id="customer-black-btn-search"></button>
+                            <button id="customer-black-btn-close-search-box"></button>
+                        </div>
+                    </div>
+                    <div id="customer-black-search-box" style="display: none;">
+                        <div class="c-grid-search-box">
+                            <div class="c-grid-search-row">
+                                <div class="c-grid-search-item" style="width: 340px;">
+                                    <label>등록일자</label>
+                                    <input id="customer-black-search-date-start" style="width: 124px;margin-right:5px;"> ~ <input id="customer-black-search-date-end" style="width: 124px;margin-left: 5px;">
+                                </div>
+                                <div class="c-grid-search-item">
+                                    <label>고객구분</label>
+                                    <input id="customer-black-customer-type">
+                                </div>
+                                <div class="c-grid-search-item c-search-txt-group">
+                                    <input id="customer-black-search-type">
+                                    <input id="customer-black-search-type-detail">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pane-content">
+                <div id="customer-black-grid"></div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/x-kendo-template" id="customer-merge-detail-tile-layout-template">
+    <div>
+        <div style="display: flex;justify-content: center;">
+            <div style="width: 40%;">
+                <h3 style="padding: 0 10px;">선택된 고객</h3>
+                <div id="customer-merge-detail">
+                    <input id="customer-merge-detail-selected-custId" hidden/>
+                    <div class="c-table" style="border-spacing: 2px;">
+                        <div class="c-table-row">
+                            <div class="c-table-cell">
+                                <dt>고객명</dt>
+                                <dd><input id="customer-merge-selected-custNm" /></dd>
+                            </div>
+                            <div class="c-table-cell">
+                                <dt>수/발신번호</dt>
+                                <dd><input id="customer-merge-selected-boundTelNo" /></dd>
+                            </div>
+                        </div>
+                        <div class="c-table-row">
+                            <div class="c-table-cell">
+                                <dt>휴대폰</dt>
+                                <dd><input id="customer-merge-selected-hpNo" /></dd>
+                            </div>
+                            <div class="c-table-cell">
+                                <dt>일반전화</dt>
+                                <dd><input id="customer-merge-selected-telNo" /></dd>
+                            </div>
+                        </div>
+                        <div class="c-table-row">
+                            <div class="c-table-cell">
+                                <dt>고객구분</dt>
+                                <dd><input id="customer-merge-selected-custType" /></dd>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-table" style="border-spacing: 3px;">
+                        <div class="c-table-row">
+                            <div class="c-table-cell">
+                                <dt>SMS동의 <input id="customer-merge-selected-cust-smsYn"/></dt>
+                            </div>
+                            <div class="c-table-cell">
+                                <dt>해피콜동의 <input id="customer-merge-selected-cust-telYn"/></dt>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 60%;">
+                <h3 style="padding: 0 10px; display: inline-block;">병합고객</h3>
+                <label id="drop-target-guide-text" style="color: \#ff6347; font-weight: bold;"></label>
+                <div id="customer-merge-selected-grid">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: end;width: 100%;padding: 5px;" class="k-grid-pager">
+        <button id="customer-merge-btn-reset" style="margin-right: 5px;">초기화</button>
+        <button sec:authorize="hasRole('ROLE_WORK_CUSTOMER_MGR_UPDATE')" id="customer-merge-btn-merge"
+                style="margin-right: 5px;">병합저장
+        </button>
+    </div>
+</script>
+
+
+<script type="text/x-kendo-template" id="customer-black-detail-tile-layout-template">
+    <div id="customer-black-detail" style="display: flex; justify-content: space-around; margin: 0 5px;">
+        <div style="">
+            <div class="c-table" style="border-spacing: 2px;">
+                <div class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>현재 고객구분</dt>
+                        <dd><input id="customer-black-selected-custType" /></dd>
+                    </div>
+                    <div class="c-table-cell">
+                        <dt>요청자</dt>
+                        <dd><input id="customer-black-selected-requesterNm" /></dd>
+                    </div>
+                    <div class="c-table-cell">
+                        <dt>요청일</dt>
+                        <dd><input id="customer-black-selected-requestDt" /></dd>
+                    </div>
+                </div>
+                <div class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>일반전화</dt>
+                        <dd><input id="customer-black-selected-telNo" /></dd>
+                    </div>
+                    <div class="c-table-cell">
+                        <dt>수/발신번호</dt>
+                        <dd><input id="customer-black-selected-boundTelNo" /></dd>
+                    </div>
+                    <div class="c-table-cell">
+                        <dt>휴대폰</dt>
+                        <dd><input id="customer-black-selected-hpNo" /></dd>
+                    </div>
+                </div>
+            </div>
+            <div class="c-table" >
+                <div class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>요청사유</dt>
+                        <dd><textarea id="customer-black-selected-requestReason"></textarea></dd>
+                    </div>
+                    <div class="c-table-cell">
+                        <dt>등록사유 <p class="c-required">*</p></dt>
+                        <div id="customer-black-reason-validator">
+                            <dd><textarea id="customer-black-reason"
+                                          name="customer-black-reason"></textarea></dd>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div sec:authorize="hasRole('ROLE_WORK_CUSTOMER_MGR_UPDATE')"
+         style="display: flex;justify-content: end;width: 100%;
+                        height: 44px;
+                        padding: 5px;
+                        margin-top: 5px;
+                        position: absolute;
+                        bottom: 0px;" class="k-grid-pager">
+        <div id="customer-black-set-status-box" style="display: none;">
+            <button id="customer-black-btn-reject" style="margin-right: 4px;">반려</button>
+            <button id="customer-black-btn-approve">승인</button>
+        </div>
+        <div id="customer-black-set-release-box" style="display: none;">
+            <button id="customer-black-btn-release">해제</button>
+        </div>
+    </div>
+</script>

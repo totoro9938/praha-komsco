@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤더-->
+
+<!--headerFragment 선언-->
+<head>
+    <meta charset="UTF-8">
+    <title>[[${@environment.getProperty('company.logo')}]]</title>
+
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles/web/kendo.bootstrap-main.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
+
+ </head>
+
+<script th:src="@{/js/ui/jquery.min.js}"></script>
+<script th:src="@{/js/ui/jszip.min.js}"></script>
+<script th:src="@{/js/ui/kendo.all.min.js}"></script>
+<script th:src="@{/js/ui/cultures/kendo.culture.ko-KR.js}"></script>
+<script th:src="@{/js/ui/messages/kendo.messages.ko-KR.js}"></script>
+<script type="text/javascript">
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+    <link rel="apple-touch-icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+</head>
+<body id="">
+<div id="wrapper">
+    <!-- 사이드바-->
+
+    <div>
+        <div id="content">
+            <!-- 상단바-->
+            <!-- 본문-->
+
+            <div class="login_wrap">
+                <p class="login_logo"><span style="font-size:36pt;font-family: 'Noto Sans KR';"><b>[[${@environment.getProperty('company.logo')}]]</b></span><br><br><br><br>
+                    <span style="font-size:20pt;font-family: 'Noto Sans KR';">콜센터 상담관리시스템</span>
+                </p>
+                <div class="login_box_area">
+                <p class="login_box_tit"></p>
+                    <input type="hidden" id="otpYn" name="otpYn" th:value="${otpYn}">
+                    <form class="m-t" role="form" th:action="@{/login}" id="loginForm" method="post">
+                        <input type="hidden" id="companyCd" name="companyCd" value="CENTERLINK">
+                        <div class="login_input_area" id="login-area">
+                            <p>
+                                <input type="text" id="userCd" name="userCd" th:value="${userCd}" required validationMessage="아이디를 입력하세요." placeholder="아이디를 입력하세요." style="font-size: 14pt" />
+                                <span class="k-invalid-msg" data-for="userCd"></span>
+                            </p>
+                            <p>
+                                <input type="password" id="userPwd" name="userPwd" th:value="${userPwd}" required validationMessage="패스워드를 입력하세요." placeholder="패스워드를 입력하세요." style="font-size: 14pt" />
+                                <span class="k-invalid-msg" data-for="userPwd"></span>
+                            </p>
+                            <P id="err-a" style="display: none"><li id="error-text" style="display: none"></li></p>
+                            <P th:if="${error != null}"><li th:text="${error}"></li></p>
+                            <p> <span id="loginBtn" class="k-primary" style="width: 100%;height: 60px;">로    그     인</span></p>
+                        </div>
+                        <div class="login_input_area" id="otp-area" style="display: none">
+                            <p>
+                                <input type="text" id="auth-number" name="auth-number" validationMessage="OTP 를 입력하세요." placeholder="OTP 를 입력하세요." style="font-size: 14pt" />
+                                <span class="k-invalid-msg" data-for="auth-number"></span>
+                            </p>
+                            <P th:if="${error != null}"><li th:text="${error}"></li></p>
+                            <p> <span id="otpBtn" class="k-primary" style="width: 100%;height: 60px;">확인</span></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script type="text/javascript" th:src="@{/js/main/login.js}"></script>
+
+        </div>
+        <!-- 공통 하단-->
+
+    </div>
+</div>
+</body>
+</html>
+<script type="text/x-kendo-template" id="otp-window-template">
+    <div class="login_box_area">
+        <p class="login_box_tit"></p>
+
+        <form class="m-t" role="form" id="otpForm" method="post">
+            <input type="hidden" id="userId" name="userId">
+            <input type="hidden" id="secretKey" name="secretKey">
+            <div class="login_input_area">
+                <p style="display: flex;justify-content: center;margin-bottom: 40px;" id="otp-reg">
+                    <img id="qr-code" style="width: 100%;"/>
+                </p>
+                <p> <span id="sendOtp" class="k-primary" style="width: 100%;height: 60px;">확        인</span></p>
+            </div>
+        </form>
+    </div>
+</script>

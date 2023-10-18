@@ -1,0 +1,28 @@
+<section id="log-info-layout">
+    <div id="log-info-splitter" class="c-splitter">
+        <div id="log-info-div-search" class="pane-content">
+            <div class="c-search-box c-grid-search-box">
+                <div class="c-grid-search-row">
+                    <div class="c-grid-search-item" style="width: 440px;">
+                        <label>기간</label>
+                        <input id="log-info-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="log-info-search-date-end" style="width: 174px;margin-left: 5px;">
+                    </div>
+                    <div class="c-grid-search-item">
+                        <ul id="log-info-log-type" style="margin-left : 15px"></ul>
+                    </div>
+                </div>
+                <div class="log-info-button-box">
+                    <button sec:authorize="hasRole('ROLE_PEPORT_LOG_LIST_SELECT')" type="button" id="log-info-btn-search" class="k-primary" title="검색"></button>
+                </div>
+            </div>
+        </div>
+        <div sec:authorize="hasRole('ROLE_PEPORT_LOG_LIST_SELECT')" class="log-info-grid-box pane-content">
+            <div id="log-info-login-grid"></div>
+            <div id="log-info-user-grid"></div>
+            <div id="log-info-group-grid"></div>
+            <div id="log-info-excel-grid"></div>
+            <div id="log-info-private-grid"></div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/js/base/logInfo.js}"></script>

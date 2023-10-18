@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+<style>
+    html, body {
+        min-width: 0;
+    }
+</style>
+<body>
+<div class="pop-container k-prompt-container" style="height:calc(100vh - 9px);">
+    <input type="hidden" id="manual-detail-call-cat-id" name="callCatId">
+    <input type="hidden" id="manual-detail-history-manual-id">
+    <input type="hidden" id="manual-detail-history-manual-idx">
+    <div class="container" style="width: 100%;">
+        <div class="k-card- pop-k-card">
+            <div class="k-card-header pop-k-header">
+                <div><h3>매뉴얼 상세보기</h3></div>
+            </div>
+            <div id="manual-detail-container-splitter" class="k-card-body" style="height: calc(100% - 50px);">
+                <div class="container">
+                    <div class="k-card pop-k-card">
+                        <div class="k-card-header c-search-btn-closed">
+                            <div>
+                                <div>
+                                    <h3 id="manual-detail-title"></h3>
+                                </div>
+                                <div>
+                                    <h4 style="color: gray;" id="manual-detail-call-cat"></h4>
+                                </div>
+                            </div>
+                            <div>
+                                <div id="manual-detail-importance"></div>
+                            </div>
+                        </div>
+                        <div class="k-card-body">
+                            <div id="manual-detail-splitter" style="border: 0; height: calc(100vh - 205px);">
+                                <div style="height: calc(100% - 150px)">
+                                    <textarea id="manual-detail-contents" class="pane-content" style="height: 100%;"></textarea>
+                                </div>
+                                <div id="manual-detail-information" style="border: 0;">
+                                    <div class="c-table">
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>부서</dt>
+                                                <dd><input id="manual-detail-information-department" /></dd>
+                                            </div>
+                                            <div class="c-table-cell">
+                                                <dt>담당자</dt>
+                                                <dd><input id="manual-detail-information-chargeNm" /></dd>
+                                            </div>
+                                            <div class="c-table-cell">
+                                                <dt>전화번호</dt>
+                                                <dd>
+                                                    <input id="manual-detail-information-telNo" style="width: 80%;" />
+                                                </dd>
+                                            </div>
+                                        </div>
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>등록</dt>
+                                                <dd><input id="manual-detail-information-regDt" /></dd>
+                                            </div>
+                                            <div class="c-table-cell">
+                                                <dt>수정</dt>
+                                                <dd><input id="manual-detail-information-mdfDt" /></dd>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="k-card-footer c-search-btn-closed">
+                            <div>
+                                <button sec:authorize="hasRole('ROLE_WORK_MANUAL_MGR_HISTORY_SELECT')"
+                                        id="manual-detail-btn-history">수정이력</button>
+                                <button sec:authorize="hasRole('ROLE_WORK_REQUEST_MANUAL_LIST_INSERT')"
+                                        id="manual-detail-btn-request-modify">수정요청</button>
+                                <span id="manual-detail-btn-requesting-modify"></span>
+                            </div>
+                            <div>
+                                <button id="manual-detail-btn-attached-file" style="margin-right: 10px;">첨부파일</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="k-card pop-k-card" style="height: 64%;">
+                        <div class="k-card-header">
+                            <div>
+                                <h3>Q&A</h3>
+                            </div>
+                            <div>
+                                <h4>&nbsp;</h4>
+                            </div>
+                        </div>
+                        <div class="k-card-body">
+                            <div id="manual-detail-qna" style="border: 0;"></div>
+                        </div>
+                    </div>
+                    <div class="k-card pop-k-card" style="height: 35%;">
+                        <div class="k-card-header">
+                            <div>
+                                <h3>연관매뉴얼</h3>
+                            </div>
+                        </div>
+                        <div class="k-card-body">
+                            <div id="manual-detail-related-manual" style="border: 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/x-kendo-template" id="manual-detail-related-manual-template">
+    <div style="cursor: pointer;">
+        <div style="padding: 5px;margin:5px;border-bottom: 1px solid rgb(222,226,230)">
+            <span style="font-weight:bold">·</span> #:title#
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="manual-detail-qna-template">
+    <div id="manual-detail-listview-div-#=manualId#" class="manual-detail-listview">
+        <div id="manual-detail-listview-select-qna-#=manualId#" style="display: none;width: 100%;"> <span data-role="badge" class="k-badge k-badge-solid k-badge-warning k-badge-md k-badge-rounded k-badge-inline" style="width: 100%">선택된 Q&A</span></div>
+        <div class="c-table">
+            <div class="c-table-row">
+                <div class="c-table-cell">
+                    <span style="font-weight: bold;font-size: 18px;color:rgb(59,122,193);">Q.</span> #:title#
+                </div>
+            </div>
+            <div class="c-table-row">
+                <div class="c-table-cell">
+                    <span style="font-weight: bold;font-size: 18px;color:rgb(226,128,66);">A.</span> <span>#if (contents === null) {# #=''# #} else {# #=contents# #}#</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="manual-detail-history-window-template">
+    <div id="manual-detail-history-grid"></div>
+</script>
+<script type="text/x-kendo-template" id="manual-request-modify-window-template">
+    <div id="manual-request-modify-window-valid">
+        <div class="c-table">
+            <div class="c-table-row">
+                <div class="c-table-cell" style="width:100%">
+                    <dt>담당부서 <p class="c-required">*</p></dt>
+                    <dd>
+                        <input id="manual-request-modify-dept" style="width:100%;" />
+                    </dd>
+                </div>
+            </div>
+            <div class="c-table-row">
+                <div class="c-table-cell" style="width:100%">
+                    <dt>담당자 <p class="c-required">*</p></dt>
+                    <dd>
+                        <input id="manual-request-modify-user" name="manual-request-modify-user" />
+                    </dd>
+                </div>
+            </div>
+            <div class="c-table-row">
+                <div class="c-table-cell" style="width:100%">
+                    <dt>요청내용 <p class="c-required">*</p></dt>
+                    <dd><textarea id="manual-request-modify-content" name="manual-request-modify-content"></textarea></dd>
+                </div>
+            </div>
+            <div style="float: right; display: inline-block; padding: 5px;">
+                <button sec:authorize="hasRole('ROLE_WORK_REQUEST_MANUAL_LIST_INSERT')"
+                        id="manual-request-modify-btn">등록</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script th:src="@{/js/common/jquery.fileDownload.js}"></script>
+<script th:src="@{/js/knowledge/manualDetail.js}"></script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+<style>
+    .k-treeview {
+        min-height: 200px;
+    }
+</style>
+<body>
+<section id="notice-editor-layout">
+    <div class="pop-container k-prompt-container">
+        <input type="hidden" id="notice-editor-doc-id" name="docId">
+        <div id="notice-editor-validator" class="pop-k-card k-card">
+            <div class="pop-k-header k-card-header">
+                <div>
+                    <h3 id="notice-editor-popup-title"></h3>
+                </div>
+            </div>
+            <div class="k-card-body">
+                <div class="c-search-box c-flex-center pane-content" style="margin: 5px 0px">
+                    <label style="width:70px; text-align: center;">제목 <p class="c-required">*</p></label>
+                    <input id="notice-editor-title" name="notice-editor-title" required />
+                </div>
+                <div id="notice-editor-splitter" style="height: calc(100vh - 168px); board : 0;">
+                    <div>
+                        <textarea id="notice-editor-editor" name="notice-editor-editor" class="pane-content" style="height: 100%"></textarea>
+                    </div>
+                    <div style="display:flex; overflow:hidden;">
+                        <div style="width: 25%;">
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell" >
+                                        <dt>중요도</dt>
+                                        <dd><div id="notice-editor-importance-radio-group"></div></dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 75%; height: 100%; overflow:auto;">
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell" >
+                                        <dd><p class="c-required">*  </p><div id="notice-editor-target-drop-down-tree" style="width: 98%;"></div></dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="k-card-footer" style="display:flex; justify-content:space-between; height: 100%;">
+                <div style="display:flex;">
+                    <div id="notice-editor-btn-upload-file"></div>
+                    <div>
+                        <button id="notice-editor-file-list-btn" style="margin-left:10px;">첨부파일</button>
+                    </div>
+                </div>
+                <div>
+                    <button id="notice-editor-btn-save">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+
+<script th:src="@{/js/board/noticeEditor.js}"></script>

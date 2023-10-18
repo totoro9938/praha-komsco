@@ -1,0 +1,130 @@
+<section id="callbackList-layout">
+    <div id="callbackList-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>접수기간</label>
+                    <input id="callbackList-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="callbackList-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <input id="callbackList-department">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담사</label>
+                    <input id="callbackList-user-list">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>처리결과</label>
+                    <input id="callbackList-search-status">
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <input id="callbackList-etc-search-dropdown" style="width: 50%;">
+                    <input id="callbackList-etc-search-textbox" style="width: 50%;">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button sec:authorize="hasRole('ROLE_CONSULT_CALLBACK_LIST_SELECT')" id="callbackList-btn-search" title="검색"></button>
+                <button sec:authorize="hasRole('ROLE_CONSULT_CALLBACK_LIST_SELECT')" id="callbackList-btn-search-reset" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="callbackList-splitter">
+        <div id="callbackList-splitter-main" class="c-splitter-grid">
+            <div id="callbackList-grid" class="c-grid"></div>
+        </div>
+        <div id="callbackList-splitter-detail" class="c-splitter-detail">
+            <div id="callbackList-detail-form-box" class="c-detail-view">
+                <div class="c-detail-body">
+                    <div id="callbackList-detail-header" class="c-detail-header">
+                        <div><h3>상세보기</h3></div>
+                        <div id="callbackList-detail-header-btn-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                    <div id="callbackList-detail-section">
+                        <form id="callbackList-detail-form">
+                            <input id="callbackList-detail-callbackId" type="hidden" value="0" name="callbackId"/>
+                            <input id="callbackList-detail-custId" type="hidden" value="0" name="custId"/>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>접수일시</dt>
+                                        <dd><input id="callbackList-detail-callbackDt"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>IVR인입경로</dt>
+                                        <dd>
+                                            <input id="callbackList-detail-routeNm">
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>콜백전화</dt>
+                                        <dd style="display: flex;">
+                                            <input id="callbackList-detail-callbackTelNo">
+                                            <a href="#" style="margin-left: 5px;" class="callback-callBtn" id="callbackList-detail-callbackTelNo-btn" title="전화 걸기"><i class="bi bi-telephone"></i></a>
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>수/발신전화</dt>
+                                        <dd style="display: flex;">
+                                            <input id="callbackList-detail-boundTelNo">
+                                            <a href="#" style="margin-left: 5px;" class="callback-callBtn" id="callbackList-detail-boundTelNo-btn" title="전화 걸기"><i class="bi bi-telephone"></i></a>
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>처리자</dt>
+                                        <dd>
+                                            <input id="callbackList-detail-processNm">
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>처리일시</dt>
+                                        <dd>
+                                            <input id="callbackList-detail-processDt">
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div>
+                                    <div id="callbackList-detail-overlap-history" style="margin: 0 5px;"></div>
+                                </div>
+                                <div>
+                                    <div><h4 style="margin: 2px 5px;">통화시도이력</h4></div>
+                                    <div id="callbackList-detail-bound-history" style="margin: 0 5px;"></div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>처리결과</dt>
+                                        <dd><select id="callbackList-detail-status" name="callbackStatus" required></select></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>처리내용 <p class="c-required">*</p></dt>
+                                        <dd><textarea id="callbackList-detail-description" name="description" required></textarea></dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="c-search-btn-opened">
+                            <button sec:authorize="hasRole('ROLE_CONSULT_CALLBACK_LIST_UPDATE')" id="callbackList-detail-update" style="margin-right: 5px;">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/x-kendo-template" id="callbackList-toolbar-template">
+    <button sec:authorize="hasRole('ROLE_CONSULT_CALLBACK_LIST_DOWN')" id="callbackList-btn-download-excel"></button>
+</script>
+
+<script th:src="@{/js/consult/callback.js}"></script>
+

@@ -1,0 +1,158 @@
+<section id="transfer-layout">
+
+    <div id="transfer-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>이관일자</label>
+                    <input id="transfer-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="transfer-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>접수부서</label>
+                    <input id="transfer-search-dept-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>접수상담사</label>
+                    <input id="transfer-search-user-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>처리결과</label>
+                    <div id="transfer-search-status"></div>
+                </div>
+                <div class="c-grid-search-item">
+                    <label>담당부서</label>
+                    <div id="transfer-search-charge-dept-id"></div>
+                </div>
+                <div class="c-grid-search-item">
+                    <label>담당자</label>
+                    <div id="transfer-search-charge-id"></div>
+                </div>
+                <div class="c-grid-search-item c-search-txt-group" style="width: 320px">
+                    <input id="transfer-search-type">
+                    <input id="transfer-search-txt">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="transfer-search-button" sec:authorize="hasRole('ROLE_WORK_TRANSFER_LIST_SELECT')" title="검색"></button>
+                <button id="transfer-search-reset" sec:authorize="hasRole('ROLE_WORK_TRANSFER_LIST_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="transfer-splitter">
+        <div id="transfer-splitter-main" class="c-splitter-grid">
+            <div id="transfer-grid" class="c-grid"></div>
+            <div id="transfer-excel-grid" style="display: none"></div>
+        </div>
+        <div id="transfer-splitter-detail" class="c-splitter-detail">
+            <div id="transfer-detail-form-box" class="c-detail-view">
+                <div class="c-detail-body">
+                    <div id="transfer-detail-header" class="c-detail-header">
+                        <div><h3>상세보기</h3></div>
+                        <div id="transfer-detail-header-btn-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                    <div id="transfer-detail-section">
+                        <form id="transfer-detail-form">
+                            <input id="transfer-detail-callId" type="hidden" value="0" name="callId"/>
+                            <input id="transfer-detail-boundId" type="hidden" value="0" name="boundId"/>
+                            <input id="transfer-detail-custId" type="hidden" value="0" name="custId"/>
+                            <input id="transfer-detail-chargeIdOld" type="hidden" value="0" name="chargeIdOld"/>
+                            <input id="transfer-detail-chargeId" type="hidden" value="0" name="chargeId"/>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>고객명</dt>
+                                        <dd><input id="transfer-detail-custNm"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>수/발신번호</dt>
+                                        <dd>
+                                            <input id="transfer-detail-boundTelNo">
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>상담분류</dt>
+                                        <dd>
+                                            <input id="transfer-detail-callCat">
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>문의내용</dt>
+                                        <dd><textarea id="transfer-detail-question"></textarea></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>이관메모</dt>
+                                        <dd><textarea id="transfer-detail-memo"></textarea></dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>담당부서</dt>
+                                        <dd><select id="transfer-detail-charge-department" style="width: 90%" name="deptId"></select></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>담당자</dt>
+                                        <dd><select id="transfer-detail-charge-user" style="width: 90%" name="chargeId"></select></dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>처리결과</dt>
+                                        <dd><select id="transfer-detail-status" name="transferStatus"></select></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>처리내용</dt>
+                                        <dd><textarea id="transfer-detail-description" name="transferAnswer"></textarea></dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>처리자</dt>
+                                        <dd>
+                                            <input id="transfer-detail-processNm">
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>처리일시</dt>
+                                        <dd>
+                                            <input id="transfer-detail-processDt">
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="c-search-btn-opened">
+                            <button sec:authorize="hasRole('ROLE_WORK_TRANSFER_LIST_UPDATE')" id="transfer-detail-update" style="margin-right: 5px;">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script type="text/x-kendo-template" id="transfer-grid-toolbar-template">
+    <button id="transfer-toolbar-button-excel-down" sec:authorize="hasRole('ROLE_WORK_TRANSFER_LIST_DOWN')" title="다운로드"></button>
+</script>
+
+<script th:src="@{/js/work/transfer.js}"></script>
+

@@ -1,0 +1,90 @@
+<section id="smsList-layout">
+    <div id="smsList-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item">
+                    <label>발송일자</label>
+                    <input id="smsList-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="smsList-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <div id="smsList-department"></div>
+                </div>
+                <div class="c-grid-search-item">
+                    <label>발송자</label>
+                    <input id="smsList-user-list"/>
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <input id="smsList-etc-search-dropdown" style="width:50%;" />
+                    <input id="smsList-etc-search-textbox" style="width: 50%;"/>
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="smsList-search-button" sec:authorize="hasRole('ROLE_CONSULT_SMS_LIST_SELECT')" title="검색"></button>
+                <button id="smsList-search-reset" sec:authorize="hasRole('ROLE_CONSULT_SMS_LIST_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="smsList-splitter">
+        <div id="smsList-splitter-main" class="c-splitter-grid">
+            <div id="smsList-grid" class="c-grid"></div>
+        </div>
+        <div id="smsList-splitter-detail" class="c-splitter-detail">
+            <div id="smsList-detail-form-box" class="c-detail-view" style="padding-bottom: 0;">
+                <div class="c-detail-body">
+                    <div id="smsList-detail-header" class="c-detail-header">
+                        <div><h3>상세보기</h3></div>
+                        <div id="smsList-detail-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                    <div  id="smsList-detail-section">
+                        <div class="c-table" style="width:98%;">
+                            <div class="c-table-row">
+                                <div class="c-table-cell">
+                                    <dt>발송일시</dt>
+                                    <dd><input id="smsList-detail-send-date" type="text"/></dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-table" style="width:98%;">
+                            <div class="c-table-row">
+                                <div class="c-table-cell" style="width: 100%">
+                                    <dt>발송문자</dt>
+                                    <dd><textarea id="smsList-detail-send-message"></textarea></dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-table" style="width:98%;">
+                            <div class="c-table-row" style="margin : 10px 0 0 0">
+                                <div class="c-table-cell" style="width: 100%">
+                                    <dd style="display:flex; justify-content: flex-end">
+                                        <input style="width:30%; margin-right:4px" id="smsList-phone-number-textbox" type="text"/>
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_SMS_LIST_INSERT')" type="button" id="smsList-re-send-btn" onclick="">재발송</button>
+                                    </dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div  style="height: 20%; display: flex; align-items: flex-end">
+                            <div id="smsList-resend-box" style="display: none;">
+                                <div style="color : red;">※ 재발송한 문자입니다.</div>
+                                <div style="display:flex; align-items: center; justify-content: center">
+                                    <label>원본 발송시각 :</label>
+                                    <input style="width:28%; margin-left:4px" id="smsList-resend-date"/>
+                                    <label>원본 전화번호 :</label>
+                                    <input style="width:28%; margin-left:4px" id="smsList-resend-number"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/x-kendo-template" id="smsList-toolbar-template">
+    <button id="smsList-toolbar-button-excel-down" sec:authorize="hasRole('ROLE_CONSULT_SMS_LIST_DOWN')" title="다운로드"></button>
+</script>
+
+<script th:src="@{/js/consult/smsList.js}"></script>

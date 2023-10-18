@@ -1,0 +1,385 @@
+<section id="campaign-layout">
+    <input type="hidden" id="campaign-sms-from-tel-no" name="campaignTelNo">
+    <div id="campaign-splitter" class="c-splitter">
+        <div id="campaign-splitter-select" class="pane-content" style="height: 100%">
+            <div id="campaign-splitter-main-grid" style="height: 100%">
+                <div id="campaign-search-box" class="pane-content">
+                    <div class="c-search-box c-grid-search-box">
+                        <div class="c-grid-search-row">
+                            <div class="c-grid-search-item" style="width: 340px;">
+                                <label>이관일자</label>
+                                <input id="campaign-search-date-start" style="width: 124px;margin-right:5px;"> ~ <input id="campaign-search-date-end" style="width: 124px;margin-left: 5px;">
+                            </div>
+                            <div class="c-grid-search-item">
+                                <label>진행상태</label>
+                                <input id="campaign-progress-drop-down-list">
+                            </div>
+                            <div class="c-grid-search-item">
+                                <label>캠페인유형</label>
+                                <input id="campaign-type-drop-down-list">
+                            </div>
+                            <div class="c-grid-search-item">
+                                <label>캠페인명</label>
+                                <input id="campaign-name-textbox">
+                            </div>
+                        </div>
+                        <div style="min-width: 200px;text-align: right;">
+                            <em sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_SELECT')" id="campaign-search-btn"></em>
+                            <button sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_INSERT')" id="campaign-btn-edit">캠페인 만들기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="pane-content">
+                    <div id="campaign-grid"></div>
+                </div>
+            </div>
+        </div>
+        <div id="campaign-splitter-management" class="pane-content">
+            <div id="campaign-splitter-detail" style="height:100%">
+                <div id="campaign-state-section" style="border-right: 2px solid #bcbcbc">
+                    <div style="padding:20px">
+                        <nav id="campaign-state-stepper" style="margin:20px 0px 20px 0px;"></nav>
+                        <div id="campaign-satisfaction-state-total-grid"></div>
+                        <div id="campaign-sms-state-total-grid"></div>
+                        <div id="campaign-state-counselor-counting-grid" style="margin-top:40px;"></div>
+                    </div>
+                </div>
+                <div id="campaign-contents-section-splitter" style="border : none;">
+                    <div id="campaign-contents-header">
+                        <div style="display: flex; justify-content: space-between;border-bottom: 2px solid #bcbcbc; height:95%;">
+                            <h2 id="campaign-contents-title" style="margin-left:15px">캠페인만들기</h2>
+                            <div id="campaign-management-close" style=" cursor: pointer; padding:15px;"><span class="k-icon k-i-close"></span></div>
+                        </div>
+                    </div>
+                    <div id="campaign-contents-body" style="padding-bottom:20px;">
+                        <div id="campaign-card-level1" style="margin-top:20px;">
+                            <input type="hidden" id="campaign-campaign-id" name="campaignId">
+                            <input type="hidden" id="campaign-regist-step" name="registStep">
+                            <input type="hidden" id="campaign-campaign-type" name="campaignType">
+                            <div id="campaign-info" class="k-card" style="width: 96%; margin :0 auto;">
+                                <div class="k-card-header">
+                                    <div><h3 id="campaign-info-header">캠페인정보</h3></div>
+                                </div>
+                                <div class="k-card-body">
+                                    <form id="campaign-info-form" style="display:flex; margin:20px;">
+                                        <div style="width:50%;">
+                                            <div style="width:40%">
+                                                <dt>캠페인명 <p class="c-required">*</p></dt>
+                                                <div style="height:67px;"><input id="campaign-info-campaign-name" name="campaign-info-campaign-name" type="text" style="width:100%; margin-top:5px;" required></div>
+                                            </div>
+                                            <div style="width:100%">
+                                                <dt>캠페인유형 <p class="c-required">*</p></dt>
+                                                <div style="height:65px;"><label
+                                                        for="campaign-info-campaign-type"></label><input id="campaign-info-campaign-type" name="campaign-info-campaign-type" type="text" style="width:30%; margin-top:5px;" required/></div>
+                                            </div>
+                                            <div style="width:100%">
+                                                <dt>진행기간</dt>
+                                                <div style="height:50px;"><div id="campaign-info-date-range-picker" style="width:50%; margin-top:5px;"></div></div>
+                                            </div>
+                                            <div style="width:100%">
+                                                <dt>진행상태</dt>
+                                                <div><ul id="campaign-info-progress-type"></ul></div>
+                                            </div>
+                                        </div>
+                                        <div style="width:50%;">
+                                            <div style="width:100%">
+                                                <dt>캠페인설명</dt>
+                                                <div><textarea id="campaign-info-campaign-textarea" style="height:100%; margin-top:5px; width:100%;"></textarea></div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="k-card-footer" style="display:flex; justify-content: flex-end; align-items: center;">
+                                    <button sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_INSERT')" id="campaign-info-btn-save" type="button" style="height: 80%;">저장</button>
+                                    <button sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_DELETE')" id="campaign-info-btn-delete" type="button" style="display:none; height: 80%; margin:0 10px 0 5px;">삭제</button>
+                                    <button sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_UPDATE')" id="campaign-info-btn-update" type="button" style="display:none;">수정</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="campaign-card-level2" style="margin-top:40px; ">
+                            <div class="k-card" style="width: 96%; margin :0 auto;">
+                                <div class="k-card-header">
+                                    <div><h3 id="campaign-target-header">대상자추출</h3></div>
+                                </div>
+                                <div id="campaign-satisfaction-target" >
+                                    <div class="k-card-body">
+                                        <div>
+                                            <div id="campaign-satisfaction-target-card-search-box" class="c-search-box c-grid-search-box">
+                                                <div class="c-grid-search-row">
+                                                    <div class="c-grid-search-item">
+                                                        <label>진행상태</label>
+                                                        <input id="campaign-satisfaction-target-progress-type">
+                                                    </div>
+                                                    <div class="c-grid-search-item c-search-txt-group">
+                                                        <input id="campaign-satisfaction-target-search-type">
+                                                        <input id="campaign-satisfaction-target-search-textbox">
+                                                    </div>
+                                                    <div class="c-grid-search-item">
+                                                        <label>상담사</label>
+                                                        <input id="campaign-satisfaction-target-agent">
+                                                    </div>
+                                                </div>
+                                                <div><em id="campaign-satisfaction-target-search-btn"></em></div>
+                                            </div>
+                                        </div>
+                                        <div id="campaign-satisfaction-target-grid-box">
+                                            <div id="campaign-satisfaction-target-grid"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="campaign-sms-target" >
+                                    <div class="k-card-body">
+                                        <div>
+                                            <div id="campaign-sms-target-search-box" class="c-search-box c-grid-search-box">
+                                                <div class="c-grid-search-row">
+                                                    <div class="c-grid-search-item">
+                                                        <label>전송결과</label>
+                                                        <input id="campaign-sms-target-send-result">
+                                                    </div>
+                                                    <div class="c-grid-search-item c-search-txt-group">
+                                                        <input id="campaign-sms-target-search-type">
+                                                        <input id="campaign-sms-target-search-text">
+                                                    </div>
+                                                </div>
+                                                <div><em id="campaign-sms-target-search-btn"></em></div>
+                                            </div>
+                                        </div>
+                                        <div id="campaign-sms-target-grid-box">
+                                            <div id="campaign-sms-target-grid"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="campaign-target-btn-div" class="k-card-footer" style="display:flex; justify-content: space-between; align-items: center;">
+                                    <div sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_INSERT')" style="display:flex; align-items:center; height:100%; margin-left:10px">
+                                        <button id="campaign-satisfaction-btn-extract" style="height: 80%;">대상자추출</button>
+                                        <button id="campaign-satisfaction-btn-excel-upload" style="height: 80%; margin-left:10px;">엑셀업로드</button>
+                                    </div>
+                                    <div sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_DELETE')" style="display:flex; align-items:center; height:100%; margin-right:10px">
+                                        <button id="campaign-satisfaction-btn-delete-select" style="height: 80%;">선택삭제</button>
+                                        <button id="campaign-satisfaction-btn-delete-all"style="height: 80%; margin-left:10px;">전체삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="campaign-card-level3" style="margin-top:40px;">
+                            <div id="campaign-user-distribution" class="k-card" style="width: 96%; margin :0 auto;">
+                                <div class="k-card-header">
+                                    <div><h3 id="campaign-satisfaction-consult-header">상담사분배</h3></div>
+                                </div>
+                                <div class="k-card-body">
+                                    <div>
+                                        <div id="campaign-user-distribution-search-box" class="c-search-box c-grid-search-box">
+                                            <div class="c-grid-search-row">
+                                                <div>
+                                                    <ul id="campaign-user-distribution-type"></ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="campaign-user-distribution-grid-box">
+                                        <div id="campaign-user-distribution-grid"></div>
+                                    </div>
+                                </div>
+                                <div id="campaign-satisfaction-consult-btn-div" sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_INSERT')" class="k-card-footer" style="display:flex; justify-content: flex-end; align-items: center;">
+                                    <div style="height:100%; margin-right:10px">
+                                        <button id="campaign-satisfaction-consult-clear" style="height: 80%;">초기화</button>
+                                    </div>
+                                    <div id="campaign-satisfaction-consult-dis-div" style="height:100%; margin-right:10px">
+                                        <button id="campaign-satisfaction-consult-btn-dis" style="height: 80%;">분배</button>
+                                        <button id="campaign-satisfaction-consult-equal-btn-dis" style="height: 80%;">선택균등분배</button>
+                                    </div>
+                                    <div id="campaign-satisfaction-consult-collection-div" style="display:none; height:100%; margin-right:10px">
+                                        <button id="campaign-satisfaction-consult-collection" style="height: 80%;">회수</button>
+                                        <button id="campaign-satisfaction-consult-equal-collection"style="height: 80%;">선택일괄회수</button>
+                                    </div>
+                                    <div id="campaign-satisfaction-consult-redistribution-div" style="display:none; height:100%; margin-right:10px">
+                                        <button id="campaign-satisfaction-consult-redistribution" style="height: 80%;">재분배</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="campaign-sms-send" class="k-card" style="display:none; width: 96%; margin :0 auto;">
+                                <div class="k-card-header">
+                                    <div><h3 id="campaign-sms-send-header">SMS전송</h3></div>
+                                </div>
+                                <div class="k-card-body" style="height:350px;">
+                                    <div id="campaign-sms-send-valid" style="display:flex; height: 100%;">
+                                        <div class="c-table" style="width:45%; height:100%;">
+                                            <div class="c-table-row" style="height:15%">
+                                                <div class="c-table-cell" style="width:100%">
+                                                    <dd><select id="campaign-sms-template-list" name="consult-transfer-call-user" style="width:100%;"></select></dd>
+                                                </div>
+                                            </div>
+                                            <div class="c-table-row">
+                                                <div class="c-table-cell" style="width:100%">
+                                                    <dd style="height:100%"><div id="campaign-sms-template-list-view" style="width:100%;"></div></dd>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="width:53%;">
+                                            <textarea id="campaign-sms-send-content" name="campaign-sms-send-content" style="height: 95%; margin: 10px; width:100%;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="k-card-footer" style="display:flex; justify-content: space-between; align-items: center;">
+                                    <div style="margin-left: 10px;">
+                                        <span id="campaign-sms-bytes">[0 / 2000] Bytes</span>
+                                        <span id="campaign-sms-type" >SMS</span>
+                                    </div>
+                                    <div style="margin-right: 10px;">
+                                        <button id="campaign-sms-send-save">발송</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/x-kendo-template" id="campaign-target-extract-template">
+    <div id="campaign-target-extract-popup">
+        <div id="campaign-target-splitter" class="c-splitter" style="height: calc(100vh - 320px)">
+            <div id="campaign-target-search-box" class="pane-content">
+                <div class="c-search-box" style="display:flex; justify-content: space-between;">
+                    <div>
+                        <div id="campaign-target-search-element">
+                            <div class="c-grid-search-box">
+                                <div class="c-grid-search-row">
+                                    <div class="c-grid-search-item" style="width: 340px;">
+                                        <label>접수일자</label>
+                                        <input id="campaign-target-date-start" style="width: 124px;margin-right:5px;"> ~ <input id="campaign-target-date-end" style="width: 124px;margin-left: 5px;">
+                                    </div>
+                                    <div class="c-grid-search-item">
+                                        <label>고객구분</label>
+                                        <input id="campaign-target-customer-type-list">
+                                    </div>
+                                    <div class="c-grid-search-item">
+                                        <label>상담유형</label>
+                                        <input id="campaign-target-consult-type-list">
+                                    </div>
+                                    <div class="c-grid-search-item">
+                                        <label>상담결과</label>
+                                        <input id="campaign-target-consult-result-list">
+                                    </div>
+                                    <div class="c-grid-search-item">
+                                        <label>상담분류</label>
+                                        <input id="campaign-target-consult-call-cat">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="campaign-target-item1"><em id="campaign-target-search-btn1"></em></div>
+                </div>
+            </div>
+            <div class="pane-content">
+                <div id="campaign-target-splitter2" style="height:100%">
+                    <div id="campaign-target-extract-grid-box">
+                        <div id="campaign-target-extract-grid"></div>
+                    </div>
+                    <div id="campaign-target-detail" class="c-detail-view">
+                        <div class="c-detail-body">
+                            <div class="c-detail-header">
+                                <div><h3>상세보기</h3></div>
+                                <div id="campaign-target-detail-close" style="margin: 15px; cursor: pointer"><span class="k-icon k-i-close"></span></div>
+                            </div>
+                            <div>
+                                <div class="c-table" style="width:98%;">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>접수일자</dt>
+                                            <dd><input id="campaign-target-detail-reg-date" type="text"/></dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>고객명</dt>
+                                            <dd><input id="campaign-target-detail-customer-name" type="text"/></dd>
+                                        </div>
+                                    </div>
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>휴대폰</dt>
+                                            <dd><input id="campaign-target-detail-hp-no" type="text"/></dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>일반전화</dt>
+                                            <dd><input id="campaign-target-detail-tel-no" type="text"/></dd>
+                                        </div>
+                                    </div>
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>고객구분</dt>
+                                            <dd><input id="campaign-target-detail-customer-type" type="text"/></dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>통화시간</dt>
+                                            <dd><input id="campaign-target-detail-tel-time" type="text"/></dd>
+                                        </div>
+                                    </div>
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>상담사</dt>
+                                            <dd><input id="campaign-target-detail-agent" type="text"/></dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>상담결과</dt>
+                                            <dd><input id="campaign-target-detail-consult-result" type="text"/></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="c-table" style="width:98%;">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>문의내용</dt>
+                                            <dd><textarea id="campaign-target-detail-question"></textarea></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="c-table" style="width:98%;">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>답변내용</dt>
+                                            <dd><textarea id="campaign-target-detail-answer"></textarea></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="c-table" style="width:98%;">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>메모</dt>
+                                            <dd><textarea id="campaign-target-detail-memo"></textarea></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_INSERT')" style="display:flex; justify-content:flex-end; margin-top:15px;">
+            <button id="campaign-target-select-save-btn" style="margin:0 10px 0 5px">선택저장</button>
+            <button id="campaign-taget-all-save-btn">전체저장</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-kendo-template" id="campaign-excel-upload-template">
+    <div id="campaign-excel-upload-popup" style="height: 86%">
+        <div style="margin-bottom : 5px;">
+            <input type="file" id ="campaign-excel-upload">
+        </div>
+        <div id="campaign-excel-upload-grid-box" style="height: 98%; margin-bottom : 10px;">
+            <div id="campaign-excel-upload-grid"></div>
+        </div>
+        <div style="display:flex; justify-content:flex-end;">
+            <button sec:authorize="hasRole('ROLE_WORK_HAPPYCALL_MGR_INSERT')" id="campaign-excel-upload-save-btn">저장</button>
+        </div>
+    </div>
+</script>
+
+<div id="campaign-extract-target-window" style="=display: none;"></div>
+<div id="campaign-excel-upload-window" style="display: none;"></div>
+
+<script th:src="@{/js/work/campaign.js}"></script>

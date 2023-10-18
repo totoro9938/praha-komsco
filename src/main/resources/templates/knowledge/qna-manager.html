@@ -1,0 +1,149 @@
+<section id="qna-layout">
+    <div id="qna-splitter" class="pane-content" style="height: calc(100vh - 100px);">
+        <div id="qna-left-section">
+            <div id="qna-expansion-panel" class="c-grid-search-box">
+                <div class="c-grid-search-row">
+                    <div class="c-grid-search-item">
+                        <label>상담분류</label>
+                        <input id="qna-call-cat">
+                    </div>
+                    <div class="c-grid-search-item">
+                        <label>담당부서</label>
+                        <input id="qna-department">
+                    </div>
+                    <div class="c-grid-search-item">
+                        <label>담당자</label>
+                        <input id="qna-agent">
+                    </div>
+                    <div class="c-grid-search-item c-search-txt-group">
+                        <label>검색구분</label>
+                        <input id="qna-search-type" style="width: 45%">
+                        <input id="qna-search-text" style="width: 55%">
+                    </div>
+                    <div class="c-grid-search-item">
+                        <label>사용여부</label>
+                        <div id="qna-use-type"></div>
+                    </div>
+                </div>
+                <div style="min-width: 100px; text-align: right">
+                    <button id="qna-search-button" sec:authorize="hasRole('ROLE_WORK_QNA_MGR_SELECT')" title="검색"></button>
+                    <button id="qna-search-reset" sec:authorize="hasRole('ROLE_WORK_QNA_MGR_SELECT')" title="초기화"></button>
+                </div>
+            </div>
+            <div id="qna-left-splitter">
+                <div id="qna-splitter-main" class="c-splitter-grid">
+                    <div id="qna-grid" class="c-grid"></div>
+                </div>
+                <div id="qna-splitter-detail" class="c-splitter-detail"></div>
+            </div>
+        </div>
+        <div id="qna-right-section" style="background-color: white; border: 1px solid rgb(222,226,230);">
+            <input type="hidden" id="qna-parent-id" name="parentId">
+            <input type="hidden" id="qna-manual-id" name="manualId">
+            <div id="qna-detail-splitter">
+                <div id="qna-detail-first" class="c-detail-view">
+                    <div id="qna-detail-first-header" class="k-card-header">
+                        <div id="qna-detail-first-title"><h4>Q&A등록/수정</h4></div>
+                    </div>
+                    <div id="qna-detail-first-section" class="k-card-body" style="padding: 0 10px; height: calc(100vh - 187px);">
+                        <div id="qna-detail-first-form">
+                            <div id="qna-detail-first-valid">
+                                <div class="c-table">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>질문</dt>
+                                            <dd><textarea id="qna-question-text" name="questionText"></textarea></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="c-table">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>답변</dt>
+                                            <dd><textarea id="qna-answer-text" name="answerText"></textarea></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center">
+                                <label style="padding: 0 10px">순번</label>
+                                <input id="qna-order-number" style="width: 120px">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between;padding: 5px 15px;">
+                        <div>
+                            <button id="qna-update-close">취소</button>
+                        </div>
+                        <div>
+                            <button sec:authorize="hasRole('ROLE_WORK_QNA_MGR_INSERT')" id="qna-set-btn" style="display: none;">저장</button>
+                            <button sec:authorize="hasRole('ROLE_WORK_QNA_MGR_UPDATE')" id="qna-detail-update" style="display: none;">수정</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="qna-detail-second" class="c-detail-view" style="padding-bottom: 0;">
+                    <div id="qna-detail-second-header" class="k-card-header">
+                        <div><h4>Q&A</h4></div>
+                    </div>
+                    <div id="qna-detail-second-section" class="k-card-body" style="padding: 0 10px; height: calc(100vh - 187px); overflow-y: auto">
+                        <div id="qna-detail-second-form" style="height: 100%;">
+                            <div id="qna-second-top" style="display: flex; align-items: center; height: 100%">
+                                <div class="k-grid-norecords-template" style="height: 100%; display:flex; align-items: center; justify-content: center; width: 100%;">Q&A 조회된 건이 없습니다</div>
+                            </div>
+                            <div id="qna-second-bottom" style="margin-top: 5px">
+                                <div id="qna-bottom-list-view" style="border-width: 0"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex;justify-content: space-between; padding: 5px 15px;">
+                        <div></div>
+                        <button sec:authorize="hasRole('ROLE_WORK_QNA_MGR_INSERT')" id="qna-insert-btn">추가</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/x-kendo-template" id="qna-listview">
+    <div style="border: 1px solid rgb(222,226,230); margin-bottom: 10px;">
+        <div class="c-table" style="padding: 0">
+            <div class="c-table">
+                <div  class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt style="display:flex; justify-content:space-between; height:25px;">
+                            질문
+                            <div>
+                                <span sec:authorize="hasRole('ROLE_WORK_QNA_MGR_UPDATE')" id="qna-listview-update-btn-#=manualId#" class="k-icon k-i-pencil" style="cursor: pointer; font-size: 20px; margin-right: 5px;" title="수정"></span>
+                                <span sec:authorize="hasRole('ROLE_WORK_QNA_MGR_UPDATE')" id="qna-listview-delete-btn-#=manualId#" class="k-icon k-i-delete" style="cursor: pointer; font-size: 20px;" title="삭제"></span>
+                            </div>
+                        </dt>
+                        <dd><textarea class="qna-listview-question">#:title#</textarea></dd>
+                    </div>
+                </div>
+            </div>
+            <div class="c-table" style="padding: 0">
+                <div  class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>답변</dt>
+                        <dd><textarea class="qna-listview-answer">#:contents#</textarea></dd>
+                    </div>
+                </div>
+            </div>
+            <div class="c-table" style="padding: 0">
+                <div  class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>등록</dt>
+                        <dd style="display: flex;"><input class="qna-listview-register" value ="#:rgtrNm# / #:regDt#"></dd>
+                    </div>
+                    <div class="c-table-cell">
+                        <dt>수정</dt>
+                        <dd><input class="qna-listview-update" value ="#:mdfrNm# / #:mdfDt#"></dd>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script th:src="@{/js/knowledge/qnaManager.js}"></script>

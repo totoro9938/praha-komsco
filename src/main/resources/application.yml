@@ -1,0 +1,106 @@
+company:
+  name: "CENTERLINK"
+  logo: "KOSCOM"
+  image: "images/logos/suwon-log.png"
+
+otp:
+  issuer : 'KOSCOM'
+
+spring:
+  profiles:
+    active: local
+  jpa:
+    properties:
+      hibernate:
+        proc:
+          param_null_passing: true
+  thymeleaf:
+    mode: HTML
+    suffix: .html
+    cache: false
+    prefix: classpath:templates/
+    check-template-location: true
+  resources:
+    static-locations: /static/
+  mail:
+    default-encoding: UTF-8
+    username: 'jswook@centerlink.kr'
+    password: '@verelel71'
+    host: smtp.worksmobile.com
+    port: 465
+    protocol: smtp
+    properties:
+      mail.smtp.starttls.enable: true
+      mail.smtp.auth: true
+
+
+
+server:
+  port: 80
+  servlet:
+    encoding:
+      charset: UTF-8
+    session:
+      timeout: 30m
+      cookie:
+        name: komsco-session
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mariadb://062.centerlink.kr:33066/callcenter_komsco?autoReconnect=true
+      username: callcenter
+      password: '#centerlink!'
+      driver-class-name: org.mariadb.jdbc.Driver
+      auto-commit: false
+      maximum-pool-size: 36
+      connection-timeout: 5000
+      validation-timeout: 5000
+      connection-test-query: select 1
+      idle-timeout: 10000
+      max-lifetime: 580000
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: com.cp.praha.config.MariaDialect
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+      location: '/Users/jungsungwook/upload'
+  redis:
+    lettuce:
+      pool:
+        max-active: 20
+        max-idle: 20
+        min-idle: 5
+    host: 062.centerlink.kr
+    port: 6379
+    password: '#centerlink!'
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on_save
+
+
+logging:
+  level:
+    org.hibernate.SQL: info
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    com.cp.praha : debug
+    org:
+      springframework:
+        security:
+          web: debug
+
+websocket:
+  url: 'http://062.centerlink.kr:9099'
+
+internal:
+  ip: ''

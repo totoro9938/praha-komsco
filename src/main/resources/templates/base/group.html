@@ -1,0 +1,44 @@
+<section id="group-layout">
+    <div id="group-splitter" style="height: 100%;">
+        <div id="group-divSearch" class="pane-content">
+            <div class="c-search-box c-grid-search-box">
+                <div class="c-grid-search-row">
+                    <div class="c-grid-search-item" style="min-width: 100px;">
+                        <button id="group-manager-window-btn-open" style="margin-right: 5px;">그룹관리</button>
+                    </div>
+                    <div class="c-grid-search-item">
+                        <label>그룹</label>
+                        <input id="group-group-dropdown"/>
+                    </div>
+                    <div class="c-grid-search-item">
+                        <label>프로그램</label>
+                        <input id="group-program-dropdown">
+                    </div>
+                    <div class="c-grid-search-item" style="min-width: 60px;">
+                        <input id="group-not-used" type="checkbox" /> 미사용
+                    </div>
+                </div>
+                <div style="min-width: 200px;text-align: right;">
+                    <div sec:authorize="hasRole('ROLE_BASE_GROUP_MGR_UPDATE')">
+                        <button  id="group-auth-grid-btn-save">저장</button>
+                        <button id="group-auth-grid-btn-cancel">초기화</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div sec:authorize="hasRole('ROLE_BASE_GROUP_MGR_SELECT')" id="group-divGrid" class="pane-content">
+            <div id="group-auth-grid"></div>
+        </div>
+    </div>
+</section>
+
+<script type="text/x-kendo-template" id="group-manager-window-template">
+    <div sec:authorize="hasRole('ROLE_BASE_GROUP_MGR_INSERT')" style="text-align: end; margin-bottom: 5px;">
+        <button id="group-manager-window-btn-addRow">추가</button>
+        <button id="group-manager-window-btn-save">저장</button>
+        <button id="group-manager-window-btn-cancel">초기화</button>
+    </div>
+    <div id="group-manager-grid"></div>
+</script>
+
+<script th:src="@{/js/base/group.js}"></script>

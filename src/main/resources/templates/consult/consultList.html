@@ -1,0 +1,166 @@
+<section id="consultList-layout">
+
+    <div id="consultList-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>상담기간</label>
+                    <input id="consultList-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="consultList-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <input id="consultList-search-dept-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담사</label>
+                    <input id="consultList-search-user-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담결과</label>
+                    <input id="consultList-search-call-type">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담분류</label>
+                    <input id="consultList-search-call-cat" >
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담유형</label>
+                    <input id="consultList-search-call-class">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>콜유형</label>
+                    <div id="consultList-search-bound-type"></div>
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <input id="consultList-search-type" style="width: 45%;">
+                    <input id="consultList-search-txt" style="width: 55%;">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="consultList-search-button" sec:authorize="hasRole('ROLE_CONSULT_CONSULT_LIST_SELECT')" title="검색"></button>
+                <button id="consultList-search-reset" sec:authorize="hasRole('ROLE_CONSULT_CONSULT_LIST_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="consultList-splitter">
+        <div id="consultList-splitter-main" class="c-splitter-grid">
+            <div id="consultList-grid" class="c-grid"></div>
+            <div id="consultList-excel-grid" style="display: none"></div>
+        </div>
+        <div id="consultList-splitter-detail" class="c-splitter-detail">
+            <div id="consultList-detail-form-box" class="c-detail-view">
+                <div class="c-detail-body">
+                    <div id="consultList-detail-header" class="c-detail-header">
+                        <div><h3>상세보기</h3></div>
+                        <div id="consultList-detail-header-btn-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                    <div id="consultList-detail-section">
+                        <form id="consultList-detail-form">
+                            <input id="consultList-detail-boundId" type="hidden" value="0" name="boundId"/>
+                            <input id="consultList-detail-callId" type="hidden" value="0" name="callId"/>
+                            <input id="consultList-detail-custId" type="hidden" value="0" name="custId"/>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>상담일시</dt>
+                                        <dd><input id="consultList-detail-callDt"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>수/발신번호</dt>
+                                        <dd style="display: flex;margin-top: 2px;">
+                                            <input id="consultList-detail-boundTelNo">
+                                            <a style="margin-left: 5px;cursor: pointer" id="consultList-sendCall" title="전화 걸기"><i class="bi bi-telephone"></i></a>
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>휴대폰번호</dt>
+                                        <dd style="display: flex;">
+                                            <input id="consultList-detail-hpNo">
+                                            <a style="margin-left: 5px;cursor: pointer" id="consultList-sendCall-hpNo" title="전화 걸기"><i class="bi bi-telephone"></i></a>
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>일반전화</dt>
+                                        <dd style="display: flex;">
+                                            <input id="consultList-detail-telNo">
+                                            <a style="margin-left: 5px;cursor: pointer" id="consultList-sendCall-telNo" title="전화 걸기"><i class="bi bi-telephone"></i></a>
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>콜유형</dt>
+                                        <dd><input id="consultList-detail-boundType"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>통화시간</dt>
+                                        <dd style="display: flex;margin-top: 3px;">
+                                            <input id="consultList-detail-callTm">
+                                            <a style="margin-left: 5px;cursor: pointer" id="consultList-recodeListen" title="녹취 듣기"><span class="k-icon k-i-volume-down"></span></a>
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>상담유형 <p class="c-required">*</p></dt>
+                                        <dd><select id="consultList-detail-callClass" name="callClass" required></select></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>상담분류 <p class="c-required">*</p></dt>
+                                        <dd><select id="consultList-detail-callCat" name="callCatId" required></select></dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>문의내용 <p class="c-required">*</p></dt>
+                                        <dd><textarea id="consultList-detail-question" name="question" required></textarea></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>답변내용 <p class="c-required">*</p></dt>
+                                        <dd><textarea id="consultList-detail-answer" name="answer" required></textarea></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>메모</dt>
+                                        <dd><textarea id="consultList-detail-memo" name="memo"></textarea></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>상담결과</dt>
+                                        <dd>
+                                            <input id="consultList-detail-callType">
+                                            <span id="consultList-detail-textField"></span>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="c-search-btn-opened" style="width: 100%">
+                            <button id="consultList-main-set-btn" style="float: left;margin: 0px 0px 10px 5px;">고객불러오기</button>
+                            <button sec:authorize="hasRole('ROLE_CONSULT_CONSULT_LIST_UPDATE')" id="consultList-detail-update" style="margin-right: 5px;float:right">수정</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script type="text/x-kendo-template" id="grid-toolbar-template">
+    <button id="consultList-toollbar-button-excel-down" sec:authorize="hasRole('ROLE_CONSULT_CONSULT_LIST_DOWN')" title="다운로드"></button>
+</script>
+
+
+<script th:src="@{/js/consult/consultList.js}"></script>

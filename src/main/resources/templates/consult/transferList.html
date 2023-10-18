@@ -1,0 +1,94 @@
+<html>
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+<head>
+  <script th:inline="javascript">
+    const consultYn =[[${consultYn}]];
+  </script>
+  <title>담당자 찾기</title>
+</head>
+<body>
+  <div class="pop-container k-prompt-container">
+    <div class="pop-k-card k-card">
+      <div class="pop-k-header k-card-header consult-main-header" >
+        <div><h3>담당자 찾기</h3></div>
+      </div>
+      <div class="k-card-body consult" style="display:flex;">
+        <div id="treeView-container" style="width: 20%;">
+          <div class="c-search-box" style="height: 100%;overflow: auto;background-color: #fbfbfb;border-color: #dee2e6;">
+            <div id="transfer-treeView"></div>
+          </div>
+        </div>
+        <div class="container" style="width:80%">
+          <div id="transfer-detail-splitter" style="height:100%">
+            <div id="transfer-grid-spliiter">
+
+                <div class="c-grid-search-box c-search-box" style="visibility: visible;width: 100%;padding-bottom: 0;">
+                  <div class="c-grid-search-row">
+                    <div class="c-grid-search-item c-search-txt-group">
+                      <select id="transfer-dropdown-list" style="width: 45%"></select>
+                      <input id="transfer-search-text" style="width: 55%">
+                    </div>
+                    <div class="c-grid-search-item" >
+                      <label>재직여부</label>
+                      <select id="transfer-user-useYn-list" ></select>
+                    </div>
+                  </div>
+                  <div style="text-align: right;">
+                    <button id="transfer-search-button" title="검색"></button>
+                  </div>
+                </div>
+              <div id="transfer-divGrid">
+                <div id="transfer-grid"></div>
+              </div>
+            </div>
+            <div id="transfer-divDetail" class="c-detail-view">
+              <div class="c-detail-body">
+                <div class="c-detail-header">
+                  <div><h3>담당업무</h3></div>
+                  <div id="transfer-detail-close" style="margin: 15px; cursor: pointer"><span class="k-icon k-i-close"></span></div>
+                </div>
+                <div>
+                  <div class="c-table" style="width:98%;">
+                    <div class="c-table-row">
+                      <div class="c-table-cell">
+                        <dd><div id="transfer-detail-descript" style="overflow-y: auto;height: calc(100vh - 185px);"></div></dd>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="k-card-footer">
+        <a id="transfer-refresh"></a>
+        <div style="float: left;display: inline-block">
+          <button id="transfer-consult-copy" title="답변내용에 내역 입력"></button>
+        </div>
+        <div class="c-grid-search-row" style="align-content: center;justify-content: flex-end;width: auto;">
+          <div class="c-grid-search-item" style="padding:0;">
+            <label style="width: 55%;">담당자 연결</label>
+            <input id="transfer-user-telNo" >
+          </div>
+          <div style="float: right;display: inline-block;margin-left: 15px;">
+            <button id="transfer-single-step-transfer" >즉시전달</button>
+            <button id="transfer-try-consult" >호전환시도</button>
+            <button id="transfer-conference" >3자통화시도</button>
+            <button id="transfer-retrieve">호전환끊기</button>
+            <button id="transfer-complete">호전환완료</button>
+            <button id="transfer-conference-retrieve">3자통화끊기</button>
+            <button id="transfer-conference-complete">3자통화연결</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+<script th:src="@{/js/consult/transferList.js}"></script>
+<style>
+  .k-callout ,.k-callout-n{
+    top : 0;
+  }
+</style>
+</html>
+

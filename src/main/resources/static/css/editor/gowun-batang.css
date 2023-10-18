@@ -1,0 +1,5 @@
+@font-face {
+    font-family: '고운바탕';
+    src: url(/css/fonts/gowun-batang/GowunBatang.eot);
+    src: url(/css/fonts/gowun-batang/GowunBatang.eot?#iefix) format("embedded-opentype"), url(/css/fonts/gowun-batang/GowunBatang.woff) format("woff"), url(/css/fonts/gowun-batang/GowunBatang.ttf) format("truetype");
+}

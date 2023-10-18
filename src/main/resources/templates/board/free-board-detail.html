@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+
+<body>
+<section id="free-board-detail-layout">
+    <div class="pop-container k-prompt-container">
+        <input type="hidden" id="free-board-detail-doc-id" name="docId">
+        <div style="display: flex; flex-flow: column; width: 100%;">
+            <div class="pop-k-card k-card" style="height: 70%; width: 100%;">
+                <div class="pop-k-header k-card-header">
+                    <div>
+                        <h3 id="free-board-detail-popup-title">게시글 상세보기</h3>
+                    </div>
+                </div>
+                <div class="k-card-body">
+                    <div class="k-card">
+                        <div class="k-card-header" style="display: flex; justify-content: space-between";>
+                            <h4 id="free-board-detail-title"></h4>
+                        </div>
+                        <div id="free-board-detail-body-splitter" class="k-card-body">
+                            <div id="free-board-detail-body-top-section" style="height:83%; border-bottom: 1px solid rgb(222,226,230);">
+                                <div id="free-board-detail-contents" style="height: 100%;"></div>
+                            </div>
+                            <div id="free-board-detail-body-bottom-section" style="height:15%;">
+                                <div class="c-table">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>등록</dt>
+                                            <dd>
+                                                <input id="free-board-detail-reg-user-date" />
+                                            </dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>수정</dt>
+                                            <dd>
+                                                <input id="free-board-detail-mdf-user-date" />
+                                            </dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>등록부서</dt>
+                                            <dd><input id="free-board-detail-reg-dept" /></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="k-card-footer" style="height:50px; display: flex; justify-content: space-between;">
+                    <div>
+                        <button id="free-board-detail-file-list-btn">첨부파일</button>
+                    </div>
+                    <div>
+                        <button sec:authorize="hasRole('ROLE_BOARD_FREE_DETAIL_DELETE')" id="free-board-detail-delete-btn">삭제</button>
+                        <button sec:authorize="hasRole('ROLE_BOARD_FREE_DETAIL_UPDATE')" id="free-board-detail-update-btn">수정</button>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 25%;">
+                <div id="free-board-detail-comment-validator" style="display: flex; padding: 15px; border-bottom: 1px solid rgb(222,226,230);">
+                    <input id="free-board-detail-comment-write" name="free-board-detail-comment-write" required/>
+                    <button id="free-board-detail-comment-btn" style="margin-left:5px;">등록</button>
+                </div>
+                <div style="border: none;" id="free-board-detail-comment-list-view"></div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+
+<script type="text/x-kendo-template" id="free-board-comment-listview">
+    <div style="padding: 5px;">
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+            <div>
+                <span class="free-board-comment-rgtr-name" style="font-weight: 550; font-size: 16px;">#:mdfrNm#</span>
+                <span class="free-board-comment-rgtr-date" style="margin-left:5px; color: grey">#:mdfDt#</span>
+            </div>
+            <div id="free-board-comment-btn-div1-#=docId#">
+                <span id="free-board-comment-update-btn-#=docId#" class="k-icon k-i-pencil" style="cursor: pointer; font-size: 20px;"></span>
+                <span id="free-board-comment-delete-btn-#=docId#" class="k-icon k-i-delete" style="cursor: pointer; font-size: 20px;"></span>
+            </div>
+            <div id="free-board-comment-btn-div2-#=docId#" style="display: none;">
+                <span id="free-board-comment-update-btn-ok-#=docId#" class="k-icon k-i-check" style="cursor: pointer; font-size: 20px;"></span>
+                <span id="free-board-comment-update-btn-cancel-#=docId#" class="k-icon k-i-close" style="cursor: pointer; font-size: 20px;"></span>
+            </div>
+        </div>
+        <div style="border-bottom: 1px solid rgb(222,226,230);">
+            <div style="margin-bottom: 10px;">
+                <span id="free-board-comment-contents-#=docId#" class="free-board-command-contents-class">#:contents#</span>
+                <input id="free-board-comment-contents-text-box-#=docId#" class="free-board-command-contents-textarea-class" />
+            </div>
+        </div>
+    </div>
+</script>
+<script th:src="@{/js/board/freeBoardDetail.js}"></script>

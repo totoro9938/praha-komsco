@@ -1,0 +1,66 @@
+<style>
+    .k-column-title {
+        margin: auto;
+    }
+</style>
+<section id="manual-manager-layout">
+    <div id="manual-manager-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item">
+                    <label>상담분류</label>
+                        <input id="manual-manager-search-call-cat">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>담당부서</label>
+                    <input id="manual-manager-search-dept-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>담당자</label>
+                    <input id="manual-manager-charge-id">
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <label>검색구분</label>
+                    <input id="manual-manager-search-type" style="width: 45%;">
+                    <input id="manual-manager-search-text" style="width: 55%;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>사용여부</label>
+                    <div id="manual-manager-use-type"></div>
+                </div>
+            </div>
+            <div style="min-width: 100px; text-align: right;">
+                <button id="manual-manager-search-btn-button" sec:authorize="hasRole('ROLE_WORK_MANUAL_MGR_SELECT')" title="검색"></button>
+                <button id="manual-manager-search-btn-reset" sec:authorize="hasRole('ROLE_WORK_MANUAL_MGR_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="manual-manager-splitter">
+        <div id="manual-manager-splitter-main" class="c-splitter-grid">
+            <div id="manual-manager-grid" class="c-grid"></div>
+        </div>
+        <div id="manual-manager-splitter-detail" class="c-splitter-detail" style="display: none;"></div>
+    </div>
+</section>
+<script type="text/x-kendo-template" id="manual-manager-window-template">
+    <div id="manual-manager-update-validator">
+        <div style="padding: 5px;">
+            <input id="manual-manager-update-callcat" name="manual-manager-update-callcat" />
+        </div>
+        <div style="padding: 5px;">
+            <input id="manual-manager-update-dept" name="manual-manager-update-dept" />
+        </div>
+        <div style="padding: 5px;">
+            <input id="manual-manager-update-user" name="manual-manager-update-user" />
+        </div>
+        <div style="float: right;">
+            <button id="manual-manager-btn-update-save">저장</button>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-kendo-template" id="manual-manager-grid-toolbar-template">
+    <button sec:authorize="hasRole('ROLE_WORK_MANUAL_MGR_UPDATE')" id="manual-manager-btn-batch-update" style="margin-right: 5px;">일괄수정</button>
+    <button sec:authorize="hasRole('ROLE_WORK_MANUAL_MGR_INSERT')" id="manual-manager-btn-insert-manual" style="margin-right: 5px;">매뉴얼 추가</button>
+</script>
+<script th:src="@{/js/knowledge/manualManager.js}"></script>

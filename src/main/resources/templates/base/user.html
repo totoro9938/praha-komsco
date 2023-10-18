@@ -1,0 +1,187 @@
+<section id="user-layout">
+
+    <div id="user-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <input id="user-search-dept-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>사용자그룹</label>
+                    <input id="user-search-group">
+                </div>
+                <div class="c-grid-search-item" style="margin-right: 10px;">
+                    <label>재직여부</label>
+                    <div id="user-search-use-yn"></div>
+                </div>
+                <div class="c-grid-search-item">
+                    <label>CTI사용</label>
+                    <div id="user-search-cti-yn"></div>
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <input id="user-search-type" style="width: 45%;">
+                    <input id="user-search-txt" style="width: 55%;">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="user-search-button" sec:authorize="hasRole('ROLE_CONSULT_BOUND_LIST_SELECT')" title="검색"></button>
+                <button id="user-search-reset" sec:authorize="hasRole('ROLE_CONSULT_BOUND_LIST_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="user-splitter">
+        <div id="user-splitter-main" class="c-splitter-grid">
+            <div id="user-grid" class="c-grid"></div>
+        </div>
+        <div id="user-splitter-detail" class="c-splitter-detail">
+            <div id="user-detail-form-box" class="c-detail-view">
+                <div class="c-detail-body">
+                    <div id="user-detail-header" class="c-detail-header">
+                        <div><h3>상세보기</h3></div>
+                        <div id="user-detail-header-btn-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                    <div id="user-detail-section">
+                        <form id="user-detail-form">
+                            <input id="user-detail-userId" hidden />
+                            <input id="user-detail-userIdx" hidden />
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>아이디 <p class="c-required">*</p></dt>
+                                        <dd><input id="user-detail-userCd" name="userCd" required /></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>이름 <p class="c-required">*</p></dt>
+                                        <dd><input id="user-detail-userNm" name="userNm" required /></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>직위</dt>
+                                        <dd><input id="user-detail-positionNm"/></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>직책</dt>
+                                        <dd><input id="user-detail-duty"/></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>부서 <p class="c-required">*</p></dt>
+                                        <dd><input id="user-detail-dept" name="department" required /></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>재직여부</dt>
+                                        <dd>
+                                            <ul id="user-detail-useYn"></ul>
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>입사일</dt>
+                                        <dd><input id="user-detail-enterYmd" name="enterYmd" required /></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>퇴사일</dt>
+                                        <dd><input id="user-detail-retireYmd"/></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>이메일</dt>
+                                        <dd><input id="user-detail-email" type="email" /></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>사용자그룹 <p class="c-required">*</p></dt>
+                                        <dd><input id="user-detail-groupNm" name="groupNm" required /></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>전화번호</dt>
+                                        <dd><input id="user-detail-telNo"/></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>휴대폰</dt>
+                                        <dd><input id="user-detail-hpNo"/></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row" id="user-detail-cti">
+                                    <div class="c-table-cell">
+                                        <dt>CTI사용</dt>
+                                        <dd class="c-flex-center">
+                                            <input id="user-detail-ctiYn" style="margin-right: 4px;"/>
+                                            <input required name="ctiId" id="user-detail-ctiId" />
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>CTI내선번호</dt>
+                                        <dd class="c-flex-center">
+                                            <input required name="ctiStation" id="user-detail-ctiStation"/>
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>CTI패스워드</dt>
+                                        <dd class="c-flex-center">
+                                            <input required name="ctiPwd" id="user-detail-ctiPwd" />
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>담당업무</dt>
+                                        <dd><textarea id="user-detail-description"></textarea></dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div sec:authorize="hasRole('ROLE_BASE_USER_MGR_UPDATE')" class="c-search-btn-opened">
+                            <div id="user-detail-insert-box">
+                                <button id="user-detail-btn-save" style="margin-right: 5px;">저장</button>
+                            </div>
+                            <div id="user-detail-update-box" style="display: none;">
+                                <button id="user-detail-btn-update">수정</button>
+                                <button id="user-detail-btn-reset-password" style="margin-right: 5px;">비밀번호 초기화</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script type="text/x-kendo-template" id="user-manager-window-template">
+    <div style="height: 88%">
+        <div>
+            <input type="file" id ="user-manager-excel-upload">
+        </div>
+        <div id="user-manager-excel-upload-grid"></div>
+        <div style="display:flex; justify-content:flex-end;">
+            <button sec:authorize="hasRole('ROLE_BASE_USER_MGR_INSERT')" id="user-manager-excel-upload-btn-save" style="margin-top: 5px;">저장</button>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/x-kendo-template" id="user-grid-toolbar-template">
+    <button sec:authorize="hasRole('ROLE_BASE_USER_MGR_INSERT')" id="user-toolbar-button-user-insert" style="margin-right: 5px;">사용자등록</button>
+    <button sec:authorize="hasRole('ROLE_BASE_USER_MGR_INSERT')" id="user-toolbar-button-excel-down" title="엑셀다운" style="margin-right: 5px;"></button>
+    <button sec:authorize="hasRole('ROLE_BASE_USER_MGR_INSERT')" id="user-toolbar-button-excel-upload" title="엑셀업로드"></button>
+</script>
+
+
+<script th:src="@{/js/base/user.js}"></script>
+
+

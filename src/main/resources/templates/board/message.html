@@ -1,0 +1,277 @@
+<style>
+    #message-tab-strip > .k-content{
+        padding: 0 5px;
+        border: none;
+        outline-style: none;
+    }
+     .k-treeview {
+         min-height: 250px;
+     }
+</style>
+<section id="message-layout">
+    <div id="message-tab-strip" style="height: 100%; margin-left: 10px;">
+        <ul style="width: 30px;">
+            <li class="k-active" style="display: flex; justify-content: center;">
+                <div style="display:flex; flex-flow: column; align-items: center;">
+                    <div class="bi bi-envelope" style="margin : 5px 0"></div>
+                    <div class="message-tab-strip-name" value="0" style="writing-mode:tb-rl; letter-spacing: 7px;">받은쪽지</div>
+                </div>
+            </li>
+            <li style="display: flex; justify-content: center;">
+                <div style="display:flex; flex-flow: column; align-items: center;">
+                    <div class="bi bi-envelope-fill" style="margin : 5px 0"></div>
+                    <div class="message-tab-strip-name" value="1" style="writing-mode:tb-rl; letter-spacing: 7px;">보낸쪽지</div>
+                </div>
+            </li>
+            <li style="display: flex; justify-content: center;">
+                <div style="display:flex; flex-flow: column; align-items: center;">
+                    <div class="bi bi-send" style="margin : 5px 0"></div>
+                    <div class="message-tab-strip-name" value="2" style="writing-mode:tb-rl; letter-spacing: 7px;">쪽지작성</div>
+                </div>
+            </li>
+        </ul>
+        <div>
+            <div id="message-receive-splitter" class="c-splitter">
+                <div id="message-receive-search-section" class="pane-content">
+                    <div class="c-search-box c-grid-search-box">
+                        <div class="c-grid-search-row">
+                            <div class="c-grid-search-item" style="width: 440px;">
+                                <label>수신기간</label>
+                                <input id="message-receive-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="message-receive-search-date-end" style="width: 174px;margin-left: 5px;">
+                            </div>
+                            <div class="c-grid-search-item c-search-txt-group">
+                                <input id="message-receive-search-drop-down-list">
+                                <input id="message-receive-search-textbox">
+                            </div>
+                            <div class="c-grid-search-item">
+                                <label>중요표시</label>
+                                <input id="message-receive-importance-drop-down-list">
+                            </div>
+                        </div>
+                        <div style="min-width: 200px;text-align: right;">
+                            <em id="message-receive-search-button" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_SELECT')" style="margin-right:5px" title="검색"></em>
+                            <button id="message-receive-message-del-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_DELETE')">선택삭제</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="message-receive-grid-splitter" style="border: 0;">
+                    <div id="message-receive-grid-section" class="c-splitter-grid">
+                        <div id="message-receive-grid" style="border: 0;"></div>
+                    </div>
+                    <div id="message-receive-detail-section" class="c-splitter-detail">
+                        <input type="hidden" id="message-receive-select-message-id" name="messageId">
+                        <input type="hidden" id="message-receive-select-message-rgtr-id" name="messageRgtrId">
+                        <input type="hidden" id="message-receive-select-message-rgtr-nm" name="messageRgtrNm">
+                        <div class="c-detail-body" style="height:100%;">
+                            <div id="message-receive-detail-header" class="c-detail-header">
+                                <div style="display:flex; align-items: center;">
+                                    <h3>쪽지보기</h3>
+                                    <a style="margin-left: 5px;" id="message-receive-detail-info"><i class="k-icon k-i-user"></i></a>
+                                </div>
+                                <div id="message-receive-detail-close" style="margin: 15px; cursor: pointer"><span class="k-icon k-i-close"></span></div>
+                            </div>
+                            <div>
+                                <div id="message-receive-detail-receive-div">
+                                    <div>
+                                        <h3>받은쪽지 내용</h3>
+                                    </div>
+                                    <div>
+                                        <textarea id="message-receive-detail-receive-contents" style="width: 100%;"></textarea>
+                                    </div>
+                                    <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                                        <button id="message-receive-detail-file-list-btn">첨부파일</button>
+                                        <button id="message-receive-detail-importance-ok-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_UPDATE')" style="margin-left: 15px;">중요표시</button>
+                                        <button id="message-receive-detail-importance-del-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_UPDATE')" style="margin-left: 5px;">중요해제</button>
+                                    </div>
+                                </div>
+                                <div id="message-receive-detail-send-div">
+                                    <div>
+                                        <h3>답장보내기</h3>
+                                    </div>
+                                    <div>
+                                        <textarea id="message-receive-detail-send-contents" style="width: 100%;"></textarea>
+                                    </div>
+                                    <div id="message-receive-detail-send-btn-div" style="display: flex; justify-content: flex-end; margin-top:10px;">
+                                        <div id="message-receive-detail-insert-file-btn"></div>
+                                        <button id="message-receive-detail-send-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_INSERT')" style="margin-left:15px;">보내기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div id="message-send-splitter" class="c-splitter">
+                <div id="message-send-search-section" class="pane-content">
+                    <div class="c-search-box c-grid-search-box">
+                        <div class="c-grid-search-row">
+                            <div class="c-grid-search-item" style="width: 440px;">
+                                <label>수신기간</label>
+                                <input id="message-send-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="message-send-search-date-end" style="width: 174px;margin-left: 5px;">
+                            </div>
+                            <div class="c-grid-search-item c-search-txt-group">
+                                <input id="message-send-search-drop-down-list">
+                                <input id="message-send-search-textbox">
+                            </div>
+                            <div class="c-grid-search-item">
+                                <label>중요표시</label>
+                                <input id="message-send-importance-drop-down-list">
+                            </div>
+                        </div>
+                        <div style="min-width: 200px;text-align: right;">
+                            <em id="message-send-search-button" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_SELECT')" style="margin-right:5px" title="검색"></em>
+                            <button id="message-send-message-del-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_DELETE')">선택삭제</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="message-send-grid-splitter" style="border: 0;">
+                    <div id="message-send-grid-section" class="c-splitter-grid">
+                        <div id="message-send-grid" style="border: 0;"></div>
+                    </div>
+                    <div id="message-send-detail-section" class="c-splitter-detail">
+                        <input type="hidden" id="message-send-select-message-id" name="messageId">
+                        <div class="c-detail-body" style="height:100%;">
+                            <div id="message-send-detail-header" class="c-detail-header">
+                                <div><h3>쪽지보기</h3></div>
+                                <div id="message-send-detail-close" style="margin: 15px; cursor: pointer"><span class="k-icon k-i-close"></span></div>
+                            </div>
+                            <div style="height: 90%;">
+                                <div id="message-send-detail-receive-div" style="height: 45%;">
+                                    <div>
+                                        <h3>보낸쪽지 내용</h3>
+                                    </div>
+                                    <div style="height: 70%;">
+                                        <textarea id="message-send-detail-send-contents" style="width: 100%;"></textarea>
+                                    </div>
+                                    <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                                        <button id="message-send-detail-file-list-btn">첨부파일</button>
+                                        <button id="message-send-detail-importance-ok-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_UPDATE')" style="margin-left: 15px;">중요표시</button>
+                                        <button id="message-send-detail-importance-del-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_UPDATE')" style="margin-left: 5px;">중요해제</button>
+                                    </div>
+                                </div>
+                                <div id="message-send-detail-send-list-div" style="height: 45%;">
+                                    <div>
+                                        <h3>수신자 리스트</h3>
+                                    </div>
+                                    <div style="height: 100%;">
+                                        <div id="message-send-receiver-list-grid"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div style="display:flex; width: 100%; height: 100%;">
+                <div style="width: 65%;">
+                    <div class="k-card" style="width:99%; height: 99%;">
+                        <div class="k-card-header" style="height: 53px">
+                            <h3>쪽지작성</h3>
+                        </div>
+                        <div class="k-card-body" style="height: calc(100% - 93px)">
+                            <div style="display: flex; height: 100%; padding: 10px;">
+                                <div id="message-write-left-section" style="width: 50%; height: 100%;">
+                                    <div id="message-write-agent-tree-view-div" style="height: 50%;">
+                                        <div>
+                                            <div style="font-size: 17px; font-weight: bold; height: 100%">조직에서 수신자 선택</div>
+                                        </div>
+                                        <div style="width:96%; height: 80%; border: 1px solid rgb(222,226,230); padding: 5px; margin-top: 2px;">
+                                            <div id="message-write-agent-tree-view" style="height: 100%; min-height: 0"></div>
+                                        </div>
+                                    </div>
+                                    <div id="message-write-group-tree-view-div" style="height: 50%;">
+                                        <div>
+                                            <div style="font-size: 17px; font-weight: bold; height: 100%">그룹에서 수신자 선택</div>
+                                        </div>
+                                        <div style="width:96%; height: 86%; border: 1px solid rgb(222,226,230); padding: 5px; margin-top: 2px;">
+                                            <div id="message-write-group-tree-view" style="height: 100%; min-height: 0"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="message-write-right-section" style="width: 50%; height: 100%;">
+                                    <div id="message-write-receiver-list-div" style="height: 30%;">
+                                        <div>
+                                            <div style="font-size: 17px; font-weight: bold; height: 100%">수신자 <p class="c-required">*</p></div>
+                                        </div>
+                                        <div style="width:96%; height: 80%; border: 1px solid rgb(222,226,230); padding: 5px; margin-top: 2px;">
+                                            <div id="message-write-sender-list-div" style="height: 100%; overflow: auto">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="message-write-contents-validator" style="height: 70%;">
+                                        <div>
+                                            <div style="font-size: 17px; font-weight: bold; height: 100%">쪽지 내용 <p class="c-required">*</p></div>
+                                        </div>
+                                        <div style="width:96%; height: 90%; margin-top: 2px;">
+                                            <textarea id="message-write-contents" name="message-write-contents" style="width: 100%; height: 100%;"></textarea>
+                                            <div style="display:flex; justify-content: flex-end; margin-top: 3px;">
+                                                <span id="message-write-contents-bytes" stlye="vertical-align: sub;">[0 / 4000] Bytes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="k-card-footer" style="height: 53px">
+                            <div id="message-write-btn-list" style="display: flex; justify-content: space-between;">
+                                <div id="message-write-insert-file-btn"></div>
+                                <div style="margin-bottom: 2px">
+                                    <button id="message-write-clear-btn">초기화</button>
+                                    <button id="message-write-send-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_INSERT')">보내기</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 35%;">
+                    <div class="k-card" style="width:99%; height: 99%;">
+                        <input type="hidden" id="message-group-id" name="messageGroupId">
+                        <div class="k-card-header">
+                            <h3>쪽지그룹관리</h3>
+                        </div>
+                        <div class="k-card-body" style="height: 100%; padding: 10px;">
+                            <div id="message-write-group-grid-box" style="height: 75%;">
+                                <div id="message-write-group-grid"></div>
+                            </div>
+                            <div id="message-group-save-validator" style="height: 25%;">
+                                <div class="c-table">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>쪽지그룹명 <p class="c-required">*</p></dt>
+                                            <dd><input id="message-write-group-name" name="message-write-group-name" required style="width:50%;"/></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="c-table">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>그룹대상 <p class="c-required">*</p></dt>
+                                            <dd style="height: 50px; overflow: auto;"><input id="message-write-group-drop-down-tree" style="width:100%;"/></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="k-card-footer">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <button id="message-write-group-delete-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_DELETE')">선택삭제</button>
+                                </div>
+                                <div>
+                                    <button id="message-write-group-clear-btn">초기화</button>
+                                    <button id="message-write-group-save-btn" sec:authorize="hasRole('ROLE_BOARD_MESSAGE_INSERT')">저장</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script th:src="@{/js/board/message.js}"></script>

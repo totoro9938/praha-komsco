@@ -1,0 +1,70 @@
+<section id="callback-layout">
+    <div id="callback-contailner" style="height: 100%;display: flex;">
+        <div id="callback-search-splitter" class="c-splitter" style="width: 65%;">
+            <div id="callback-divSearch">
+                <div class="c-search-box c-grid-search-box">
+                    <div class="c-grid-search-row">
+                        <div class="c-grid-search-item">
+                            <label>분배여부</label>
+                            <div id="callback-search-distributionYn"></div>
+                        </div>
+                        <div class="c-grid-search-item">
+                            <input id="callback-search-dateType" style="width: 120px;border-radius: 0.25rem 0 0 0.25rem;">
+                            <input id="callback-search-date-start" style="width: 124px;margin-right:5px;border-radius: 0 0.25rem 0.25rem 0;margin-left: -1px;"> ~ <input id="callback-search-date-end" style="width: 124px;margin-left: 5px;">
+                        </div>
+                        <div class="c-grid-search-item">
+                            <label>처리결과</label>
+                            <input id="callback-search-status">
+                        </div>
+                        <div class="c-grid-search-item">
+                            <label>부서</label>
+                            <input id="callback-search-deptTree">
+                        </div>
+                        <div class="c-grid-search-item">
+                            <label>상담사</label>
+                            <input id="callback-user-list">
+                        </div>
+                    </div>
+                    <div style="min-width: 100px;text-align: right;">
+                      <button sec:authorize="hasRole('ROLE_WORK_CALLBACK_MGR_SELECT')" id="callback-btn-search" title="검색"></button>
+                    </div>
+                </div>
+            </div>
+            <div id="callback-divGrid">
+                <div id="callback-grid"></div>
+            </div>
+        </div>
+        <div id="callback-user-splitter" class="c-splitter k-widget k-splitter" style="width:35%;height: 100%;margin-left: 3px;">
+            <div id="callback-divSearch-right" class="pane-content">
+                <div class="c-search-box c-grid-search-box">
+                    <div class="c-grid-search-row">
+                        <div class="c-grid-search-item">
+                            <label>부서</label>
+                            <input id="callback-right-grid-deptTree">
+                        </div>
+                    </div>
+                    <div style="min-width: 200px;text-align: right;">
+                        <button id="callback-satisfaction-btn" style="margin-right: 3px;">분배</button>
+                        <button id="callback-resatisfaction-btn" style="margin-right: 3px;">재분배</button>
+                        <button id="callback-satisfaction-recovery-btn" style="margin-right: 3px;">회수</button>
+                    </div>
+                </div>
+            </div>
+            <div id="callback-divGrid-right" style="height:100%">
+                <div id="callback-user-grid"></div>
+            </div>
+            <div id="callback-divAppoint">
+                <div class="k-card-header">
+                    <h3>콜백알림지정</h3>
+                </div>
+                <div class="k-card-body" style="height: 296px;">
+                    <div id="callback-appoint-grid"></div>
+                </div>
+                <div class="k-card-footer">
+                    <button sec:authorize="hasRole('ROLE_WORK_CALLBACK_MGR_EXTEND_01')" id="callback-appoint-save-btn">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/js/work/callbackManager.js}"></script>

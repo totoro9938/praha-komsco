@@ -1,0 +1,188 @@
+<div class="cards-container">
+
+        <div class="k-card" >
+            <div class="k-card-header" style="display: flex; justify-content: space-between;">
+                <div>
+                    <h3>고객정보</h3>
+                </div>
+                <div>
+                    <span id="custClass"></span>
+                </div>
+            </div>
+            <div class="k-card-body">
+                <dl>
+                    <div class="table-row">
+                        <div class="table-cell">
+                            <dt>부서️</dt>
+                            <dd><input id="main-dept" style="width: 250px;"></dd>
+                        </div>
+                        <div class="table-cell">
+                            <dt>코드</dt>
+                            <dd><input id="main-code" ></dd>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">
+                            <dt>사용자</dt>
+                            <dd><input id="main-users" ></dd>
+                        </div>
+                        <div class="table-cell">
+                            <dt>일반전화</dt>
+                            <dd><input id="homeNumber" ></dd>
+                        </div>
+                    </div>
+                    <div class="table-row">
+                        <div class="table-cell">
+                            <dt>특이사항</dt>
+                            <dd><textarea id="remark" style="width: 100%"></textarea></dd>
+                        </div>
+                        <div class="table-cell">
+                            <dt></dt>
+                            <dd>
+                                <label>SMS수신동의 </label><input id="smsReceiveYn" type="checkbox" >&nbsp;&nbsp;&nbsp;
+                                <label>해피콜수신동의 </label><input id="happyCallReceiveYn" type="checkbox" >
+                            </dd>
+                            <dd>
+                                <label>병합고객 <span id="badge"></span></label>&nbsp;최초등록일 : 2022-01-04
+                            </dd>
+                        </div>
+                    </div>
+                </dl>
+                <div style="display: flex; justify-content: space-between;margin: 3px;">
+                    <div>
+
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="k-card-footer">
+                <button id="customerBlackRegistryBtn">유의고객등록</button>
+                <button id="customerSearchBtn">고객조회</button>
+                <button id="customerSaveBtn" class="k-primary">고객저장</button>
+                <span id="cp-file-area"></span>
+            </div>
+        </div>
+
+    <div class="k-card">
+        <div class="k-card-header"><h3>상담내역</h3></div>
+        <div class="k-card-body">
+            <dl>
+                <div class="table-row">
+                    <div class="table-cell">
+                        <dt>상담유형</dt>
+                        <dd>
+                            <select id="main-callClass" style="width: 100%">
+                                <option>일반상담</option>
+                            </select>
+                        </dd>
+                    </div>
+                    <div class="table-cell">
+                        <dt>일반전화</dt>
+                        <dd>
+                            <select id="main-call-cat">
+                            </select>
+                        </dd>
+                    </div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell">
+                        <dt>문의내용</dt>
+                        <dd><textarea id="question" style="width: 100%"></textarea></dd>
+                    </div>
+                    <div class="table-cell">
+                        <dt>답변내용</dt>
+                        <dd><textarea id="answer" style="width: 100%"></textarea></dd>
+                    </div>
+                </div>
+                <div class="table-row">
+                    <div class="table-cell">
+                        <dt>메모</dt>
+                        <dd><textarea id="memo" style="width: 100%"></textarea></dd>
+                    </div>
+                    <div class="table-cell">
+                        <dt>상담결과</dt>
+                        <dd style="border: 1px solid #ccc;padding: 5px;width: auto;">
+                            <ul id="callType"></ul>
+                            <div style="height: 28px;"></div>
+                        </dd>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: left;margin:5px;">
+
+                </div>
+            </dl>
+        </div>
+        <div class="k-card-footer">
+            <div style="display: flex;justify-content: space-between;">
+                <div>
+                    <button id="sendSMSBtn">문자발송</button>
+                    <button id="manualRequestBtn">메뉴얼요청</button>
+                </div>
+                <div>
+                    <button id="callSaveBtn" class="k-primary">내역저장</button>
+                    <button id="resetBtn">초기화</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="k-card" style="width: 49vw;">
+        <div id="tabstrip3">
+            <ul>
+                <li id="tab3_1" class="tabstrip-title" >상담이력</li>
+                <li id="tab3_2" class="tabstrip-title" >예약상담</li>
+                <li id="tab3_3" class="tabstrip-title" >SMS</li>
+            </ul>
+            <!-- 상담이력탭 -->
+            <div>
+
+                <div id="callHistoryGrid" style="margin-top: 4px;"></div>
+
+                <!-- 예약상담탭 -->
+                <div>
+                    <div id="callReservationHistoryGrid"></div>
+                </div>
+
+                <!-- SMS탭 -->
+                <div><div id="smsHistoryGrid"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/x-kendo-tmpl" id="template">
+    <div class="callDetail">
+      <dl>
+        <div>
+          <dt>상담일시</dt>
+          <dd>#:callDate#</dd>
+        </div>
+        <div>
+          <dt>수/발신번호</dt>
+          <dd>#:callClass#</dd>
+        </div>
+        <div>
+          <dt>상담원</dt>
+          <dd>#:agent#</dd>
+        </div>
+        <div>
+          <dt>상담시간</dt>
+          <dd>#:callTime#</dd>
+        </div>
+        <div>
+          <dt>상담결과</dt>
+          <dd>#:answer#</dd>
+        </div>
+        <div>
+          <dt>문의내용</dt>
+          <dd>#:question#</dd>
+        </div>
+      </dl>
+      <div style="position: relative; left: 490px; bottom: 270px;display:none;">
+        <span class="k-icon k-i-ungroup k-icon-32"></span>
+      </div>
+    </div>
+</script>
+<script th:src="@{/js/main/main.js}"></script>

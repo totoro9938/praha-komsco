@@ -1,0 +1,143 @@
+<section id="reservation-layout">
+    <div id="reservation-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>예약일자</label>
+                    <input id="reservation-search-date-start" style="width: 174px; margin-right:5px;"> ~ <input id="reservation-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <input id="reservation-department" >
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담사</label>
+                    <input id="reservation-user-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>처리결과</label>
+                    <input id="reservation-processing-result">
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <input id="reservation-search-type" style="width: 45%;">
+                    <input id="reservation-search-text" style="width: 55%;">
+                </div>
+            </div>
+            <div style="min-width: 100px; text-align: right;">
+                <button id="reservation-search-button" sec:autorize="hasRole('ROLE_CONSULT_RESERVE_LIST_SELECT')" title="검색"></button>
+                <button id="reservation-search-btn-reset" sec:authorize="hasRole('ROLE_CONSULT_RESERVE_LIST_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="reservation-splitter">
+        <div id="reservation-splitter-main" class="c-splitter-grid">
+            <div id="reservation-grid" class="c-grid"></div>
+        </div>
+        <div id="reservation-splitter-detail" class="c-splitter-detail">
+            <div id="reservation-detail-form-box" class="c-detail-view">
+                <div class="c-detail-body">
+                    <div id="reservation-detail-header" class="c-detail-header">
+                        <div><h3>상세보기</h3></div>
+                        <div id="reservation-detail-header-btn-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer;"></span>
+                        </div>
+                    </div>
+                    <div id="reservation-detail-section">
+                        <input id="reservation-detail-boundId" hidden/>
+                        <input id="reservation-detail-callId" hidden/>
+                        <input id="reservation-detail-chargeId" hidden >
+                        <div class="c-table">
+                            <div class="c-table-row">
+                                <div class="c-table-cell">
+                                    <dt>예약일시</dt>
+                                    <dd><input id="reservation-detail-reservationDt" /></dd>
+                                </div>
+                                <div class="c-table-cell">
+                                    <dt>예약전화</dt>
+                                    <dd style="display: flex; line-height: 16px;margin-top: 2px;">
+                                        <input id="reservation-detail-reservationTelNo" />
+                                        <span id="reservation-detail-btn-call-reservationTelNo" style="cursor: pointer;margin-left: 5px;" title="전화 걸기">
+                                            <i class="bi bi-telephone"></i>
+                                        </span>
+                                    </dd>
+                                </div>
+                            </div>
+                            <div class="c-table-row">
+                                <div class="c-table-cell">
+                                    <dt>상담분류</dt>
+                                    <dd><input id="reservation-detail-fullCallCatNm" /></dd>
+                                </div>
+                                <div class="c-table-cell">
+                                    <dt>수/발신전화</dt>
+                                    <dd style="display: flex;line-height: 16px;margin-top: 3px;">
+                                        <input id="reservation-detail-boundTelNo" />
+                                        <span id="reservation-detail-btn-call-boundTelNo" style="cursor: pointer;margin-left: 5px;" title="전화 걸기">
+                                            <i  class="bi bi-telephone"></i>
+                                        </span>
+                                    </dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-table">
+                            <div class="c-table-row">
+                                <div class="c-table-cell">
+                                    <dt>문의내용</dt>
+                                    <dd><textarea id="reservation-detail-question" ></textarea></dd>
+                                </div>
+                            </div>
+                            <div class="c-table-row">
+                                <div class="c-table-cell">
+                                    <dt>예약메모</dt>
+                                    <dd><textarea id="reservation-detail-memo"></textarea></dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-table">
+                            <div class="c-table-row">
+                                <div class="c-table-cell">
+                                    <dt>처리자</dt>
+                                    <dd><input id="reservation-detail-processNm" /></dd>
+                                </div>
+                                <div class="c-table-cell">
+                                    <dt>처리일시</dt>
+                                    <dd><input id="reservation-detail-processDt" /></dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div><h4 style="margin: 2px 5px;">통화시도이력</h4></div>
+                            <div id="reservation-detail-bound-history" style="margin: 0 5px;"></div>
+                        </div>
+                    </div>
+                    <div id="reservation-detail-update-box">
+                        <div class="c-table">
+                            <div class="c-table-row">
+                                <div class="c-table-cell">
+                                    <dt>처리결과</dt>
+                                    <dd><input id="reservation-detail-reservationStatus" name="reservation-detail-reservationStatus"/></dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="c-table">
+                            <div class="c-table-row">
+                                <div class="c-table-cell">
+                                    <dt>처리내용</dt>
+                                    <dd><textarea id="reservation-detail-answer"></textarea></dd>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: end; padding-bottom: 10px;">
+                            <button sec:authorize="hasRole('ROLE_CONSULT_RESERVE_LIST_UPDATE')"
+                                    id="reservation-detail-btn-update" style="margin-right: 5px;">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/x-kendo-template" id="reservation-grid-toolbar-template">
+    <button id="reservation-toolbar-button-excel-down" sec:authorize="hasRole('ROLE_CONSULT_RESERVE_LIST_DOWN')" title="다운로드"></button>
+</script>
+<script th:src="@{/js/consult/reservation.js}"></script>

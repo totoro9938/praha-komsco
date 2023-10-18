@@ -1,0 +1,77 @@
+<section th:id="${idName}+'-layout'">
+
+    <div th:id="${idName}+'-expansion-panel'">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>등록일시</label>
+                    <input th:id="${idName}+'-search-date-start'" style="width: 174px;margin-right:5px;"> ~ <input th:id="${idName}+'-search-date-end'" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <input th:id="${idName}+'-search-type'" style="width: 45%;">
+                    <input th:id="${idName}+'-search-txt'" style="width: 55%;">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button th:id="${idName}+'-search-button'" sec:authorize="hasRole('ROLE_BOARD_RESOURCE_ROOM_SELECT')" title="검색"></button>
+                <button th:id="${idName}+'-search-reset'" sec:authorize="hasRole('ROLE_BOARD_RESOURCE_ROOM_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div th:id="${idName}+'-splitter'">
+        <div th:id="${idName}+'-splitter-main'" class="c-splitter-grid">
+            <div th:id="${idName}+'-grid'" class="c-grid"></div>
+        </div>
+        <div th:id="${idName}+'-splitter-detail'" class="c-splitter-detail"></div>
+    </div>
+
+</section>
+
+<script type="text/x-kendo-template" id="resource-board-toolbar-template">
+    <button th:id="${idName}+'-write-button'" sec:authorize="hasRole('ROLE_BOARD_RESOURCE_ROOM_INSERT')">글쓰기</button>
+</script>
+
+<!--
+<section th:id="${idName}+'-layout'">
+    <div th:id="${idName}+'-test'"></div>
+    <div th:id="${idName}+'-splitter'" class="c-splitter" style="height: calc(100vh - 145px);">
+        <div th:id="${idName}+'-search'" class="pane-content">
+            <div class="c-search-box">
+                <div th:id="${idName}+'-search-item1'" style="display: none;">
+                    <div class="c-search-btn-opened">
+                        <em th:id="${idName}+'-search-button1'" style="margin-right:5px"></em>
+                        <em th:id="${idName}+'-close-button'"></em>
+                    </div>
+                </div>
+                <div class="c-flex-center" style="justify-content: space-between;">
+                    <div th:id="${idName}+'-search-element1'" style="display: none; padding: 3px;">
+                        <div class="c-search-content" style="height: 100%">
+                            <div class="c-search-item c-flex-center" style="width:320px;">
+                                <label>등록일시</label>
+                                <div th:id="${idName}+'-date-range-picker'" style="width:70%; margin-left:5px;"></div>
+                            </div>
+                            <div class="c-search-item c-flex-center" style="width:380px;">
+                                <label>기타조건</label>
+                                <input th:id="${idName}+'-other-condition-drop-down-list'" style="width:30%; margin-left:5px;" />
+                                <input th:id="${idName}+'-other-condition-text-box'" style="width:50%;" />
+                            </div>
+                        </div>
+                    </div>
+                    <div th:id="${idName}+'-search-element2'">
+                        <span th:id="${idName}+'-search-result'" class="c-flex-center" style="height: 100%;"></span>
+                    </div>
+                    <div th:id="${idName}+'-search-item2'">
+                        <em sec:authorize="hasRole('ROLE_BOARD_RESOURCE_ROOM_SELECT')" th:id="${idName}+'-search-button2'" style="margin-right:5px"></em>
+                        <em sec:authorize="hasRole('ROLE_BOARD_RESOURCE_ROOM_INSERT')" th:id="${idName}+'-write-button'" style="margin-right:5px">글쓰기</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:id="${idName}+'-grid-box'" class="pane-content">
+            <div th:id="${idName}+'-grid'" style="margin: 5px"></div>
+        </div>
+    </div>
+</section>
+-->
+
+<script th:src="@{/js/board/resourceboard/resourceBoard.js}"></script>

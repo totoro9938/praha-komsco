@@ -1,0 +1,252 @@
+html    {height: 100%;}
+body    {
+    height: 100%;
+    overflow: hidden;
+    font-size: 13px;
+}
+
+
+/*  Window padding right 1rem -> 5px    */
+.k-window-content   {
+    padding: 5px;
+}
+.k-dialog-content   {
+    padding: 1rem;
+}
+
+section {
+    height: 100%;
+}
+
+/* Grid */
+.k-grid {
+    font-size: 13px;
+    max-width: 100%;
+}
+#consult-tabstrip > .k-content {
+    padding: 0 !important;
+}
+.k-input-sm,
+.k-button-sm,
+.k-picker-sm    {
+    height: 26px;
+}
+.k-grid-toolbar .k-dropdown,
+.k-grid-toolbar .k-button   {
+    height: 26px;
+}
+
+
+/* Expansion panel search */
+.k-expander  {
+    box-shadow: none !important;
+}
+.k-expander-title   {
+    font-size: 13px;
+    color: #0a0c0d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.k-expander-title   label   {
+    font-size: 12px;
+    color: #666666;
+}
+.k-expander-content {
+    width: 100%;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, .04);
+    border-top: 1px solid rgba(0, 0, 0, .08);
+}
+
+.c-grid-search-box {
+    display: flex;
+    justify-content: space-between;
+    /*visibility : hidden;*/
+}
+.c-grid-search-row {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.c-grid-search-item    {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    max-width: 440px;
+    min-width: 220px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    font-size: 13px;
+}
+
+.c-grid-search-item  label:first-child,
+.c-search-box   div > label:first-child {
+    font-size: 12px;
+    color: #666666;
+    line-height: 24px;
+    width: 35%;
+    max-width: 77px;
+    text-align: center;
+    border: 1px solid rgb(228, 231, 235);
+    border-radius: .25rem 0 0 .25rem;
+}
+.c-grid-search-item  label + div,
+.c-search-box   div > label + div   {
+    min-width: 65%;
+}
+
+.c-grid-search-item  label + .k-input:first-of-type,
+.c-grid-search-item  label + .k-dropdown,
+.c-grid-search-item  label + .k-dropdownlist,
+.c-grid-search-item  label + .k-dropdowntree,
+.c-grid-search-item  label + div > .k-button:first-child    {
+    border-radius: 0 .25rem .25rem 0;
+    margin-left: -1px;
+}
+.c-grid-search-item .k-dropdown, .c-grid-search-item .k-dropdowntree, .c-grid-search-item .k-dropdownlist    {
+    width: 65%;
+}
+.c-grid-search-box .k-dropdown, .c-grid-search-box .k-dropdowntree, .c-grid-search-box .k-dropdownlist, .c-grid-search-box .k-button    {
+    height: 26px;
+    font-size: 13px;
+}
+.c-grid-search-box  .k-button-group > button {
+    flex-grow: 1;
+}
+.c-search-txt-group > :first-child    {
+    border-radius: 0.25rem 0 0 0.25rem;
+}
+.c-search-txt-group > :last-child    {
+    border-radius: 0 0.25rem 0.25rem 0;
+    margin-left:-5px;
+}
+
+
+
+/*  Grid toolbar */
+.k-grid-toolbar {
+    display: flex;
+    justify-content: end;
+    padding: 3px 18px;
+    background-color: rgba(0, 0, 0, .08);
+    border-width: 0;
+    border-radius: 0;
+}
+.k-grid-toolbar > * {
+    margin: 0;
+}
+
+
+/*  Splitter */
+.k-splitbar-static-horizontal {
+    width: 0 !important;
+}
+.c-splitter-grid    {
+    height: 100%;
+}
+
+/*  Splitter detail */
+.c-splitter-detail {
+    background-color: rgba(241, 251, 255, 0.8);
+    border-left: 1px solid #cccccc;
+}
+.c-detail-view  {
+    width: 100%;
+    height: 100%;
+    background: none;
+}
+.c-detail-view  h3  {
+    margin: .7rem 0;
+}
+.c-detail-body  {
+    padding: 0 20px;
+}
+.c-detail-body  .c-table    {
+    padding: 0 0 0 0;
+}
+.c-search-btn-opened    {
+    margin-top: 10px;
+}
+
+
+
+
+
+.c-flex-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.c-detail-body  .k-form {
+    margin-top: 10px;
+}
+
+.c-detail-body  .k-form-field   {
+    margin: 2px 0 2px 0 !important;
+}
+.c-detail-body  .k-form-label   {
+    margin-bottom:  2px;
+}
+
+
+
+/*  Splitter 내부 grid border */
+.k-pane .c-grid {
+    border: 0;
+}
+
+
+/*  대시보드 card > grid border */
+.k-card .k-grid {
+    border: 0;
+}
+
+
+/* 상담메인 > 예상상담, SMS발송 pager border top */
+.k-listview-pager   {
+    border-width: 1px 0 0 0;
+}
+
+
+.k-grid-pager   {
+    border-color: #dee2e6;
+}
+
+
+
+.k-toolbar-overflow-button  {
+    display: none;
+}
+
+
+
+
+/* Expansion panel 미사용 */
+.k-splitter {
+    border-top: 0;
+}
+.c-search-box   {
+    margin: 0;
+    border: 0;
+    padding: 10px 20px;
+    background-color: rgba(0, 0, 0, .04);
+    border-top: 1px solid rgba(0, 0, 0, .08);
+}
+
+
+
+/*  Popup 스크롤 제거 */
+.pop-container  {
+    padding: 0;
+}
+
+
+
+/* 고객관리 */
+.k-tilelayout-item.k-card  {
+    margin: 0;
+}

@@ -1,0 +1,788 @@
+<div id="consult-tilelayout" ></div>
+
+<script type="text/x-kendo-template" id="consult-receipt-listview">
+    <div class="consult-callDetail">
+        <div class="c-table">
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>상담일시</dt>
+                    <dd><input class="consult-callDetail-listView-callDt" value ="#:callDt#"></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>상담사</dt>
+                    <dd><input class="consult-callDetail-listView-rgtrNm" value ="#:rgtrNm#"></dd>
+                </div>
+            </div>
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>수/발신번호</dt>
+                    <dd><input class="consult-callDetail-listView-boundTelNo" value ="#if (boundTelNo == null) {# #=''# #} else {# #:boundTelNo# #}#"></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>상담결과</dt>
+                    <dd><input class="consult-callDetail-listView-callTypeNm" value ="#:callTypeNm#"></dd>
+                </div>
+            </div>
+        </div>
+        <div class="c-table">
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>상담분류</dt>
+                    <dd><input class="consult-callDetail-listView-fullCallCatNm" value ="#if (fullCallCatNm == null) {# #=''# #} else {# #:fullCallCatNm# #}#"></dd>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="consult-reservation-listview">
+    <div class="consult-callDetail">
+        #if (processYn == 'N') {# #='<div><a role="button" class="k-edit-button consult-reservation-edit-btn" href="\\#" style="float: right;"><span class="k-button-icon k-icon k-i-edit"></span></a></div>'# #} else {# #='<div style="height:20px"></div>'# #}#
+        <div class="c-table">
+            <div class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>예약일시</dt>
+                    <dd><input class="consult-reservation-listView-reservationDt" value ="#:reservationDt#"></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>예약상담사</dt>
+                    <dd><input class="consult-reservation-listView-callRgtrNm" value ="#:callRgtrNm#"></dd>
+                </div>
+            </div>
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>수/발신번호</dt>
+                    <dd><input class="consult-reservation-listView-boundTelNo" value ="#if (boundTelNo == null) {# #=''# #} else {# #=boundTelNo# #}#"></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>예약전화번호</dt>
+                    <dd>
+                        <input class="consult-reservation-listView-reservationTelNo" style="width:80%" value ="#if (reservationTelNo == null) {# #=''# #} else {# #=reservationTelNo# #}#">
+                        <a href="\\#" style="margin-left: 5px;" id="consult-reservation-listView-callBtn-#=callId#" title="전화 걸기"><i class="bi bi-telephone"></i></a>
+                    </dd>
+                </div>
+            </div>
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>시도횟수</dt>
+                    <dd>
+                        <input class="consult-reservation-listView-boundCnt" style="width:80%" value ="#:boundCnt# 회">
+                        <a id="consult-boundCnt-#=callId#"><span class="k-button-icon k-icon k-i-search"></span></a>
+                    </dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>처리결과</dt>
+                    <dd>
+                        <input class="consult-reservation-listView-reservationStatusNm" value ="#if (reservationStatusNm == null) {# #=''# #} else {# #:reservationStatusNm# #}#">
+                    </dd>
+                </div>
+            </div>
+        </div>
+        <div class="c-table">
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>문의내용</dt>
+                    <dd>
+                        <textarea class="consult-reservation-listView-question">#:question#</textarea>
+                    </dd>
+                </div>
+            </div>
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>처리내용</dt>
+                    <dd>
+                        <textarea class="consult-reservation-listView-description">#:description#</textarea>
+                    </dd>
+                </div>
+            </div>
+        </div>
+        <div class="c-table">
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>처리자</dt>
+                    <dd><input class="consult-reservation-listView-processNm" value ="#if (processNm == '') {# #=' '# #} else {# #:processNm# #}#"></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>처리일시</dt>
+                    <dd><input class="consult-reservation-listView-processDt" value ="#if (processDt == '') {# #=' '# #} else {# #:processDt# #}#"></dd>
+                </div>
+            </div>
+       </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="consult-reservation-edit-listview">
+    <div class="consult-callDetail">
+        <a role="button" id="consult-reservation-edit-template-close" href="\\#" style="float:right"><span class="k-icon k-i-close"></span></a>
+        <div id="consult-reservation-update-valid">
+            <input type="hidden" id="consult-reservation-boundId" value="0">
+            <input type="hidden" id="consult-reservation-callId" value="0">
+            <input type="hidden" id="consult-reservation-chargeId" value="0">
+            <div class="c-table">
+                <div class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>처리결과</dt>
+                        <dd><select id="consult-reservationTab-edit-codeTree" name="reservationStatus" type="text" style="margin-left:5px;"></select></dd>
+                    </div>
+                </div>
+                <div  class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>처리내용 <p class="c-required">*</p></dt>
+                        <dd><textarea id="consult-reservationTab-edit-textarea" name="description"></textarea> </dd>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="btn-right-box">
+            <button id="consult-reservationTab-edit-update">등록</button>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="consult-black-customer-insert-template">
+     <div class="consult" id="consult-black-customer-insert-valid">
+         <div class="c-table">
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>고객구분 <p class="c-required">*</p></dt>
+                     <dd>
+                         <ul id="consult-custType-radio" validationMessage="고객구분을 선택하세요." ></ul>
+                     </dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>등록사유 <p class="c-required">*</p></dt>
+                     <dd><textarea id="consult-black-description" name="consult-black-description" class="consult-customer-textarea" required validationMessage="등록사유는 필수 입니다."  ></textarea></dd>
+                 </div>
+             </div>
+             <div class="btn-right-box">
+                 <button id="consult-black-customer-insertBtn">등록</button>
+             </div>
+         </div>
+     </div>
+</script>
+<script type="text/x-kendo-template" id="consult-search-window-template">
+        <div class="c-grid-search-box" style="visibility: visible;width: 100%;">
+            <div class="c-grid-search-row" id="consult-customer-search-valid">
+                <div class="c-grid-search-item c-search-txt-group" style="max-width: none;width: 500px;justify-content: flex-start;">
+                    <select id="consult-customer-search-type" name="consult-customer-search-type" style="width: 30%;" required></select>
+                    <input id="consult-customer-search-text" name="consult-customer-search-text" style="width: 42%;" required>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <button id="consult-customer-searchBtn" style="float: right;" title="조회"></button>
+            </div>
+        </div>
+    <div id="consult-customer-multi-search-grid"></div>
+</script>
+<script type="text/x-kendo-template" id="consult-reservation-call-window-template">
+     <div id="consult-reservation-call-valid" class="consult">
+         <div class="c-table">
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>상담사 <p class="c-required">*</p></dt>
+                     <dd>
+                         <select id="consult-reservation-call-user" name="consult-reservation-call-user" style="width:100%;" required ></select>
+                     </dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>예약전화번호 <p class="c-required">*</p></dt>
+                     <dd>
+                         <select id="consult-reservation-number-select" name="consult-reservation-number-select"  style="width:38%;" ></select>
+                         <input id="consult-reservation-call-number" name="consult-reservation-call-number" style="width:58%;" required  >
+                     </dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>예약시간</dt>
+                     <dd>
+                         <input id="consult-reservation-call-date" name="consult-reservation-call-date" style="width:100%;" required >
+                     </dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>예약메모</dt>
+                     <dd><textarea id="consult-reservation-call-memo" class="consult-customer-textarea"></textarea></dd>
+                 </div>
+             </div>
+             <div class="btn-right-box">
+                 <button id="consult-reservation-call-item-save">저장</button>
+             </div>
+         </div>
+     </div>
+</script>
+<script type="text/x-kendo-template" id="consult-transfer-call-window-template">
+     <div id="consult-transfer-call-valid" class="consult">
+         <div class="c-table">
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>담당부서 <p class="c-required">*</p></dt>
+                     <dd>
+                         <select id="consult-transfer-call-dept" style="width:100%;"></select>
+                     </dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>담당자 <p class="c-required">*</p></dt>
+                     <dd>
+                         <select id="consult-transfer-call-user" name="consult-transfer-call-user" style="width:100%;" required validationMessage="담당자 선택은 필수 입니다." ></select>
+                     </dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>이관메모</dt>
+                     <dd><textarea id="consult-transfer-call-memo" class="consult-customer-textarea"></textarea></dd>
+                 </div>
+             </div>
+             <div class="btn-right-box">
+                 <button id="consult-transfer-call-item-save">저장</button>
+             </div>
+         </div>
+     </div>
+</script>
+<script type="text/x-kendo-template" id="consult-sms-send-window-template">
+     <div id="consult-sms-send-valid" class="consult" style="height: 100%;">
+         <div class="c-table" style="display:inline-block;width: 48%;padding: 5px;">
+             <div class="c-table-row" style="width:100%">
+                 <div class="c-table-cell" >
+                     <dt>수신번호 <p class="c-required">*</p></dt>
+                     <dd>
+                         <select id="consult-sms-receiver-select" name="consult-sms-receiver-select"  style="width:130px;" validationMessage="수신 전화번호는 필수 입니다." ></select>
+                         <input id="consult-sms-receiver-number" name="consult-sms-receiver-number" style="width:57%;" required validationMessage="수신 전화번호는 필수 입니다." >
+                     </dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dt>발신번호</dt>
+                     <dd>
+                         <input id="consult-sms-sender-number" name="consult-sms-sender-number" style="width:100%;" readonly>
+                     </dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dd><select id="consult-sms-template-list" name="consult-transfer-call-user" style="width:100%;"></select></dd>
+                 </div>
+             </div>
+             <div class="c-table-row">
+                 <div class="c-table-cell" style="width:100%">
+                     <dd><div id="consult-sms-template-list-view" style="width:100%;"></div></dd>
+                 </div>
+             </div>
+         </div>
+         <div style="display:inline-block;width: 48%;padding: 5px;vertical-align: top;">
+             <textarea id="consult-sms-send-content" name="consult-sms-send-content" class="consult-customer-textarea" validationMessage="문자 내용은 필수 입니다."></textarea>
+             <div>
+                 <span id="consult-sms-bytes" stlye="vertical-align: sub;">[0 / 2000] Bytes</span>
+                 <span id="consult-sms-type" stlye="vertical-align: sub;" >SMS</span>
+                 <div class="btn-right-box">
+                     <button id="consult-sms-send-save">발송</button>
+                     <button id="consult-sms-send-cancel">초기화</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+</script>
+<script type="text/x-kendo-template" id="consult-manual-request-window-template">
+    <div class="consult" id="consult-manual-request-window-valid">
+        <div class="c-table">
+            <div class="c-table-row">
+                <div class="c-table-cell" style="width:100%">
+                    <dt>담당부서 <p class="c-required">*</p></dt>
+                    <dd>
+                        <select id="consult-manual-request-dept" style="width:100%;"></select>
+                    </dd>
+                </div>
+            </div>
+            <div class="c-table-row">
+                <div class="c-table-cell" style="width:100%">
+                    <dt>담당자 <p class="c-required">*</p></dt>
+                    <dd>
+                        <select id="consult-manual-request-user" name="consult-manual-request-user" style="width:100%;" required validationMessage="담당자 선택은 필수 입니다." ></select>
+                    </dd>
+                </div>
+            </div>
+            <div class="c-table-row">
+                <div class="c-table-cell" style="width:100%">
+                    <dt>요청내용 <p class="c-required">*</p></dt>
+                    <dd><textarea id="consult-manual-request-content" name="consult-manual-request-content" class="consult-customer-textarea" required validationMessage="요청내용은 필수 입니다."></textarea></dd>
+                </div>
+            </div>
+            <div class="btn-right-box">
+                <button id="consult-manual-request-btn">등록</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="consult-united-grid-template" style="height: 100%" type="text/x-kendo-template">
+    <div id="consult-united-grid"></div>
+</script>
+<script id="consult-callback-template" style="height: 100%" type="text/x-kendo-template">
+    <div id="consult-callback">
+        <form id="consult-callback-detail-form">
+            <input id="consult-callback-detail-callbackId" type="hidden" value="0" name="callbackId"/>
+            <input id="consult-callback-detail-custId" type="hidden" value="0" name="custId"/>
+            <div class="c-table">
+                <div class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>수/발신전화</dt>
+                        <dd><input id="consult-callback-detail-boundTelNo" ></dd>
+                    </div>
+                    <div class="c-table-cell">
+                        <dt>콜백전화</dt>
+                        <dd><input id="consult-callback-detail-callbackTelNo"></dd>
+                    </div>
+                </div>
+                <div class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>중복접수건수</dt>
+                        <dd><input id="consult-callback-detail-overlap-cnt"></dd>
+                    </div>
+                    <div class="c-table-cell"></div>
+                </div>
+            </div>
+            <div class="c-table">
+                <div class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>처리결과</dt>
+                        <dd><select id="consult-callback-detail-status" name="callbackStatus" required></select></dd>
+                    </div>
+                </div>
+                <div class="c-table-row">
+                    <div class="c-table-cell">
+                        <dt>처리내용 <p class="c-required">*</p></dt>
+                        <dd><textarea id="consult-callback-detail-description" name="description" required></textarea></dd>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="c-search-btn-opened">
+            <button id="consult-callback-detail-update" style="margin-right: 5px;">저장</button>
+        </div>
+    </div>
+</script>
+<script type="text/x-kendo-template" id="consult-smsTab-listview-template">
+    <div class="consult-callDetail">
+        <div class="c-table">
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>발송일시</dt>
+                    <dd><input class="consult-smsTab-listView-regDt" value ="#:regDt#"></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>고객명</dt>
+                    <dd><input class="consult-smsTab-listView-custNm" value ="#:custNm#"></dd>
+                </div>
+            </div>
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>발송번호</dt>
+                    <dd><input class="consult-smsTab-listView-toTelNo" value ="#:toTelNo#"></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>문자구분</dt>
+                    <dd><input class="consult-smsTab-listView-smsKindNm" value ="#if (smsKindNm == null) {# #=''# #} else {# #:smsKindNm# #}#"></dd>
+                </div>
+            </div>
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>발송결과</dt>
+                    <dd><input class="consult-smsTab-listView-resultNm" value ="#:resultNm#"></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>발송자</dt>
+                    <dd><input class="consult-smsTab-listView-rgtrNm" value ="#:rgtrNm#"></dd>
+                </div>
+            </div>
+        </div>
+        <div class="c-table">
+            <div  class="c-table-row">
+                <div class="c-table-cell">
+                    <dt>문자내용</dt>
+                    <dd><textarea class="consult-smsTab-listView-message">#:message#</textarea></dd>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<form id="consult-reservation-form">
+    <input type="hidden" id="cunsult-reservation-user-id" name="reservationUserId" >
+    <input type="hidden" id="cunsult-reservation-tel-no" name="reservationTelNo">
+    <input type="hidden" id="cunsult-reservation-dt" name="reservationDt">
+    <input type="hidden" id="cunsult-reservation-memo" name="reservationMemo">
+</form>
+<form id="consult-transfer-form">
+    <input type="hidden" id="cunsult-transfer-dept-id" name="transferDeptId" >
+    <input type="hidden" id="cunsult-transfer-user-id" name="transferChargeId" >
+    <input type="hidden" id="cunsult-transfer-memo" name="transferMemo">
+</form>
+<form id="consult-parent-call-form">
+    <input type="hidden" id="consult-parent-uuid" name="parentCallUuid">
+    <input type="hidden" id="consult-parent-processDt" name="processDt">
+    <input type="hidden" id="consult-parent-boundTelNo" name="parentBoundTelNo">
+</form>
+<form id="consult-call-transfer-form">
+    <input type="hidden" id="consult-call-transfer-deptId" name="deptId">
+    <input type="hidden" id="consult-call-transfer-chargeId" name="chargeId">
+</form>
+<script th:inline="javascript">
+    $(document).ready(() => {
+    let consultMainFrame = JSON.stringify([
+        {
+            colSpan: 1,
+            rowSpan: 2,
+            header: {
+                template:`<div class="consult-main-header">
+                            <div><h3>고객정보</h3></div>
+                            <div>
+                                <span id="consult-customer-class-badge"></span>
+                            </div>
+                        </div>`
+            },
+            bodyTemplate:` <div class="k-card-body consult" style="height: 40%" >
+                                <div class="c-table" id="consult-customer-table">
+                                    <input type="hidden" id="consult-customer-custId" name="custId">
+                                    <input type="hidden" id="consult-customer-custUuid" name="custUuid">
+                                    <input type="hidden" id="consult-customer-custType" name ="custType">
+                                    <input type="hidden" id="consult-callClass-value">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>고객명 </dt>
+                                            <dd><input id="consult-customer-name" class="consult-customer-input" name="custNm"></dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>수/발신번호</dt>
+                                            <dd><input id="consult-boundTel-number" class="consult-customer-input" name="boundTelNo" readonly ></dd>
+                                        </div>
+                                    </div>
+                                    <div class="c-table-row" id="consult-customer-info-valid">
+                                        <div class="c-table-cell">
+                                            <dt>휴대폰 <p class="c-required">*</p></dt>
+                                            <dd><input id="consult-phone-number" class="consult-customer-input" name="hpNo" required></dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>일반전화 <p class="c-required">*</p></dt>
+                                            <dd><input id="consult-personal-number" class="consult-customer-input" name="telNo" required></dd>
+                                        </div>
+                                    </div>
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>특이사항</dt>
+                                            <dd><textarea id="consult-description" class="consult-customer-textarea" name="description"></textarea></dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dd>
+                                                <div style="height:15px">&nbsp</div>
+                                                <div>
+                                                    <label class="consult-main-label" >SMS수신동의 </label><input id="consult-sms-receiveYn" name="smsYn" type="checkbox" style="margin-right: 10px">
+                                                    <label class="consult-main-label" >해피콜수신동의 </label><input id="consult-happyCall-receiveYn" name="telYn" type="checkbox" >
+                                                </div>
+                                                <div style="height:15px">&nbsp</div>
+                                                <div>
+                                                    <label class='consult-main-label' style='width:20%;vertical-align: middle;' >등록일 :</label>
+                                                    <span id="consult-customer-last-callDt" style="vertical-align: middle;display: inline-block;width: 30%;"></span>
+                                                    <label class="consult-main-label" style="margin-right: 10px;">병합고객
+                                                        <span id="consult-united-grid-popover" style="margin-left: 5px;">
+                                                            <span id="consult-customer-unitedCustCnt"></span>
+                                                        </span>
+                                                    </label>
+                                                    <span id="consult-callback-popover" style="margin-left: 5px;">
+                                                        <span id="consult-customer-callbackCnt"></span>
+                                                    </span>
+                                                </div>
+                                            </dd>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="k-card-footer" style="width: 100%">
+                                <div style="float: left;margin-top: 6px;color: red;">
+                                    <a style="margin-left: 5px;" id="consult-hp-tooltip"><i class="bi bi-info-circle"></i></a>
+                                </div>
+                                <button id="consult-customer-black-registryBtn">유의고객등록</button>
+                                <button id="consult-customer-search-openBtn">고객조회</button>
+                                <button id="consult-customer-saveBtn" class="k-primary">고객저장</button>
+                            </div>`
+        },
+        {
+            colSpan: 1,
+            rowSpan: 4,
+            bodyTemplate:` <div id="consult-tabstrip" style="min-height:500px;height: 100%; width: 100%">
+                                <ul>
+                                    <li id="consult-receipt-tab" class="tabstrip-title">상담이력</li>
+                                    <li id="consult-reservation-tab" class="tabstrip-title" >예약상담&nbsp;<span id="consult-reservation-tab-cnt"></span></li>
+                                    <li id="consult-sms-tab" class="tabstrip-title" >SMS</li>
+                                </ul>
+                                <div style="height: 100%;width: 100%;overflow-y:hidden;">
+                                    <div id="consult-grid-search-container" class="pane-content consult-observer" style="overflow: initial">
+                                        <div class="c-search-box consult-tab-search-box" >
+                                            <div class="c-grid-search-box" style="visibility: visible;width: 100%;">
+                                                <div class="c-grid-search-row" >
+                                                    <div style="text-align: right;margin-right: 10px;">
+                                                       <button id="consult-receipt-switch-btn" title="리스트 방식 변경" style="margin-right:3px"></button>
+                                                    </div>
+                                                    <div class="c-grid-search-item">
+                                                        <label style="width: 20%">상담일자</label>
+                                                        <input id="consult-receipt-search-date-picker-start" style="width: 125px;margin-right:5px;">
+                                                         ~
+                                                        <input id="consult-receipt-search-date-picker-end" style="width: 125px;margin-left: 5px;">
+                                                    </div>
+                                                     <div class="c-grid-search-item" style="min-width: 180px;">
+                                                        <label style="width: 40%">콜유형</label>
+                                                        <div id="consult-receipt-search-boundType" name="boundType"></div>
+                                                    </div>
+                                                    <div class="c-grid-search-item" style="width: 180px;min-width: 170px;">
+                                                        <label style="width: 50%">전화번호</label>
+                                                        <input id="consult-receipt-search-text">
+                                                    </div>
+                                                </div>
+                                                <div style="text-align: right;">
+                                                    <button id="consult-receipt-search-btn" title="검색" style="margin-right:3px"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="consult-divSplitter" class="c-splitter consult-tab-splitter"  style=" padding:3px;width: 100%;border:0;height: calc(100% - 41px)" >
+                                        <div id ="consult-receipt-container" class="pane-content">
+                                            <div id="consult-receipt-grid" style="margin-top: 4px; "></div>
+                                            <div id="consult-list-view-splitter" style="height:100%; width:100%; border : 0;">
+                                                <div id="consult-list-view-splitter-top" style="display: flex; align-items: center;">
+                                                    <div class="k-grid-norecords-template" style="display:flex; align-items: center; justify-content: center;">조회된 건이 없습니다</div>
+                                                </div>
+                                                <div id="consult-list-view-splitter-bottom">
+                                                    <div id="consult-receipt-list"></div>
+                                                    <div style="overflow: auto">
+                                                        <div id="consult-receipt-timeline" style="margin-top: 4px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="consult-receipt-detail" class="pane-content c-detail-view" style="border: 1px solid \\#dee2e6; margin-top: 1px;padding-bottom: 0;">
+                                            <div class="c-detail-body">
+                                                <div class="c-detail-header">
+                                                    <div><h3>상세보기</h3></div>
+                                                    <div>
+                                                        <div id="consult-receipt-dtailClose">
+                                                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="c-table">
+                                                        <div class="c-table-row">
+                                                            <div class="c-table-cell" >
+                                                                <dt>상담일시</dt>
+                                                                <dd><input id="consult-detail-callDt"></dd>
+                                                            </div>
+                                                            <div class="c-table-cell">
+                                                                <dt>상담결과</dt>
+                                                                <dd><input id="consult-detail-callType"></dd>
+                                                            </div>
+                                                            <div class="c-table-cell">
+                                                                <dt>상담유형</dt>
+                                                                <dd><input id="consult-detail-callClass"></dd>
+                                                            </div>
+                                                            <div class="c-table-cell">
+                                                                <dt>콜유형</dt>
+                                                                <dd><input id="consult-detail-boundTypeNm"></dd>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="c-table">
+                                                        <div class="c-table-row">
+                                                            <div class="c-table-cell">
+                                                                <dt>수/발신번호</dt>
+                                                                <dd><input id="consult-detail-boundTelNo" style="width: 100%"></dd>
+                                                            </div>
+                                                            <div class="c-table-cell">
+                                                                <dt>통화시간</dt>
+                                                                <dd><input id="consult-detail-callTm" style="width: 100%"></dd>
+                                                            </div>
+                                                            <div class="c-table-cell">
+                                                                <dt>상담분류</dt>
+                                                                <dd><input id="consult-detail-callCat" style="width: 100%"></dd>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="c-table">
+                                                        <div class="c-table-row">
+                                                            <div class="c-table-cell">
+                                                                <dt>문의내용</dt>
+                                                                <dd><textarea id="consult-detail-question" style="width: 100%"></textarea></dd>
+                                                            </div>
+                                                            <div class="c-table-cell">
+                                                                <dt>답변내용</dt>
+                                                                <dd><textarea id="consult-detail-answer" style="width: 100%"></textarea></dd>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="height: 100%;overflow-y:hidden;">
+                                    <div class="pane-content consult-observer" style="overflow: initial">
+                                        <div class="c-search-box consult-tab-search-box" >
+                                            <div class="c-grid-search-box" style="visibility: visible;width: 100%">
+                                                <div class="c-grid-search-row">
+                                                    <div class="c-grid-search-item">
+                                                       <label style="width: 20%">예약일자</label>
+                                                        <input id="consult-reservationTab-search-rangepicker-start" style="width: 125px;margin-right:5px;">
+                                                         ~
+                                                        <input id="consult-reservationTab-search-rangepicker-end" style="width: 125px;margin-left: 5px;">
+                                                    </div>
+                                                    <div class="c-grid-search-item">
+                                                        <label>처리결과</label>
+                                                        <select id="consult-reservationTab-search-codeTree"></select>
+                                                    </div>
+                                                    <div class="c-grid-search-item" style="width: 210px;min-width: 170px;">
+                                                        <label style="width: 50%">수/발신번호</label>
+                                                        <input id="consult-reservationTab-search-text" />
+                                                    </div>
+                                                </div>
+                                                <div style="text-align: right;">
+                                                      <button id="consult-reservationTab-search-btn" style="margin-right:3px" title="검색"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="consult-reservation-list-view-splitter" class="consult-tab-splitter" style="width:100%; border : 0;height: calc(100% - 41px)">
+                                        <div id="consult-reservation-list-view-splitter-top" style="display: flex; align-items: center;">
+                                            <div class="k-grid-norecords-template" style="display:flex; align-items: center; justify-content: center;">조회된 건이 없습니다</div>
+                                        </div>
+                                        <div id="consult-reservation-list-view-splitter-bottom">
+                                           <div id="consult-reservation-list"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="height: 100%">
+                                    <div class="c-search-box consult-tab-search-box" style="overflow: initial">
+                                        <div class="c-grid-search-box" style="visibility: visible;width: 100%">
+                                            <div class="c-grid-search-row">
+                                                <div class="c-grid-search-item">
+                                                   <label>발송일자</label>
+                                                    <input id="consult-sms-search-rangepicker-start" style="width: 125px;margin-right:5px;">
+                                                     ~
+                                                    <input id="consult-sms-search-rangepicker-end" style="width: 125px;margin-left: 5px;">
+                                                </div>
+                                                <div class="c-grid-search-item">
+                                                   <label>전화번호</label>
+                                                   <input id="consult-sms-search-text"/>
+                                                </div>
+                                            </div>
+                                            <div style="text-align: right;">
+                                                  <button id="consult-sms-search-btn" style="margin-right:3px" title="검색"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="consult-sms-list-view-splitter" style="height: calc(100% - 41px); width:100%; border : 0;">
+                                        <div id="consult-sms-list-view-splitter-top" style="display: flex; align-items: center;">
+                                            <div class="k-grid-norecords-template" style="display:flex; align-items: center; justify-content: center;">조회된 건이 없습니다</div>
+                                        </div>
+                                        <div id="consult-sms-list-view-splitter-bottom">
+                                           <div id="consult-sms-list"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+        },
+        {
+            colSpan: 1,
+            rowSpan: 2,
+            header: {
+                template: `<div style="display: inline-block"><h3>상담내역</h3></div>
+                                <div style="display: inline-block"><span id="consult-call-type-tooltip"></span></div>
+                                <div style="display: inline-block"><span id="consult-conect-call"></span></div>`
+            },
+            bodyTemplate: `<div class="k-card-body">
+                                <form id="consult-call-form">
+                                    <input type="hidden" id="consult-memo" name="memo">
+                                    <div class="c-table" id="consult-call-insert-valid">
+                                        <div class="c-table-row">
+                                            <div class=" c-table-cell">
+                                                <dt>상담유형 <p class="c-required">*</p></dt>
+                                                <dd>
+                                                    <select id="consult-callClass" name="callClass" required></select>
+                                                </dd>
+                                            </div>
+                                            <div class="c-table-cell">
+                                                <dt>상담분류 <p class="c-required">*</p></dt>
+                                                <dd>
+                                                    <select id="consult-callCat" name="callCatId" required></select>
+                                                </dd>
+                                            </div>
+                                        </div>
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>문의내용 <p class="c-required">*</p></dt>
+                                                <dd><textarea id="consult-question" name="question" required class="consult-customer-textarea"></textarea></dd>
+                                            </div>
+                                            <div class="c-table-cell">
+                                                <dt>답변내용 <p class="c-required">*</p></dt>
+                                                <dd><textarea id="consult-answer" name="answer" required class="consult-customer-textarea" ></textarea></dd>
+                                            </div>
+                                        </div>
+                                        <div class="c-table-row">
+<!--                                            <div class="c-table-cell">-->
+<!--                                                <dt>메모</dt>-->
+<!--                                                <dd><textarea id="consult-memo" name="memo" class="consult-customer-textarea"></textarea></dd>-->
+<!--                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="c-table">
+                                        <div class="c-table-cell">
+                                            <dd>
+                                                <dt style="display: inline;margin-right: 10px;"><span>상담결과 <p class="c-required">*</p></span></dt>
+                                                <ul id="consult-callType" name="callType" style="display: inline-flex"></ul>
+                                                <div style="display: inline;float: right;"><button id="consult-memo-btn" title="메모 등록"></button></div>
+                                            </dd>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="k-card-footer" style="width: 100%">
+                                <div class="consult-card-footer-btnBox">
+                                    <div>
+                                        <button id="consult-send-smsBtn">문자발송</button>
+                                        <button id="consult-manual-requestBtn">매뉴얼요청</button>
+                                    </div>
+                                    <div>
+                                        <button id="consult-resetBtn">초기화</button>
+                                        <button id="consult-call-saveBtn" class="k-primary">내역저장</button>
+                                    </div>
+                                </div>
+                            </div>`
+        }
+    ]);
+    $("#consult-tilelayout").kendoTileLayout({
+        containers: JSON.parse(consultMainFrame),
+        columns: 2,
+        columnsWidth: "50%",
+        rowsHeight: "auto",
+        height:"860px",
+        reorderable: false,
+        resizable: false,
+        gap: {
+            rows:5,
+            columns: 5
+        },
+        resize: function (e) {
+        },
+        reorder:function(e){
+        }
+
+    }).data("kendoTileLayout");
+    cpProgress('consult-tilelayout');
+    consultMainOpen();
+    })
+</script>
+<link rel="stylesheet" th:href="@{/css/consult/consult-main.css}"/>

@@ -1,0 +1,69 @@
+<section id="survey-layout">
+    <div id="survey-detail-splitter" class="c-splitter" style="height: calc(100vh - 125px);">
+        <div id="survey-splitter">
+            <div id="survey-divSearch">
+                <div class="c-search-box">
+                    <div id="survey-searched-btn-box" class="c-search-btn-closed">
+                        <div id="survey-searched-field-box">
+                            <span></span>
+                        </div>
+                        <div class="c-flex-center">
+                            <button sec:authorize="hasRole('ROLE_WORK_SURVAY_TEMPLATE_INSERT')" id="survey-btn-open-insert-btn" style="margin-right: 5px;">설문지만들기</button>
+                            <button sec:authorize="hasRole('ROLE_WORK_SURVAY_TEMPLATE_SELECT')" id="survey-btn-open-search-box" style="margin-right: 5px;"></button>
+                        </div>
+                    </div>
+                    <div id="survey-searching-btn-box" style="display: none;">
+                        <div class="c-search-btn-opened">
+                            <button sec:authorize="hasRole('ROLE_WORK_SURVAY_TEMPLATE_SELECT')" id="survey-btn-search" style="margin-right: 5px;"></button>
+                            <button sec:authorize="hasRole('ROLE_WORK_SURVAY_TEMPLATE_SELECT')" id="survey-search-box-btn-close"></button>
+                        </div>
+                    </div>
+                    <div id="survey-searching-field" style="display: none; padding: 3px;">
+                        <div class="c-search-content">
+                            <div class="c-flex-center"  style="width:215px">
+                                <label>설문지명</label>
+                                <input id="survey-search-text" style="width: 65%; margin-left: 10px;"/>
+                            </div>
+                            <div class="c-flex-center" style="width:215px">
+                                <label>설문지유형</label>
+                                <input id="survey-type-list" style="width: 65%; margin-left: 10px;"/>
+                            </div>
+                            <div class="c-flex-center" style="margin-left: 10px;width:210px">
+                                <label>사용여부</label>
+                                <select id="survey-user-yn" style="width:65%; margin-left:10px;"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="survey-divGrid">
+                <div id="survey-grid" style="margin: 5px;"></div>
+            </div>
+        </div>
+        <div id="survey-detail" class="c-detail-view">
+            <div class="c-detail-body">
+                <div id="survey-detail-header" class="c-detail-header">
+                    <div><h3>설문지 등록/수정</h3></div>
+                    <div>
+                        <div id="survey-detail-header-btn-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: calc(100vh - 185px);">
+                    <div id="survey-detail-tileLayout"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/js/work/survey.js}"></script>
+<style>
+    .surveyGrid .k-grid-header th.k-header .k-checkbox-md {
+        vertical-align: middle;
+    }
+    .surveyGrid td k-checkbox k-checkbox-md k-rounded-md {
+        vertical-align: middle;
+    }
+</style>
+

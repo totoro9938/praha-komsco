@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+
+<body>
+<section th:id="${idName}+'-editor-layout'">
+<div class="pop-container k-prompt-container">
+    <input type="hidden" th:id="${idName}+'-editor-doc-id'" name="docId">
+    <div th:id="${idName}+'-editor-validator'" class="pop-k-card k-card" style="height: 100%; width: 100%;">
+        <div class="pop-k-header k-card-header" style="height: 7%;">
+            <div>
+                <h3 th:id="${idName}+'-editor-popup-title'"></h3>
+            </div>
+        </div>
+        <div class="k-card-body" style="height: 88%;">
+            <div class="c-search-box c-flex-center pane-content" style="margin: 5px 0px; height: 7%">
+                <label style="width:70px; text-align: center;">제목 <p class="c-required">*</p></label>
+                <input th:id="${idName}+'-editor-title'" th:name="${idName}+'-editor-title'" />
+            </div>
+            <div th:id="${idName}+'-editor-splitter'" style="height: 94%">
+                <textarea th:id="${idName}+'-editor-editor'" th:name="${idName}+'-editor-editor'" class="pane-content" style="height: 97.5%"></textarea>
+            </div>
+        </div>
+        <div class="k-card-footer" style="display:flex; justify-content:space-between; height: 7%; align-items: center;">
+            <div style="display:flex;">
+                <div th:id="${idName}+'-editor-btn-upload-file'"></div>
+                <div>
+                    <button th:id="${idName}+'-editor-file-list-btn'" style="margin-left:10px;">첨부파일</button>
+                </div>
+            </div>
+            <div>
+                <button th:id="${idName}+'-editor-btn-save'">저장</button>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+</body>
+</html>
+
+<script th:src="@{/js/board/resourceboard/resourceBoardEditor.js}"></script>

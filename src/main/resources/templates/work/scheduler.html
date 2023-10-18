@@ -1,0 +1,103 @@
+<section id="scheduler-layout">
+    <button id="workScheduler-reload" style="z-index: 999"></button>
+    <div id="work-scheduler"></div>
+</section>
+<script id="event-template" type="text/x-kendo-template">
+    <p class="event-task-view" style="display: inline">#: title #</p>
+    <p class="event-tooltip" style="display: none">#:description #</p>
+    <p class="event-schedulerType" style="display: none">#: schedulerType #</p>
+</script>
+<script th:src="@{/js/work/scheduler.js}"></script>
+<style>
+    #work-scheduler .k-scheduler-monthview .k-scheduler-header-wrap .k-scheduler-table th:last-child,
+    #work-scheduler .k-scheduler-yearview .k-scheduler-header-wrap .k-scheduler-table th:nth-child(6n),
+    #work-scheduler .k-scheduler-yearview .k-scheduler-header-wrap .k-scheduler-table th:last-child,
+    #work-scheduler .k-scheduler-monthview .k-scheduler-table-auto td:last-child
+    {
+        color: #D74848;
+    }
+    #work-scheduler .k-scheduler-monthview .k-scheduler-header > table {
+        height: 100%;
+        color: #F9F9FA;
+    }
+    #work-scheduler .k-scheduler-monthview .k-scheduler-content {
+        height: 100%;
+        color: #2B2B2C !important;
+    }
+    #work-scheduler .k-scheduler-yearview .k-day-indicator {
+        margin-top: 0;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        position: absolute;
+        left: calc(50% - 1.5px);
+    }
+    #work-scheduler .k-scheduler-monthview td .k-today,
+    #work-scheduler .k-scheduler-header .k-scheduler-date-group .k-today{
+        box-shadow: inset 0 0 0 1px #0D05EC, inset 0 0 0 0.25rem rgba(228, 231, 235, 0.5);
+        color: #053E91;
+        font-weight: bold;
+    }
+    #work-scheduler .kendo-scheduler .k-event .k-event-actions, .k-event .k-event-actions {
+        white-space: nowrap;
+        position: absolute;
+        bottom: 0;
+        right: 1rem;
+        z-index: 2;
+    }
+    #work-scheduler .k-event .k-event-actions:first-child {
+        margin: 0.7ex 0.5ex 0 0.5rem;
+    }
+    #work-scheduler .event-task-view{
+        font-weight: 501;
+        font-family: 'Noto Sans KR',system-ui, -apple-system, "Segoe UI";
+    }
+    #work-scheduler .k-tooltip {
+        border-color: #424141;
+        color: rgb(252, 249, 255);
+        background-color: #424141;
+        max-width: 250px;
+    }
+    #work-scheduler .k-spacer .k-toolbar-spacer{
+        display: flex; !important;
+    }
+    #work-scheduler .k-checkbox-item{
+        padding: 0;
+    }
+
+    #work-scheduler .k-input {
+        width: 100%;
+    }
+
+    textarea {
+        resize: none;
+    }
+
+    #work-scheduler .k-scheduler-content{
+        overflow: hidden; !important;
+    }
+
+    .k-edit-field {
+        margin: 0 0 0.9rem 0;
+        width: 65%;
+        float: right;
+        clear: right;
+        position: relative;
+    }
+
+
+    .k-form-field   {
+        margin-bottom: 10px;
+    }
+    .k-form-label   {
+        margin-bottom: 5px;
+    }
+
+    .k-scheduler-yearview .k-calendar .k-calendar-view   {
+        gap: 50px 3%;
+    }
+    .k-scheduler-yearview   .k-calendar-table   {
+        flex-grow: 1;
+        min-width: 22%;
+    }
+</style>

@@ -1,0 +1,110 @@
+<section id="sms-template-layout">
+    <div id="sms-template-splitter" class="c-splitter">
+        <div id="sms-template-search-splitter">
+            <div id="sms-template-divSearch">
+                <div class="c-search-box c-grid-search-box">
+                    <div class="c-grid-search-row">
+                        <div class="c-grid-search-item" style="width: 340px;">
+                            <label>템플릿구분</label>
+                            <input id="sms-template-search-template-list" style="width: 280px;">
+                        </div>
+                        <div class="c-grid-search-item" style="min-width: 100px;">
+                            <div><input id="sms-template-search-useYn" class="sms-template-search-check-box"> 미사용</div>
+                            <div><input id="sms-template-search-delYn" class="sms-template-search-check-box"> 삭제</div>
+                        </div>
+                    </div>
+                    <div style="min-width: 100px;text-align: right;">
+                        <button sec:authorize="hasRole('ROLE_WORK_SMS_TEMPLATE_MGR_INSERT')" id="sms-template-add-btn">등록</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  id="sms-template-detail-splitter" class="pane-content" style="border-top:1px solid #dee2e6;">
+            <div id="sms-template-divGrid">
+                <div id="sms-template-grid" style="border:0;"></div>
+            </div>
+            <div id="sms-template-detail" class="c-splitter-detail">
+                <div class="c-detail-body">
+                    <div id="sms-template-detail-header" class="c-detail-header">
+                        <div><h3 id="sms-template-detail-header-text">메세지템플릿 수정</h3></div>
+                        <div>
+                            <div id="sms-template-detail-header-btn-close">
+                                <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="sms-template-detail-section">
+                        <form id="sms-template-detail-form">
+                            <input type="hidden" id="sms-template-detail-smsTemplateId" name="smsTemplateId" value="0">
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>템플릿구분</dt>
+                                        <dd><input id="sms-template-detail-sms-template-gb"></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>템플릿명 <p class="c-required">*</p></dt>
+                                        <dd><input id="sms-template-detail-sms-template-name" name="smsTemplateNm" required></dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>메세지내용 <span id="sms-template-detail-sms-bytes" style="font-weight: bold;">[0 / 2000] Bytes </span><span id="sms-template-detail-sms-type" style="margin-left: 5px;font-weight: bold;" >SMS</span> <p class="c-required">*</p></dt>
+                                        <dd>
+                                            <textarea id="sms-template-detail-sms-send-content" name="smsTemplateContents" required></textarea>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>사용/삭제 여부</dt>
+                                        <dd>
+                                            <label for="sms-template-detail-useYn"> 사용 </label><input type="checkbox" id="sms-template-detail-useYn" class="k-checkbox-md" style="margin-left: 7px;"/>
+                                            <label for="sms-template-detail-delYn" style="margin-left: 15px;"> 삭제 </label><input type="checkbox" id="sms-template-detail-delYn" class="k-checkbox-md" style="margin-left: 7px;"/>
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>순서</dt>
+                                        <dd><input id="sms-template-detail-sms-template-idx" name="smsTemplateIdx"></dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>등록자</dt>
+                                        <dd><input id="sms-template-detail-regNm"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>처리내용</dt>
+                                        <dd><input id="sms-template-detail-regDt"></dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>수정자</dt>
+                                        <dd><input id="sms-template-detail-mdfrNm"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>수정일시</dt>
+                                        <dd><input id="sms-template-detail-mdfDt"></dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="c-search-btn-opened">
+                            <button sec:authorize="hasRole('ROLE_WORK_SMS_TEMPLATE_MGR_UPDATE')" id="sms-template-detail-update" style="margin-right: 5px;">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/js/work/smsTemplate.js}"></script>

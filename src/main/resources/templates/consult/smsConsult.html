@@ -1,0 +1,101 @@
+<section id="sms-consult-layout">
+    <div id="sms-consult-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>최종수신일자</label>
+                    <input id="sms-consult-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="sms-consult-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <input id="sms-consult-search-dept-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담사</label>
+                    <input id="sms-consult-search-user-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>수신번호</label>
+                    <input id="sms-consult-sms-telno">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>처리구분</label>
+                    <input id="sms-consult-sms-rv-status" >
+                </div>
+                <div class="c-grid-search-item">
+                    <label>문자유형</label>
+                    <input id="sms-consult-sms-kind">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>전송상태</label>
+                    <div id="sms-consult-sms-result"></div>
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="sms-consult-search-button" sec:authorize="hasRole('ROLE_CONSULT_SMS_CONSULT_SELECT')" title="검색"></button>
+                <button id="sms-consult-search-reset" sec:authorize="hasRole('ROLE_CONSULT_SMS_CONSULT_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="sms-consult-splitter">
+        <div id="sms-consult-splitter-main" class="c-splitter-grid">
+            <div id="sms-consult-grid" class="c-grid"></div>
+        </div>
+        <div id="sms-consult-detail-splitter" class="c-splitter-detail">
+            <div id="sms-consult-detail" class="c-detail-view">
+                <div id="sms-consult-detail-body" class="c-detail-body" style="height: 815px;">
+                    <div id="sms-consult-detail-header" class="c-detail-header">
+                        <div><h3>문자상담</h3></div>
+                        <div id="sms-consult-detail-header-btn-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                    <div id="sms-consult-detail-section" style="height: 100%; border: 0;background-color: #f1fbffcc;">
+                        <div id="sms-consult-detail-chat">
+                            <div style="height:calc(100% - 70px);max-width: none;" class="k-widget k-chat">
+                                <div class="k-message-list k-avatars" data-role="chat" role="log" aria-label="Message list">
+                                    <div id="sms-chat-list" class="k-message-list-content"></div>
+                                </div>
+                            </div>
+                            <div style="margin: 10px 0px;">
+                                <button id="sms-consult-detail-history-close-btn" style="float: right">닫기</button>
+                            </div>
+                        </div>
+                        <div id="sms-consult-detail-image">
+                            <div id="sms-consult-detail-image-div" style="overflow-y:scroll; padding: 5px;"></div>
+                            <div style="margin: 10px 0px;">
+                                <button id="sms-consult-detail-image-close-btn" style="float: right">닫기</button>
+                            </div>
+                        </div>
+                        <div id="sms-consult-detail-content" style="height: 730px;">
+                            <div style="margin:5px 0px 5px 0px">
+                                <textarea id="sms-consult-detail-message-content" style="width: 100%"></textarea>
+                            </div>
+                            <div>
+                                <textarea id="sms-consult-detail-message-input" style="width: 90%"></textarea>
+                                <div style="display: inline-block;float: right;width: 9%">
+                                    <button id="sms-consult-detail-message-send-btn" style="height: 245px;margin-left: 10px;"></button>
+                                </div>
+                            </div>
+                            <div style="padding: 5px">
+                                <select id="sms-consult-detail-template-select"></select>
+                                <div id="sms-consult-detail-template-listview"></div>
+                            </div>
+                            <div style="height: 20px;margin-top: 10px;">
+                                <button id="sms-consult-detail-spam-ins-btn"  style="display: none;">스팸등록</button>
+                                <button id="sms-consult-detail-spam-release-btn"  style="display: none;">스팸해제</button>
+                                <button id="sms-consult-detail-sms-skip-btn"  style="display: none;">SKIP</button>
+                                <button id="sms-consult-detail-sms-release-btn" style="display: none;">지정취소</button>
+                                <button id="sms-consult-detail-sms-resend-btn" style="display: none;">다시발송</button>
+                                <button id="sms-consult-detail-sms-catch-btn" style="display: none;">상담하기</button>
+                                <button id="sms-consult-detail-image-btn" style="display: none;float: right;margin-right:10px;"><i class="bi bi-image"></i></button>
+                                <button id="sms-consult-detail-history-btn" style="float: right;margin-right:2px">전체상담</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/js/consult/smsConsult.js}"></script>

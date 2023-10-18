@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+
+<body>
+<section id="notice-detail-layout">
+    <div class="pop-container k-prompt-container">
+        <input type="hidden" id="notice-detail-doc-id" name="docId">
+        <div class="pop-k-card k-card">
+            <div class="pop-k-header k-card-header">
+                <div>
+                    <h3 id="notice-detail-popup-title">공지사항 상세보기</h3>
+                </div>
+            </div>
+            <div class="k-card-body">
+                <div class="k-card">
+                    <div class="k-card-header" style="display: flex; justify-content: space-between";>
+                        <h4 id="notice-detail-title"></h4>
+                        <div id="notice-detail-importance"></div>
+                    </div>
+                    <div id="notice-detail-body-splitter" class="k-card-body" style="border: 0;">
+                        <div id="notice-detail-body-top-section" style=" border-bottom: 1px solid rgb(222,226,230);">
+                            <div id="notice-detail-contents"></div>
+                        </div>
+                        <div id="notice-detail-body-bottom-section">
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>등록</dt>
+                                        <dd>
+                                            <input id="notice-detail-reg-user-date" />
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>수정</dt>
+                                        <dd>
+                                            <input id="notice-detail-mdf-user-date" />
+                                        </dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>등록부서</dt>
+                                        <dd><input id="notice-detail-reg-dept" /></dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="k-card-footer" style="display: flex; justify-content: space-between;">
+                <div>
+                    <button id="notice-detail-file-list-btn">첨부파일</button>
+                    <button sec:authorize="hasRole('ROLE_BOARD_NOTICE_EXTEND_01')" id="notice-detail-read-visitor-call-btn" style="margin-left: 10px;">열람리스트</button>
+                </div>
+                <div id="notice-detail-btn-div">
+                    <button sec:authorize="hasRole('ROLE_BOARD_NOTICE_DETAIL_DELETE')" id="notice-detail-delete-btn">삭제</button>
+                    <button sec:authorize="hasRole('ROLE_BOARD_NOTICE_DETAIL_UPDATE')" id="notice-detail-update-btn">수정</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/x-kendo-template" id="notice-detail-visitor-template">
+    <div id="notice-detail-visitor-grid-box" style="height: 98%; margin-bottom : 10px;">
+        <div id="notice-detail-visitor-grid"></div>
+    </div>
+</script>
+<div id="notice-detail-visitor-window" style="display: none;"></div>
+</body>
+</html>
+
+<script th:src="@{/js/board/noticeDetail.js}"></script>

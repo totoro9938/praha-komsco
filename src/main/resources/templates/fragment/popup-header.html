@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="popupHeader">
+    <meta charset="UTF-8"/>
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+<!--    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.common.css}"/>-->
+<!--    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.common-bootstrap.css}"/>-->
+<!--    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.bootstrap.mobile.css}"/>-->
+    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.bootstrap-main.css}"/>
+
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons.css}"/>
+    <link rel="stylesheet" th:href="@{/css/madrid-icons.css}"/>
+
+    <link rel="stylesheet" th:href="@{/css/madrid-search-grid.css}"/>
+
+    <link rel="stylesheet" th:href="@{/css/praha.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.material-tabstrip.css}"/>
+    <link rel="stylesheet" th:href="@{/css/praha-add.css}"/>
+
+    <script th:src="@{/js/ui/jquery.min.js}"></script>
+    <script th:src="@{/js/common/lodash.js}"></script>
+    <script th:src="@{/js/ui/kendo.all.min.js}"></script>
+    <script th:src="@{/js/ui/kendo.timezones.js}"></script>
+    <script th:src="@{/js/common/kendo.rewrite.js}"></script>
+    <script th:src="@{/js/ui/cultures/kendo.culture.ko-KR.js}"></script>
+    <script th:src="@{/js/ui/messages/kendo.messages.ko-KR.js}"></script>
+    <script th:src="@{/js/common/jquery.fileDownload.js}"></script>
+    <script th:src="@{/js/common/dataSource.js}"></script>
+    <script th:src="@{/js/common/cpEditor.js}"></script>
+    <script th:src="@{/js/common/utils.js}"></script>
+    <script th:src="@{/js/common/popupWindow.js}"></script>
+
+    <script th:inline="javascript">
+        const USER_AUTHORITY = Object.freeze([[${userInfo.getAuthorities()}]]);
+        const USER_INFO = Object.freeze([[${userInfo}]]);
+
+        const CENTER_NAME = [[${@environment.getProperty('company.logo')}]];
+    </script>
+    <title>콜센터 상담시스템</title>
+</head>
+</html>

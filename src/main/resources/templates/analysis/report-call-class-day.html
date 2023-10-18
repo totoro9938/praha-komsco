@@ -1,0 +1,37 @@
+<section id="call-class-day-layout">
+    <div id="call-class-day-splitter" class="c-splitter">
+        <div id="call-class-day-div-search" class="pane-content">
+            <div class="c-search-box c-grid-search-box">
+                <div class="c-grid-search-row">
+                    <div class="c-grid-search-item" style="width: 440px;">
+                        <label>기간</label>
+                        <input id="call-class-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="call-class-search-date-end" style="width: 174px;margin-left: 5px;">
+                    </div>
+                    <div class="c-grid-search-item">
+                        <label>상담유형</label>
+                        <input id="call-class-day-callclass">
+                    </div>
+                    <div class="c-grid-search-item">
+                        <label>상담분류</label>
+                        <input id="call-class-day-callcat">
+                    </div>
+                </div>
+                <div style="min-width: 100px;text-align: right;">
+                    <button sec:authorize="hasRole('ROLE_REPORT_RECEIPT_CALLCLASS_SELECT')" id="call-class-day-btn-search" title="검색"></button>
+                    <button sec:authorize="hasRole('ROLE_REPORT_RECEIPT_CALLCLASS_DOWN')" id="call-class-day-btn-excel" title="엑셀다운"></button>
+                </div>
+            </div>
+        </div>
+        <div class="pane-content">
+            <div id="call-class-day-grid"></div>
+        </div>
+    </div>
+</section>
+<script th:src="@{/js/analysis/reportCallClassDay.js}"></script>
+
+<style>
+    #call-class-day-grid tr td {
+        border-width: 0px 1px 1px 0px;
+        border-style: solid;
+    }
+</style>

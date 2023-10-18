@@ -1,0 +1,35 @@
+<section id="free-board-layout">
+
+    <div id="free-board-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>등록일시</label>
+                    <input id="free-board-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="free-board-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <input id="free-board-search-type" style="width: 45%;">
+                    <input id="free-board-search-txt" style="width: 55%;">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="free-board-search-button" sec:authorize="hasRole('ROLE_BOARD_FREE_SELECT')" title="검색"></button>
+                <button id="free-board-search-reset" sec:authorize="hasRole('ROLE_BOARD_FREE_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="free-board-splitter">
+        <div id="free-board-splitter-main" class="c-splitter-grid">
+            <div id="free-board-grid" class="c-grid"></div>
+        </div>
+        <div id="free-board-splitter-detail" class="c-splitter-detail"></div>
+    </div>
+
+</section>
+
+<script type="text/x-kendo-template" id="free-board-toolbar-template">
+    <button id="free-board-write-button" sec:authorize="hasRole('ROLE_BOARD_FREE_INSERT')">글쓰기</button>
+</script>
+
+
+<script th:src="@{/js/board/freeBoard.js}"></script>

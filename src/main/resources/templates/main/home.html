@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+    <link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon">
+<!--    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.common.css}"/>-->
+<!--    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.common-bootstrap.css}"/>-->
+<!--    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.bootstrap.mobile.css}"/>-->
+    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.bootstrap-main.css}"/>
+<!--    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.material-tabstrip.css}"/>-->
+
+    <link rel="stylesheet" th:href="@{/css/fonts.css}"/>
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons.css}"/>
+    <link rel="stylesheet" th:href="@{/css/madrid-icons.css}"/>
+
+    <link rel="stylesheet" th:href="@{/css/madrid-search-grid.css}"/>
+
+    <link rel="stylesheet" th:href="@{/css/praha.css}"/>
+    <link rel="stylesheet" th:href="@{/css/praha-add.css}"/>
+    <link rel="stylesheet" th:href="@{/css/styles/web/kendo.material-tabstrip.css}"/>
+
+    <script th:src="@{/js/ui/jquery.min.js}"></script>
+    <script th:src="@{/js/common/jquery.keyframes.js}"></script>
+    <script th:src="@{/js/common/lodash.js}"></script>
+    <script th:src="@{/js/ui/kendo.all.min.js}"></script>
+    <script th:src="@{/js/ui/kendo.timezones.js}"></script>
+    <script th:src="@{/js/common/kendo.rewrite.js}"></script>
+    <script th:src="@{/js/common/jquery.fileDownload.js}"></script>
+    <script th:src="@{/js/common/jquery.serializejson.js}"></script>
+    <script th:src="@{/js/ui/cultures/kendo.culture.ko-KR.js}"></script>
+    <script th:src="@{/js/ui/messages/kendo.messages.ko-KR.js}"></script>
+    <script th:src="@{/js/common/dataSource.js}"></script>
+    <script th:src="@{/js/common/cpEditor.js}"></script>
+    <script th:src="@{/js/common/validationPassword.js}"></script>
+    <script th:src="@{/js/common/utils.js}"></script>
+    <script th:src="@{/js/common/sockjs.min.js}"></script>
+    <script th:src="@{/js/common/stomp.min.js}"></script>
+    <script th:src="@{/js/cti/softphone.js}"></script>
+    <script th:src="@{/js/ui/jszip.min.js}"></script>
+    <script th:src="@{/js/common/xlsx.full.min.js}"></script>
+    <script th:src="@{/js/common/popupWindow.js}"></script>
+    <script th:src="@{/js/common/dexie.js}"></script>
+    <script th:src="@{/js/consult/consult.js}"></script>
+    <script th:src="@{/js/cti/ipron.js}"></script>
+
+    <script th:inline="javascript">
+        const USER_AUTHORITY = [[${userInfo.getAuthorities()}]];
+        const USER_INFO = Object.freeze({ userId: [[${userInfo.userId}]],userCd: [[${userInfo.userCd}]]
+            ,userNm: [[${userInfo.userNm}]],groupUid: [[${userInfo.groupUid}]]
+            ,deptId: [[${userInfo.deptId}]],deptNm: [[${userInfo.deptNm}]],topDeptId: [[${userInfo.topDeptId}]]
+            ,ctiYn: [[${userInfo.ctiYn}]],ctiId: [[${userInfo.ctiId}]]
+            ,ctiPwd: [[${userInfo.ctiPwd}]],ctiStation: [[${userInfo.ctiStation}]]});
+        const WEBSOCKET_URL = [[${@environment.getProperty('websocket.url')}]];
+        const CENTER_NAME = [[${@environment.getProperty('company.logo')}]];
+    </script>
+    <title></title>
+</head>
+<body>
+
+<span id="notice-message-container" class="c-notice-container"></span>
+<span id="alarm-message-container" class="c-alarm-container"></span>
+<span id="alarm-container-window" class="c-alarm-container-window"></span>
+<form id="callBoundF">
+    <input type="hidden" name="ctiCallId"           id="boundFctiCallId"  value="0">
+    <input type="hidden" name="uui"                 id="boundFuui">
+    <input type="hidden" name="ctiStation"          id="boundFctiStation">
+    <input type="hidden" name="recordingId"         id="boundFrecordingId">
+    <input type="hidden" name="boundTelNo"          id="boundFboundTelNo">
+    <input type="hidden" name="dnis"                id="boundFdnis">
+    <input type="hidden" name="boundType"           id="boundFboundType">
+    <input type="hidden" name="campaignId"          id="boundFcampaignId" value="0">
+    <input type="hidden" name="campaignCustId"      id="boundFcampaignCustId" value="0">
+    <input type="hidden" name="reservationBoundId"  id="boundFreservationBoundId" value="0">
+    <input type="hidden" name="reservationCallId"   id="boundFreservationCallId" value="0">
+    <input type="hidden" name="callbackId"          id="boundFcallbackId"value="0">
+    <input type="hidden" name="connId"              id="boundFconnId">
+    <input type="hidden" name="boundId"             id="boundFboundId">
+    <input type="hidden" name="callStartDt"         id="boundFcallStartDt">
+    <input type="hidden" name="callEndDt"           id="boundFcallEndDt">
+    <input type="hidden" name="boundKey"            id="boundFboundKey">
+    <input type="hidden" name="callObResult"        id="boundFcallObResult">
+    <input type="hidden" id="transfer-cti-station">
+</form>
+<div id="wrapper">
+    <header style="width: 100%">
+        <div id="appbar"></div>
+    </header>
+
+    <div id="drawer-content" style="height: calc(100vh - 60px);">
+        <div class="container" style="">
+            <div style="width: 100%;height: 25px;display: contents;" id="home-window-badge"></div>
+            <div id="tabstrip">
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/main/index.js}"></script>
+</body>
+</html>
+

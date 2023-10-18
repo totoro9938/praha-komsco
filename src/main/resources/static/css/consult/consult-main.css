@@ -1,0 +1,104 @@
+.consult-main-label {
+    margin-top: 5px;
+    font-size: 13px;
+    font-weight: inherit;
+    color: #5e5e5e;
+    height: 16px;
+    line-height: 16px;
+    opacity: 0.9;
+}
+.consult .k-card {
+    width: 45%;
+    margin: 5px;
+}
+.consult-callDetail{
+    float: left;
+    margin: 3px;
+    padding: 3px;
+    cursor: pointer;
+    border:1px solid #cccccc;
+    background-color: #fbfbfb;
+}
+#consult-tabstrip > .k-content{
+    padding:5px;
+    border: none;
+    outline-style: none;
+}
+.consult-main-header{
+    display: flex;
+    justify-content: space-between;
+    /*height: 47.5px;*/
+}
+.consult-customer-input{
+    width:100%;
+}
+.consult-customer-textarea{
+    width:100%;
+}
+.consult-radio-group-div{
+    border: 1px solid #ccc;padding: 5px;width: auto;
+}
+.consult-card-footer-btnBox{
+    display: flex;
+    justify-content: space-between;
+}
+.btn-right-box{
+    float: right;
+    display: inline-block;
+    padding: 5px;
+}
+.btn-left-box{
+    float: left;
+    display: inline-block;
+    padding: 5px;
+}
+.c-k-callout-n{
+    margin-left: -6px;
+    border-bottom-color: currentColor;
+    top: -11px;
+    left: 50%;
+    pointer-events: none;
+}
+
+.consult-tab-search-item{
+    display:flex;
+    align-items: center;
+}
+
+.conuslt-tab-splitter{
+    height:calc(100% - 41px);
+    display:flex;
+    justify-content: space-between;
+    align-items:center;
+}
+.consult-tab-search-box{
+    border:none;
+    margin: 0px;
+    display:flex;
+    align-items: center;
+    padding: 10px;
+    padding-bottom: 0px;
+}
+
+#consult-call-type-tooltip {
+    vertical-align: middle;
+    color: blue;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.k-timeline-card .k-card .k-card-header + .k-card-body{
+    padding: 5px;
+    margin-left: 10px;
+}
+@media (max-width: 716px) {
+    #consult-tilelayout div.k-tilelayout-item:nth-child(-n + 4) {
+        grid-column-end: span 5 !important;
+    }
+}
+
+@media (min-width: 717px) and (max-width: 1065px) {
+    #consult-tilelayout div.k-tilelayout-item:nth-child(-n + 4) {
+        grid-column-end: span 5 !important;
+    }
+}

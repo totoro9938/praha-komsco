@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+<body>
+<section id="manual-history-layout">
+    <div class="pop-container k-prompt-container">
+        <div class="pop-k-card k-card" style="height: 100%;width:100%">
+            <div class="pop-k-header k-card-header" >
+                <div><h3>매뉴얼 수정이력 상세보기</h3></div>
+            </div>
+            <div class="k-card-body">
+                <div class="k-card-header c-search-btn-closed">
+                    <div>
+                        <div>
+                            <h3 id="manual-history-title"></h3>
+                        </div>
+                        <div>
+                            <h4 style="color: gray;" id="manual-history-call-cat"></h4>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="manual-history-importance"></div>
+                    </div>
+                </div>
+                <div class="k-card-body">
+                    <div id="manual-history-splitter" style="border: 0; height: calc(100vh - 180px);">
+                        <div style="height: calc(100% - 150px)">
+                            <div id="manual-history-contents"></div>
+                        </div>
+                        <div id="manual-history-information" style="border: 0;">
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>부서</dt>
+                                        <dd><input id="manual-history-information-department" /></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>담당자</dt>
+                                        <dd><input id="manual-history-information-chargeNm" /></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>전화번호</dt>
+                                        <dd>
+                                            <input id="manual-history-information-telNo" style="width: 80%;" />
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>등록</dt>
+                                        <dd><input id="manual-history-information-regDt" /></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>수정</dt>
+                                        <dd><input id="manual-history-information-mdfDt" /></dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+<script th:src="@{/js/knowledge/manualHistory.js}"></script>

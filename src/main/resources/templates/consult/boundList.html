@@ -1,0 +1,100 @@
+<section id="boundList-layout">
+
+    <div id="boundList-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>인입일자</label>
+                    <input id="boundList-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="boundList-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <input id="boundList-search-dept-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담사</label>
+                    <input id="boundList-search-user-id">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>콜유형</label>
+                    <div id="boundList-search-bound-type"></div>
+                </div>
+                <div class="c-grid-search-item">
+                    <label>전화번호</label>
+                    <input id="boundList-search-txt">
+                    <input type="hidden" id="boundList-search-type" value="TelNo">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="boundList-search-button" sec:authorize="hasRole('ROLE_CONSULT_BOUND_LIST_SELECT')" title="검색"></button>
+                <button id="boundList-search-reset" sec:authorize="hasRole('ROLE_CONSULT_BOUND_LIST_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="boundList-splitter">
+        <div id="boundList-splitter-main" class="c-splitter-grid">
+            <div id="boundList-grid" class="c-grid"></div>
+        </div>
+        <div id="boundList-splitter-detail" class="c-splitter-detail">
+            <div id="boundList-detail-form-box" class="c-detail-view">
+                <div class="c-detail-body">
+                    <div id="boundList-detail-header" class="c-detail-header">
+                        <div><h3>상세보기</h3></div>
+                        <div id="boundList-detail-header-btn-close">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                    <div id="consultList-detail-section">
+                        <form id="boundList-detail-form">
+                            <input id="boundList-detail-boundId" type="hidden" value="0" name="boundId"/>
+                            <div class="c-table">
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>인입일시</dt>
+                                        <dd><input id="boundList-detail-callDt"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>수/발신번호</dt>
+                                        <dd>
+                                            <input id="boundList-detail-boundTelNo">
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>콜유형</dt>
+                                        <dd><input id="boundList-detail-boundType"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>통화시간</dt>
+                                        <dd>
+                                            <input id="boundList-detail-callTm">
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="c-table-row">
+                                    <div class="c-table-cell">
+                                        <dt>내선번호</dt>
+                                        <dd><input id="boundList-detail-ctiStation"></dd>
+                                    </div>
+                                    <div class="c-table-cell">
+                                        <dt>상담사</dt>
+                                        <dd>
+                                            <input id="boundList-detail-rgtrNm">
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="c-search-btn-opened">
+                            <button id="boundList-main-detail-setBtn" style="margin-right: 5px;">메인화면으로 복사</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script th:src="@{/js/consult/boundList.js}"></script>

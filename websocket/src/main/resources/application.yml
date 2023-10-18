@@ -1,0 +1,47 @@
+server:
+  port: 19099
+
+company:
+  name: CENTERLINK
+
+spring:
+  profiles:
+    active: local
+  jpa:
+    properties:
+      hibernate:
+        proc:
+          param_null_passing: true
+  thymeleaf:
+    mode: HTML
+    suffix: .html
+    cache: false
+    prefix: classpath:templates/
+    check-template-location: true
+
+  cross:
+    origin: 062.centerlink.kr:9091
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mariadb://062.centerlink.kr:33066/callcenter_suwon?autoReconnect=true
+      username: callcenter
+      password: '#centerlink!'
+      driver-class-name: org.mariadb.jdbc.Driver
+      auto-commit: false
+      maximum-pool-size: 36
+      connection-timeout: 5000
+      validation-timeout: 5000
+      connection-test-query: select 1
+      idle-timeout: 10000
+      max-lifetime: 580000
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true

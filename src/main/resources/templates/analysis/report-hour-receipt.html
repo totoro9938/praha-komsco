@@ -1,0 +1,46 @@
+<section id="hour-receipt-layout">
+  <div id="hour-receipt-splitter" class="c-splitter">
+    <div id="hour-receipt-div-search" class="pane-content">
+      <div class="c-search-box c-grid-search-box">
+        <div class="c-grid-search-row">
+          <div class="c-grid-search-item" style="width: 440px;">
+            <label>기간</label>
+            <input id="hour-receipt-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="hour-receipt-search-date-end" style="width: 174px;margin-left: 5px;">
+          </div>
+          <div class="c-grid-search-item">
+            <label>부서</label>
+            <input id="hour-receipt-department">
+          </div>
+          <div class="c-grid-search-item">
+            <label>상담사</label>
+            <input id="hour-receipt-user-list">
+          </div>
+          <div class="c-grid-search-item">
+            <label>상담분류</label>
+            <input id="hour-receipt-callcat">
+          </div>
+          <div class="c-grid-search-item">
+            <label>콜유형</label>
+            <div id="hour-receipt-callType"></div>
+          </div>
+        </div>
+        <div style="min-width: 100px;text-align: right;">
+          <button sec:authorize="hasRole('ROLE_REPORT_RECEIPT_LIST_HOUR_SELECT')" id="hour-receipt-btn-search" title="검색"></button>
+          <button sec:authorize="hasRole('ROLE_REPORT_RECEIPT_LIST_HOUR_DOWN')" id="hour-receipt-btn-excel" title="엑셀다운"></button>
+        </div>
+      </div>
+    </div>
+    <div class="pane-content">
+      <div id="hour-receipt-grid"></div>
+    </div>
+  </div>
+</section>
+
+<script th:src="@{/js/analysis/reportHourReceipt.js}"></script>
+
+<style>
+  #hour-receipt-grid tr td {
+    border-width: 0px 1px 1px 0px;
+    border-style: solid;
+  }
+</style>

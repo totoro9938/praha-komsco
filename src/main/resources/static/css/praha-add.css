@@ -1,0 +1,188 @@
+/* 스케줄러 상단 */
+.k-scheduler-header-wrap    {
+    background-color: #92a4d5ff;
+}
+.k-scheduler-table td, .k-scheduler-table th {
+    padding: 0.4rem;
+}
+
+
+/* 그리드 툴바 */
+.k-toolbar-overflow-button  {
+    display: none;
+}
+
+
+/* Expansion panel */
+.k-expander {
+    border-bottom: 0;
+}
+.k-expander-content {
+    padding-block: 0.5rem;
+    padding-inline: 0.5rem;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+ }
+
+
+/*  pager top border */
+.k-grid-pager, .k-grid-toolbar   {
+    border-color: #dee2e6;
+}
+
+
+/*  Card body   */
+.k-card .k-card-body,
+.k-card,
+.k-card-body    {
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-block: 0;
+    padding-inline: 0;
+}
+
+
+/*  drawer  */
+.hidden {
+    display: none;
+}
+
+
+/*  tile layout background  */
+.k-tilelayout {
+    background-color: #ffffff;
+}
+
+/*  menu tab badge  */
+.k-badge-solid.k-badge-solid-primary {
+    border-color: #1861ccff;
+    color: #fff;
+    background-color: #1861ccff;
+}
+
+
+
+.k-textbox.k-input.k-input-solid {
+    height: 26px
+}
+
+
+
+/*  Popup   */
+.k-window-content, .k-prompt-container {
+    padding-block: 3px;
+    padding-inline: 3px;
+    overflow: hidden;
+}
+#program-250, #program-266    {
+    overflow: auto;
+}
+.pop-k-header {
+    background-color: #394F8A;
+    color: #ffffff;
+}
+.pop-container  {
+
+}
+.pop-container .pop-k-card {
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+.pop-container .pop-k-card .k-card-body .k-card {
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    margin: 3px;
+}
+.pop-container .pop-k-card .k-card-body .k-card .k-splitter {
+    border: 0;
+}
+
+
+.c-table    {
+    padding: 0;
+}
+
+
+
+/*  Editor  */
+.k-editor {
+    border-width: 1px 0 1px 0;
+}
+.k-input-md.k-icon-picker .k-input-inner,.k-picker-md.k-icon-picker .k-input-inner {
+    width: 1.5em;
+    height: 1rem;
+    padding: 0.35rem;
+    box-sizing: content-box
+}
+
+
+
+/*  Pager   */
+.k-pager-md {
+    padding-inline: 0.5rem;
+    padding-block: 0.5rem;
+    gap: 1rem;
+}
+.k-pager.k-pager-md {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+
+
+
+
+.k-input-sm,
+.k-button-sm,
+.k-picker-sm    {
+    height: 26px;
+}
+
+
+
+
+.c-splitter {
+    height: 100%;
+}
+
+
+
+.k-grid .k-grid-header .k-table-th {
+    vertical-align: middle;
+}
+
+
+
+
+
+/*  Alarm   */
+
+.c-alarm-title-todo-color {
+    color: #507f50;
+    border-color: #d0dfd0;
+    background-color: #f0fff0;
+}
+
+.c-alarm-title-info-color {
+    color: #50607f;
+    border-color: #d0d9df;
+    background-color: #f0f9ff;
+}
+
+.c-alarm-title-msg-report-color {
+    color: #7f5050;
+    border-color: #dfd0d0;
+    background-color: #fff0f0;
+}
+
+
+#home-alarm-list-view .k-listview-content   {
+    padding: 10px;
+}
+
+.k-notification-info {
+    display: block;
+}

@@ -1,0 +1,231 @@
+<style>
+    .k-rating-container {
+        margin-top : 9px;
+    }
+</style>
+<section id="campaign-consult-layout">
+    <div id="campaign-consult-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item">
+                    <label>진행일자</label>
+                    <input id="campaign-consult-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="campaign-consult-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item">
+                    <label>진행상태</label>
+                    <div id="campaign-consult-search-status"></div>
+                </div>
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <div id="campaign-consult-department"></div>
+                </div>
+                <div class="c-grid-search-item">
+                    <label>상담사</label>
+                    <input id="campaign-consult-user-list"/>
+                </div>
+                <div class="c-grid-search-item">
+                    <label>캠페인명</label>
+                    <input id="campaign-consult-etc-search-textbox"/>
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="campaign-consult-search-button" sec:authorize="hasRole('ROLE_CONSULT_HAPPYCALL_LIST_SELECT')" title="검색"></button>
+                <button id="campaign-consult-search-reset" sec:authorize="hasRole('ROLE_CONSULT_HAPPYCALL_LIST_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="campaign-consult-splitter">
+        <div id="campaign-consult-splitter-main" class="c-splitter-grid">
+            <div id="campaign-consult-grid" class="c-grid"></div>
+        </div>
+        <div id="campaign-consult-right-section" class="c-splitter-detail" style="background-color: #ffffff;border-left: 0;">
+            <input type="hidden" id="campaign-consult-campaign-id" name="campaignId">
+            <input type="hidden" id="campaign-consult-campaign-status" name="campaignStatus">
+            <div id="campaign-consult-detail-header" class="c-detail-header" style="height: 5%; border-top: 1px solid rgb(225 221 221);">
+                <div style="margin-left: 10px;"><h3 id="campaign-consult-detail-header-title">캠페인</h3></div>
+                <div id="campaign-consult-detail-close" style="margin: 15px; cursor: pointer">
+                    <span class="k-icon k-i-close"></span>
+                </div>
+            </div>
+            <div id="campaign-consult-detail-body" style="display:flex; height:calc(100vh - 166px)">
+                <div id="campaign-consult-detail-body-left" style="width:65%;">
+                    <div id="campaign-consult-detail-body-left-top" style="margin: 10px 0;">
+                       <div id="campaign-consult-detail-count-grid" style="margin: 5px;"></div>
+                    </div>
+                    <div id="campaign-consult-detail-body-left-bottom">
+                        <div class="k-card" style="width:99%; height:calc(100vh - 247px)">
+                            <div class="k-card-body">
+                                <div>
+                                    <div id="campaign-consult-detail-target-search-box" class="c-search-box c-grid-search-box">
+                                        <div class="c-grid-search-row" style="justify-content: space-between;">
+                                            <div class="c-grid-search-item" style="margin-left: 10px;">
+                                                <label>처리결과</label>
+                                                <input id="campaign-consult-detail-target-processing-result" type="text"/>
+                                            </div>
+                                            <div style="margin-top: 3px;">
+                                                <span id="campaign-consult-detail-campagin-status-text" style="color: #ff6347;font-weight: bold;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="campaign-consult-detail-target-grid-box" style="height: calc(100vh - 300px);">
+                                    <div id="campaign-consult-detail-target-grid" class="c-grid"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="campaign-consult-detail-body-right" style="width:34.5%;">
+                    <div id="campaign-consult-detail-body-right-top" style="height:47%; margin: 11px 0 10px 0;">
+                        <div class="k-card" style="width:100%; height: 100%">
+                            <div class="k-card-header">
+                                <div><h3>상담이력</h3></div>
+                            </div>
+                            <div class="k-card-body" style="overflow: auto">
+                                <div>
+                                    <div class="c-table" style="width:98%;">
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>상담일시</dt>
+                                                <dd><input id="campaign-consult-target-detail-consult-date" type="text"/></dd>
+                                            </div>
+                                            <div class="c-table-cell">
+                                                <dt>콜유형</dt>
+                                                <dd><input id="campaign-consult-target-detail-call-type" type="text"/></dd>
+                                            </div>
+                                        </div>
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>상담유형</dt>
+                                                <dd><input id="campaign-consult-target-detail-consult-type" type="text"/></dd>
+                                            </div>
+                                            <div class="c-table-cell">
+                                                <dt>상담결과</dt>
+                                                <dd><input id="campaign-consult-target-detail-consult-result" type="text"/></dd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="c-table" style="width:98%;">
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>상담분류</dt>
+                                                <dd><input id="campaign-consult-target-detail-consult-category" type="text"/></dd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="c-table" style="width:98%;">
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>문의내용</dt>
+                                                <dd><textarea id="campaign-consult-target-detail-question"></textarea></dd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="c-table" style="width:98%;">
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>답변내용</dt>
+                                                <dd><textarea id="campaign-consult-target-detail-answer"></textarea></dd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="c-table" style="width:98%;">
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>메모</dt>
+                                                <dd><textarea id="campaign-consult-target-detail-memo"></textarea></dd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="campaign-consult-detail-body-right-bottom" style="height:51%">
+                        <input type="hidden" id="campaign-consult-campaign-cust-id" name="campaignId">
+                        <input type="hidden" id="campaign-consult-campaign-bound-id" name="campaignId">
+                        <input type="hidden" id="campaign-consult-campaign-call-id" name="campaignId">
+                        <div class="k-card" style="width:100%;height: 100%">
+                            <div class="k-card-header">
+                                <div><h3>캠페인 처리</h3></div>
+                            </div>
+                            <div class="k-card-body" style="overflow: auto">
+                                <div>
+                                    <div class="c-table" style="width:98%;">
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>수/발신번호</dt>
+                                                <dd style="display: flex;line-height: 16px;">
+                                                    <input id="campaign-consult-target-detail-bound-tel-no"/>
+                                                    <span id="campaign-consult-target-detail-btn-call-bound-tel-no" style="display:none; cursor: pointer;margin-left: 5px;" title="전화 걸기">
+                                                        <i  class="bi bi-telephone"></i>
+                                                    </span>
+                                                </dd>
+                                            </div>
+                                            <div class="c-table-cell">
+                                                <dt>일반전화</dt>
+                                                <dd style="display: flex;line-height: 16px;">
+                                                    <input id="campaign-consult-target-detail-tel-no" />
+                                                    <span id="campaign-consult-target-detail-btn-call-tel-no" style="display:none; cursor: pointer;margin-left: 5px;" title="전화 걸기">
+                                                        <i  class="bi bi-telephone"></i>
+                                                    </span>
+                                                </dd>
+                                            </div>
+                                        </div>
+                                        <div class="c-table-row">
+                                            <div class="c-table-cell">
+                                                <dt>휴대폰번호</dt>
+                                                <dd style="display: flex;line-height: 16px;">
+                                                    <input id="campaign-consult-target-detail-hp-no"/>
+                                                    <span id="campaign-consult-target-detail-btn-call-hp-no" style="display:none; cursor: pointer;margin-left: 5px;" title="전화 걸기">
+                                                        <i  class="bi bi-telephone"></i>
+                                                    </span>
+                                                </dd>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="campaign-consult-save-validator">
+                                        <div class="c-table" style="width:98%;">
+                                            <div class="c-table-row">
+                                                <div class="c-table-cell">
+                                                    <dt>처리결과</dt>
+                                                    <dd style="display: flex;">
+                                                        <input id="campaign-consult-target-detail-processing-result" name="processResult" required style="width:170px;" />
+                                                        <div id="campaign-consult-rating-div" style="display:none;"><input id="campaign-consult-target-detail-processing-rating"/></div>
+                                                    </dd>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="c-table" style="width:98%;">
+                                            <div class="c-table-row">
+                                                <div class="c-table-cell">
+                                                    <dt>처리사유</dt>
+                                                    <dd><textarea id="campaign-consult-target-detail-processing-reason" name="processReason" required></textarea></dd>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="k-card-footer c-flex-center" style="justify-content:space-between; height:38px;padding-block: 0">
+                                <button sec:authorize="hasRole('ROLE_CONSULT_HAPPYCALL_LIST_SELECT')" id="campaign-consult-target-detail-btn-call-try" style="display:none;">통화시도이력</button>
+                                <button sec:authorize="hasRole('ROLE_CONSULT_HAPPYCALL_LIST_UPDATE')" id="campaign-consult-target-detail-btn-save" style=" margin-left:10px;">내역저장</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/x-kendo-template" id="myTemplate">
+    <span> # if(value === 1){# #= first # #}else if(value === 2){#불만족#}else if(value === 3){#보통#}else if(value === 4){#만족#}else if(value === 5){#매우만족#}#</span>
+</script>
+<script type="text/x-kendo-template" id="campaign-consult-visitor-template">
+        <div id="campaign-consult-visitor-grid-box" style="height: 98%; margin-bottom : 10px;">
+            <div id="campaign-consult-visitor-grid"></div>
+        </div>
+</script>
+<div id="campaign-consult-visitor-window" style="display: none;"></div>
+<script th:src="@{/js/consult/campaignConsult.js}"></script>

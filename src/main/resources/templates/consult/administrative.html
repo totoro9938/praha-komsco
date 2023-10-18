@@ -1,0 +1,564 @@
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+<head>
+    <title>행정정보연계</title>
+</head>
+<body>
+<section id="administ-layout">
+    <div class="pop-container k-prompt-container">
+        <div class="pop-k-card k-card" style="height: 100%;width:100%">
+            <div class="pop-k-header k-card-header">
+                <div><h3>행정정보연계</h3></div>
+            </div>
+            <div class="k-card-body" style="height: 100%">
+                <input type="hidden" id="administ-sms-from-tel-no" name="campaignTelNo">
+                <input type="hidden" id="administ-reg-no">
+                <input type="hidden" id="administ-search-tpye">
+                <div id="administ-tab-strip" style="height: 100%;">
+                    <ul style="display: flex; align-items: center;">
+                        <li class="k-active">
+                            <div>
+                                <div class="administ-tab-strip-value-class" value="0">상하수도 요금</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="administ-tab-strip-value-class" value="1">지방세</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="administ-tab-strip-value-class" value="2">세외수입</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="administ-tab-strip-value-class" value="3">환경개선부담금</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div>
+                                <div class="administ-tab-strip-value-class" value="4">주&#183;정차 위반 과태료</div>
+                            </div>
+                        </li>
+                    </ul>
+                    <div id="water-supply">
+                        <div style="height: calc(100% - 10px); border:1px solid #dee2e6;">
+                            <div id="water-supply-fare-div" style="height: 39%; margin-bottom: 5px;">
+                                <div class="c-search-box c-grid-search-box">
+                                    <div class="c-grid-search-row">
+                                        <div class="c-grid-search-item" style="width: 440px;">
+                                            <label style="max-width: 35%;">수용가주소 또는 수용가명</label>
+                                            <input id="water-supply-fare-search-text" style="max-width: calc(65% + 1px);">
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 125px;text-align: right;">
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_EXTEND_01')" id=water-supply-sms-btn>SMS 전송</button>
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_SELECT')" id="water-supply-fare-search-btn"></button>
+                                    </div>
+                                </div>
+                                <div id="water-supply-fare-grid-div" style="height: 92%;">
+                                    <div id="water-supply-fare-grid"></div>
+                                </div>
+                            </div>
+                            <div id="water-supply-number-div" style="height: 47%; margin-bottom: 5px;">
+                                <div class="c-search-box c-grid-search-box">
+                                    <div class="c-grid-search-row">
+                                        <div class="c-grid-search-item">
+                                            <label>고객번호</label>
+                                            <input id="water-supply-number-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <label>기준년월</label>
+                                            <input id="water-supply-number-month">
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 100px;text-align: right;">
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_SELECT')" id="water-supply-number-search-btn"></em>
+                                    </div>
+                                </div>
+                                <div id="water-supply-number-grid-div" style="height: 92%;">
+                                    <div id="water-supply-number-grid"></div>
+                                </div>
+                            </div>
+                            <div id="water-supply-info" style="height: 13%;display: flex;justify-content: space-around;">
+                                <div id="water-supply-stats" style="width: 60%;">
+                                    <table id="water-supply-status-table" style="width: 100%; height: 40%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                            <tr class="administ-table-style">
+                                                <th style="width: 10%"></th>
+                                                <th style="width: 10%">상수도</th>
+                                                <th style="width: 10%">하수도</th>
+                                                <th style="width: 10%">계</th>
+                                                <th style="width: 10%">이체활인액</th>
+                                                <th style="width: 10%">납기내금액</th>
+                                                <th style="width: 10%">가산금액</th>
+                                                <th style="width: 10%">납기후금액</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th style="font-size: 14px;font-weight: normal;">총 계</th>
+                                                <td><input id="water-supply-number-total-samt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-total-hamt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-total-tamt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-total-ichehal" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-total-inamt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-total-gaamt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-total-afamt" class="administ-total-input-style" value="0원"/></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr style="background-color: #eff1f3;">
+                                                <th style="font-size: 14px;font-weight: normal;">선택 계</th>
+                                                <td><input id="water-supply-number-checked-total-samt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-checked-total-hamt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-checked-total-tamt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-checked-total-ichehal" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-checked-total-inamt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-checked-total-gaamt" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="water-supply-number-checked-total-afamt" class="administ-total-input-style" value="0원"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="water-supply-customer-info" style="width: 41%;padding: 0 5px 5px;">
+                                    <div class="c-grid-search-row">
+                                        <div class="c-grid-search-item" style="width: 310px;">
+                                            <label style="width: 75%;max-width: none;">전자수용가번호</label>
+                                            <input id="water-supply-customer-info-ercNo" class="administ-money"/>
+                                        </div>
+                                        <div class="c-grid-search-item" style="width: 310px;">
+                                            <label style="width: 75%;max-width: none;">전자납부번호</label>
+                                            <input id="water-supply-customer-info-junja"/>
+                                        </div>
+                                        <div class="c-grid-search-item c-search-txt-group" style="width: 310px;">
+                                            <input id="water-supply-customer-info-bank-drop-down-list" style="width: 77%;text-align: center;"/>
+                                            <input id="water-supply-customer-info-bank-number"/>
+                                        </div>
+                                        <div class="c-grid-search-item" style="width: 310px;">
+                                            <label style="width: 75%;max-width: none;">급수중지여부</label>
+                                            <input id="water-supply-customer-info-sastop"/>
+                                        </div>
+                                        <div class="c-grid-search-item" style="width: 310px;">
+                                            <label style="width: 75%;max-width: none;">체납포함납기내금액</label>
+                                            <input id="water-supply-customer-info-inamt"/>
+                                        </div>
+                                        <div class="c-grid-search-item" style="width: 310px;">
+                                            <label style="width: 75%;max-width: none;">체납포함납기후금액</label>
+                                            <input id="water-supply-customer-info-afamt"/>
+                                        </div>
+                                    </div>
+                                    <input id="water-supply-customer-info-suynm" style="display: none"/>
+                                    <input id="water-supply-customer-info-suyad" style="display: none"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="local-tax">
+                        <input type="hidden" id="local-tax-checked-vir-acc-no">
+                        <div style="height: calc(100% - 5px); border:1px solid #dee2e6;">
+                            <div style="height: 88%;">
+                                <div class="c-search-box c-grid-search-box">
+                                    <div class="c-grid-search-row">
+                                        <div class="c-grid-search-item c-search-txt-group">
+                                            <input id="local-tax-search-condition-drop-down-list">
+                                            <input id="local-tax-search-text" name="local-tax-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item" style="min-width: 145px;">
+                                            <button id="local-tax-ars-btn">ARS 연결</button>
+                                            <button id="local-tax-reg-no-clear-btn">초기화</button>
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <label>성명</label>
+                                            <input id="local-tax-name-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <ul id="local-tax-pay-type"></ul>
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 125px;text-align: right;">
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_EXTEND_01')" id="local-tax-non-sms-btn" style="margin-left: 10px;">SMS 전송</button>
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_SELECT')" id="local-tax-search-btn"></em>
+                                    </div>
+                                </div>
+                                <div id="local-tax-non-payment-grid-div" style="height: 100%;">
+                                    <div id="local-tax-non-payment-grid"></div>
+                                </div>
+                                <div id="local-tax-payment-grid-div" style="height: 100%; display: none;">
+                                    <div id="local-tax-payment-grid"></div>
+                                </div>
+                            </div>
+                            <div id="local-tax-non-payment-total-div" style="height: 10%;">
+                                <div id="local-tax-status" style="margin: 0 5px; height: 100%;">
+                                    <table id="local-tax-status-table-all" style="width: 100%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                            <tr class="administ-table-style">
+                                                <th></th>
+                                                <th style="width: 25%;" colspan="2">미납</th>
+                                                <th style="width: 25%;" colspan="2">체납</th>
+                                                <th style="width: 15%;" >선택항목 총계</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th style="font-size: 14px;font-weight: normal;">전체항목</th>
+                                                <td><input id="local-tax-total-non-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                                <td><input id="local-tax-total-non-pay" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="local-tax-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                                <td><input id="local-tax-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr style="background-color: #eff1f3;">
+                                                <th style="font-size: 14px;font-weight: normal;">선택항목</th>
+                                                <td><input id="local-tax-checked-total-non-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                                <td><input id="local-tax-checked-total-non-pay" class="administ-total-input-style" value="0원"/></td>
+                                                <td><input id="local-tax-checked-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                                <td><input id="local-tax-checked-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                                <td rowspan="2"><input id="local-tax-checked-total" class="administ-total-input-style" value="0원"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="local-tax-payment-total-div" style="height: 10%; display: none;">
+                                <div id="local-tax-payment-status" style="margin: 0 5px; height: 100%;">
+                                    <table id="local-tax-payment-status-table-all" style="width: 100%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                        <tr class="administ-table-style">
+                                            <th colspan="3">납부현황</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th style="font-size: 14px;font-weight: normal;">전체항목</th>
+                                            <td style="width: 25%"><input id="local-tax-payment-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                            <td style="width: 25%"><input id="local-tax-payment-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody>
+                                        <tr style="background-color: #eff1f3;">
+                                            <th style="font-size: 14px;font-weight: normal;">선택항목</th>
+                                            <td><input id="local-tax-payment-checked-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                            <td><input id="local-tax-payment-checked-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="non-tax">
+                        <div style="height: calc(100% - 5px); border:1px solid #dee2e6;">
+                            <div style="height: 88%;">
+                                <div class="c-search-box c-grid-search-box">
+                                    <div class="c-grid-search-row">
+                                        <div class="c-grid-search-item c-search-txt-group">
+                                            <input id="non-tax-search-condition-drop-down-list">
+                                            <input id="non-tax-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item" style="min-width: 145px;">
+                                            <button id="non-tax-ars-btn">ARS 연결</button>
+                                            <button id="non-tax-reg-no-clear-btn">초기화</button>
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <label>성명</label>
+                                            <input id="non-tax-name-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <ul id="non-tax-pay-type"></ul>
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 125px;text-align: right;">
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_EXTEND_01')" id=non-tax-non-sms-btn style="margin-left: 10px;">SMS 전송</button>
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_SELECT')" id="non-tax-search-btn"></em>
+                                    </div>
+                                </div>
+                                <div id="non-tax-non-payment-grid-div" style="height: 100%;">
+                                    <div id="non-tax-non-payment-grid"></div>
+                                </div>
+                                <div id="non-tax-payment-grid-div" style="height: 100%; display: none;">
+                                    <div id="non-tax-payment-grid"></div>
+                                </div>
+                            </div>
+                            <div id="non-tax-non-payment-total-div" style="height: 10%;">
+                                <div id="non-tax-status" style="margin: 0 5px; height: 100%;">
+                                    <table id="non-tax-status-table-all" style="width: 100%; height: 40%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                            <tr class="administ-table-style">
+                                                <th></th>
+                                                <th style="width: 15%;"> 합 계</th>
+                                                <th style="width: 25%;" colspan="2">미납</th>
+                                                <th style="width: 25%;" colspan="2">체납</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th style="font-size: 14px;font-weight: normal;">총 계</th>
+                                                <td><input id="non-tax-non-payment-total" class="administ-total-input-style" value="0원" style="width: 100%;"/></td>
+                                                <td><input id="non-tax-non-payment-total-non-pay-case" class="administ-total-input-style" value="0건" style="width: 100%;"/></td>
+                                                <td><input id="non-tax-non-payment-total-non-pay" class="administ-total-input-style" value="0원" style="width: 100%;"/></td>
+                                                <td><input id="non-tax-non-payment-total-pay-case" class="administ-total-input-style" value="0건" style="width: 100%;"/></td>
+                                                <td><input id="non-tax-non-payment-total-pay" class="administ-total-input-style" value="0원" style="width: 100%;"/></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr style="background-color: #eff1f3;">
+                                                <th style="font-size: 14px;font-weight: normal;">선택 계</th>
+                                                <td><input id="non-tax-non-payment-checked-total-pay" class="administ-total-input-style" value="0원" style="width: 100%;"/></td>
+                                                <td colspan="4"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="non-tax-payment-total-div" style="height: 10%; display: none;">
+                                <div id="non-tax-payment-status" style="margin: 0 5px; height: 100%;">
+                                    <table id="non-tax-payment-status-table-all" style="width: 100%; height: 40%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                            <tr class="administ-table-style">
+                                                <th colspan="3">납부현황</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th style="font-size: 14px;font-weight: normal;">전체항목</th>
+                                                <td style="width: 25%"><input id="non-tax-payment-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                                <td style="width: 25%"><input id="non-tax-payment-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr style="background-color: #eff1f3;">
+                                                <th style="font-size: 14px;font-weight: normal;">선택항목</th>
+                                                <td><input id="non-tax-payment-checked-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                                <td><input id="non-tax-payment-checked-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="environment">
+                        <div style="height: calc(100% - 5px); border:1px solid #dee2e6;">
+                            <div style="height: 88%;">
+                                <div class="c-search-box c-grid-search-box">
+                                    <div class="c-grid-search-row">
+                                        <div class="c-grid-search-item c-search-txt-group">
+                                            <input id="environment-search-condition-drop-down-list">
+                                            <input id="environment-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item" style="min-width: 145px;">
+                                            <button id="environment-ars-btn">ARS 연결</button>
+                                            <button id="environment-reg-no-clear-btn">초기화</button>
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <label>물건명</label>
+                                            <input id="environment-car-number-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <ul id="environment-tax-pay-type"></ul>
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 125px;text-align: right;">
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_EXTEND_01')" id="environment-non-sms-btn" style="margin-left: 10px;">SMS 전송</button>
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_SELECT')" id="environment-search-btn"></em>
+                                    </div>
+                                </div>
+                                <div id="environment-non-payment-grid-div" style="height: 90%; overflow: hidden;">
+                                    <div id="environment-non-payment-grid"></div>
+                                </div>
+                                <div id="environment-payment-grid-div" style="height: 90%; overflow: hidden; display: none;">
+                                    <div id="environment-payment-grid"></div>
+                                </div>
+                            </div>
+                            <div id="environment-non-payment-total-div" style="height: 10%;">
+                                <div id="environment-non-status" style="margin: 0 5px; height: 100%;">
+                                    <table id="environment-non-status-table-all" style="width: 100%; height: 40%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                        <tr class="administ-table-style">
+                                            <th></th>
+                                            <th style="width: 20%;">미납금액</th>
+                                            <th style="width: 20%;">체납금액</th>
+                                            <th style="width: 20%;">총 금액</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th style="font-size: 14px;font-weight: normal;">총 계</th>
+                                            <td><input id="environment-non-payment-total-non-pay" class="administ-total-input-style" style="width:100%;" value="0원"/></td>
+                                            <td><input id="environment-non-payment-total-pay" class="administ-total-input-style" style="width:100%;" value="0원"/></td>
+                                            <td><input id="environment-non-payment-total" class="administ-total-input-style" style="width:100%;" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody>
+                                        <tr style="background-color: #eff1f3;">
+                                            <th style="font-size: 14px;font-weight: normal;">선택 계</th>
+                                            <td><input id="environment-non-payment-total-checked-non-pay" class="administ-total-input-style" style="width:100%;" value="0원"/></td>
+                                            <td><input id="environment-non-payment-total-checked-pay" class="administ-total-input-style" style="width:100%;" value="0원"/></td>
+                                            <td><input id="environment-non-payment-total-checked" class="administ-total-input-style" style="width:100%;" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="environment-payment-total-div" style="height: 10%; display: none;">
+                                <div id="environment-status" style="margin: 0 5px; height: 100%;">
+                                    <table id="environment-status-table-all" style="width: 100%; height: 40%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                        <tr class="administ-table-style">
+                                            <th colspan="3">납부현황</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th style="font-size: 14px;font-weight: normal;">전체항목</th>
+                                            <td style="width: 25%"><input id="environment-payment-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                            <td style="width: 25%"><input id="environment-payment-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody>
+                                        <tr style="background-color: #eff1f3;">
+                                            <th style="font-size: 14px;font-weight: normal;">선택항목</th>
+                                            <td><input id="environment-payment-checked-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                            <td><input id="environment-payment-checked-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="parking">
+                        <div style="height: calc(100% - 5px); border:1px solid #dee2e6;">
+                            <div style="height: 88%;">
+                                <div class="c-search-box c-grid-search-box">
+                                    <div class="c-grid-search-row">
+                                        <div class="c-grid-search-item c-search-txt-group">
+                                            <input id="parking-search-condition-drop-down-list">
+                                            <input id="parking-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item" style="min-width: 145px;">
+                                            <button id="parking-ars-btn">ARS 연결</button>
+                                            <button id="parking-reg-no-clear-btn">초기화</button>
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <label>차량번호</label>
+                                            <input id="parking-car-number-search-text">
+                                        </div>
+                                        <div class="c-grid-search-item">
+                                            <ul id="parking-tax-pay-type"></ul>
+                                        </div>
+                                    </div>
+                                    <div style="min-width: 125px;text-align: right;">
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_EXTEND_01')" id="parking-non-sms-btn" style="margin-left: 10px;">SMS 전송</button>
+                                        <button sec:authorize="hasRole('ROLE_CONSULT_ADMINIST_SELECT')" id="parking-search-btn" style="margin-right:5px"></button>
+                                    </div>
+                                </div>
+                                <div id="parking-non-payment-grid-div" style="height: 100%;">
+                                    <div id="parking-non-payment-grid" style="margin: 5px;"></div>
+                                </div>
+                                <div id="parking-payment-grid-div" style="height: 100%; display: none;">
+                                    <div id="parking-payment-grid" style="margin: 5px;"></div>
+                                </div>
+                            </div>
+                            <div id="parking-non-payment-total-div" style="height: 10%;">
+                                <div id="parking-non-tax-status" style="margin: 0 5px; height: 100%;">
+                                    <table id="parking-non-tax-status-table-all" style="width: 100%; height: 40%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                        <tr class="administ-table-style">
+                                            <th></th>
+                                            <th style="width: 20%;">총 건수</th>
+                                            <th style="width: 20%;">총 금액</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th style="font-size: 14px;font-weight: normal;">전체항목</th>
+                                            <td><input id="parking-non-payment-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                            <td><input id="parking-non-payment-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody>
+                                        <tr style="background-color: #eff1f3;">
+                                            <th style="font-size: 14px;font-weight: normal;">선택항목</th>
+                                            <td><input id="parking-non-payment-checked-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                            <td><input id="parking-non-payment-checked-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="parking-payment-total-div" style="height: 10%; display: none;">
+                                <div id="parking-tax-status" style="margin: 0 5px; height: 100%;">
+                                    <table id="parking-tax-status-table-all" style="width: 100%; height: 40%; border-spacing: 0; margin-bottom: 5px;">
+                                        <thead>
+                                        <tr class="administ-table-style">
+                                            <th colspan="3">납부현황</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <th style="font-size: 14px;font-weight: normal;">전체항목</th>
+                                            <td style="width: 25%"><input id="parking-payment-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                            <td style="width: 25%"><input id="parking-payment-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                        <tbody>
+                                        <tr style="background-color: #eff1f3;">
+                                            <th style="font-size: 14px;font-weight: normal;">선택항목</th>
+                                            <td><input id="parking-payment-checked-total-pay-case" class="administ-total-input-style" value="0건"/></td>
+                                            <td><input id="parking-payment-checked-total-pay" class="administ-total-input-style" value="0원"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/x-kendo-template" id="administ-sms-window-template">
+    <div id="administ-sms-send-valid" class="consult" style="height: 100%;">
+        <div class="c-table" style="width: 98%;">
+            <div class="c-table-row" style="width:100%">
+                <div class="c-table-cell" >
+                    <dt>전화번호</dt>
+                    <dd style="display: flex; align-items: center;">
+                        <input id="administ-sms-condition-drop-down-list" name="administ-sms-condition-drop-down-list"  style="width: 160px;"/>
+                        <input id="administ-sms-receiver-number" name="administ-sms-receiver-number" style="width:100%;" required validationMessage="수신 전화번호는 필수 입니다." >
+                    </dd>
+                </div>
+            </div>
+            <div class="c-table-row" style="width:100%">
+                <div class="c-table-cell">
+                    <dt>문자내용</dt>
+                    <dd>
+                        <textarea id="administ-sms-send-content" name="administ-sms-send-content" validationMessage="문자 내용은 필수 입니다."></textarea>
+                    </dd>
+                    <div>
+                        <div style="display: flex; justify-content: flex-end">
+                            <span id="administ-sms-bytes" style="vertical-align: sub; margin-right: 5px;">[0 / 2000] Bytes</span>
+                            <span id="administ-sms-type" style="vertical-align: sub;" >SMS</span>
+                        </div>
+                        <div style="display: flex; justify-content: center;">
+                            <button id="administ-sms-send-save">발송</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<div id="administ-sms-window" style="display: none;"></div>
+<script th:src="@{/js/consult/administrative.js}"></script>
+<link rel="stylesheet" th:href="@{/css/consult/administrative.css}"/>
+</body>
+</html>
+

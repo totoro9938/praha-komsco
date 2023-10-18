@@ -1,0 +1,60 @@
+.k-tabstrip-items-wrapper{
+    /*height: 5%;*/
+    margin-top: 3px;
+}
+#administ-tab-strip ul li {
+    display: flex;
+    justify-content: center;
+    width: 8%;
+    line-height: 30px;
+}
+
+.k-grid-header th.k-header{
+    font-size: 12px;
+}
+.k-notification{
+    width: 300px;
+}
+
+#administ-tab-strip > .k-content{
+    padding:5px;
+    border: none;
+    outline-style: none;
+}
+
+.administ-tab-strip-name {
+    writing-mode:tb-rl;
+    letter-spacing: 3px;
+    margin: 7px 0;
+}
+
+.administ-table-style > th {
+    background-color: rgba(59, 82, 143, 0.9);
+    color: white;
+    font-weight: unset;
+    font-size: 12px;
+    border-right: 1px solid #fff;
+}
+
+/*.administ-table-style > td {*/
+/*    border: 1px solid #dee2e6;*/
+/*}*/
+
+/*.administ-table-style > tr{*/
+/*    border: 1px solid #dee2e6;*/
+/*}*/
+
+/*.water-supply-customer-th-width th{*/
+/*    width: 12%;*/
+/*    border-right: 1px solid #dee2e6;*/
+/*    border-bottom:1px solid #dee2e6;*/
+/*}*/
+
+.administ-total-input-style {
+    text-align: right;
+    margin-right: 3px;
+}
+
+.water-supply-total-input-style{
+    height: 25px;
+}

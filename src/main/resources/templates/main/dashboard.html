@@ -1,0 +1,806 @@
+<div class="greeting"><span id="dash-user-name"></span><button id="dashboard-reset"></button></div>
+<div id="dashboard-tilelayout" style="margin-bottom: 14px"></div>
+<ul id="options-menu">
+    <li><span class='k-icon k-i-delete'></span>삭제</li>
+</ul>
+
+<script>
+    $('#dash-user-name').text(`${kendo.toString(new Date(),'yyyy 년 MM 월 dd 일')} ${USER_INFO.userNm} 님 현황`);
+    let dashboardRows = localStorage.getItem('dashboard');
+    let dashLayout = JSON.stringify([
+        {
+            colSpan: 4,
+            rowSpan: 4,
+            header: false,
+            bodyTemplate: `<div id="center-event" style="width: 100%;overflow: auto;padding:0.2em;border-width: 0px;"></div>`
+        },
+        {
+            colSpan: 2,
+            rowSpan: 4,
+            header: {
+                template:
+                    "<span class=k-card-title>오늘의 상담</span>"
+            },
+            bodyTemplate:`<div id="dashboard-call-job-today-working"></div>`
+        },
+        {
+            colSpan: 2,
+            rowSpan: 4,
+            header: {
+                template:
+                    "<span class=k-card-title>전광판</span>"
+            },
+            bodyTemplate:
+                `
+                <div class="c-agent-report-container">
+                    <div class="c-agent-report-row">
+                        <span class="c-agent-report-item c-agent-report-item-in">
+                            <span class="c-text-indicator">인바운드</span><span id="cti-agent-report-inSuccess">0</span>
+                        </span>
+                        <span class="c-agent-report-item c-agent-report-item-out">
+                            <span class="c-text-indicator">아웃바운드</span><span id="cti-agent-report-outSuccess">0</span>
+                        </span>
+                    </div>
+                    <div class="c-agent-report-row">
+                        <span class="c-agent-report-item c-agent-report-item-time">
+                            <span class="c-text-indicator">통화시간</span><span id="cti-agent-report-callTime">00:00:00</span>
+                        </span>
+                        <span class="c-agent-report-item c-agent-report-item-time">
+                            <span class="c-text-indicator">수신대기시간</span><span id="cti-agent-report-readyTime">00:00:00</span>
+                        </span>
+                    </div>
+                    <div class="c-agent-report-row">
+                        <span class="c-agent-report-item c-agent-report-item-time">
+                            <span class="c-text-indicator">이석시간</span><span id="cti-agent-report-notReadyTime">00:00:00</span>
+                        </span>
+                        <span class="c-agent-report-item c-agent-report-item-time">
+                            <span class="c-text-indicator">후처리시간</span><span id="cti-agent-report-afterCallTime">00:00:00</span>
+                        </span>
+                    </div>
+                </div>
+                `
+        },
+        {
+            colSpan: 4,
+            rowSpan: 8,
+            header: {
+                text: `최근 15일 상담현황`
+            },
+            bodyTemplate: `<div id="total-points-chart" style="height:100%; width:100%"></div>`
+        },
+        {
+            colSpan: 4,
+            rowSpan: 8,
+            header: {
+                text: ` 공지사항`
+            },
+            bodyTemplate: `<div id="dash-notice-grid"></div>`
+        }
+    ]);
+    //if(!dashboardRows)localStorage.setItem('dashboard',dashLayout);
+
+    let tileLayout = $("#dashboard-tilelayout").kendoTileLayout({
+        containers: JSON.parse(dashLayout),
+        columns: 8,
+        columnsWidth: "12.5%",
+        rowsHeight: "48px",
+        reorderable: false,
+        resizable: false,
+        resize: function (e) {
+            // for widgets that do not auto resize
+            kendo.resize(e.container, true);
+        },
+        reorder:function(e){
+            let rows = JSON.parse(localStorage.getItem("dashboard"));
+            rows.move(e.oldIndex,e.newIndex);
+            localStorage.setItem('dashboard',JSON.stringify(rows));
+        }
+
+    }).data("kendoTileLayout");
+
+    $("#options-menu").kendoContextMenu({
+        target: "#dashboard-tilelayout",
+        filter: ".contextMenuButton",
+        showOn: "click",
+        select: function (e) {
+            let itemId = $(e.target).closest(".k-tilelayout-item").attr("id");
+            let mainItems = tileLayout.items;
+            let item = tileLayout.itemsMap[itemId];
+
+            mainItems.splice(mainItems.indexOf(item), 1);
+            item.colSpan = 1;
+
+            $("#my-team-grid").data("kendoGrid").destroy();
+            recreateSetup(mainItems);
+        }
+    });
+
+    function recreateSetup(mainItems) {
+        for (let i = 0; i < mainItems.length; i++) {
+            if (mainItems[i]) {
+                mainItems[i].order = i;
+            }
+        }
+        tileLayout.setOptions({ containers: mainItems });
+        createWidgets();
+        $("#total-points-chart").data("kendoChart").dataSource.read();
+    }
+
+    let salesCountDataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "/js/main/dashboard/region-sales-count.json",
+                dataType: "json",
+            }
+        },
+        schema: {
+            model: {
+                fields: {
+                    Region: { type: "string" },
+                    Date: { type: "date" },
+                    Sum: { type: "number" },
+                }
+            }
+        },
+        group: {
+            field: "Region",
+        }
+    });
+
+    let salesRevenueDataSource = new kendo.data.DataSource({
+        transport: {
+            read: {
+                url: "/common/v1/user/call-average/15",
+                dataType: "json"
+            }
+        },
+        schema: {
+            model: {
+                fields: {
+                    regYmd: { type: "string" },
+                    center: { type: "number" },
+                    personal: { type: "number" }
+                }
+            },
+            //data: "data",
+            parse: (res) => {
+                let rtn =[];
+                res.data.forEach((element) => {
+                    element.regYmd = element.regYmd.substring(4,6) + '/' + element.regYmd.substring(6,8);
+                    rtn.push(element);
+                });
+                return rtn;
+            }
+        }
+    });
+
+    let scheduleType = [];
+
+    function createWidgets() {
+        callJob();
+        // $("#gauge").kendoArcGauge({
+        //     value: 0,
+        //     centerTemplate:
+        //         "<span style='color:\\#0058E9; font-size:28px; font-weight: bold;'>#:value#%</span>",
+        //     color: "#0058E9"
+        // });
+
+        $("#range-selection").kendoDateRangePicker({
+            labels: false,
+            min: new Date(),
+            max: new Date(),
+            close: rangeSelection
+        });
+
+        // $("#trend-volume-buttons").kendoButtonGroup({
+        //     items: [
+        //         { text: "상담건", attributes: { style: "padding: 4px 35px" } },
+        //         { text: "이관건", attributes: { style: "padding: 4px 29px" } },
+        //     ],
+        //     index: 0,
+        //     select: onChartChange
+        // });
+
+        // $("#grid-button-group").kendoButtonGroup({
+        //     items: [
+        //         { text: "팀", attributes: { style: "padding: 4px 24px" } },
+        //         { text: "전체", attributes: { style: "padding: 4px 22px" } },
+        //     ],
+        //     index: 0,
+        //     select: onGridChange
+        // });
+
+        let chart = $("#total-points-chart").kendoChart({
+            dataSource: [],
+            title: {
+                visible: false
+            },
+            plotArea: {
+                margin: {
+                    bottom: 16,
+                }
+            },
+            chartArea: {
+                margin: { top: "0px" }
+            },
+            legend: {
+                position: "bottom",
+                labels: {
+                    margin: {
+                        right: 200
+                    }
+                },
+                align: "center"
+            },
+            series: [
+                {
+                    type: "line",
+                    field: "center",
+                    categoryField: "regYmd",
+                    name: "센터평균"
+                },
+                {
+                    type: "line",
+                    field: "personal",
+                    categoryField: "regYmd",
+                    name: "개인"
+                }
+            ],
+            categoryAxis: {
+                field: "regYmd",
+                labels: {
+                    format: "MM/dd"
+                }
+            },
+            valueAxis: {
+                // labels: {
+                //     template: getTemplate,
+                // },
+                type: "numeric"
+            },
+            tooltip: {
+                visible: true,
+                shared: true,
+                format: "N0"
+            },
+        }).data("kendoChart");
+        setTimeout(function () {
+            chart.resize();
+        }, 350);
+
+        chart.setDataSource(salesRevenueDataSource);
+
+        $("#dash-notice-grid").kendoCpGrid({
+            columns: [
+                {
+                    field: "importanceNm",
+                    title:"중요도",
+                    width: 70,
+                    attributes: {style: 'text-align:center'},
+                },
+                {
+                    field: "docNm",
+                    title: "제목",
+                    attributes: {style: 'text-overflow: ellipsis; overflow: hidden; white-space: nowrap;'},
+                },
+                // {
+                //     field: "startYmd",
+                //     title: "공지기간(From)",
+                //     width:120,
+                //     attributes: {style: 'text-align:center'},
+                // },
+                // {
+                //     field: "endYmd",
+                //     title: "공지기간(To)",
+                //     width:120,
+                //     attributes: {style: 'text-align:center'},
+                // },
+                // {
+                //     field: "confirmPerCnt",
+                //     title:"조회수",
+                //     width: 70,
+                //     attributes: {style: 'text-align:center'},
+                // },
+                // {
+                //     field: "rgtrDeptNm",
+                //     title:"등록부서",
+                //     width:200,
+                //     attributes: {style: 'text-align:center'},
+                // },
+                {
+                    field: "rgtrNm",
+                    title:"등록자",
+                    width: 110,
+                    attributes: {style: 'text-align:center'},
+                },
+                {
+                    field: "regDt",
+                    title:"등록일시",
+                    width:160,
+                    attributes: {style: 'text-align:center'},
+                },
+            ],
+            dataSource: datshNoticeDataSource,
+            change: (e) => {
+                const cell = e.sender.select();
+                const selectRows = e.sender.dataSource.view()[cell.closest("tr").index()];
+
+                let editorOption ={
+                    name: 'notice-detail',
+                    height: 750,
+                    width: 850,
+                    top: 100,
+                    left: 100,
+                }
+
+                new popupWindow(`/notice-detail?parentPage=dashboard&docUuid=${selectRows.docUuid}`, 'notice-detail', editorOption).open();
+                //공지사항 조회수 +1 이후 grid read
+                const noticeReadCnt =  new cpDataSource(METHOD.POST, `/board/v1/notice/read/insert/${selectRows.docId}`, {}).getDataSource();
+                noticeReadCnt.read();
+            },
+            height: "100%",
+            resizable: false,
+            selectable: true,
+            pageable: {
+                refresh: true
+            },
+        });
+
+        let scheduleTypeds = new cpDataSource(METHOD.GET, '/common/v1/code/ScheduleType').getDataSource();
+        scheduleTypeds.read().then(() => {
+            let data = scheduleTypeds.data();
+            let scheduleTypeItem = {};
+            data.forEach(d => {
+                scheduleTypeItem.text = d.codeNm;
+                scheduleTypeItem.value = d.codeKey;
+                scheduleTypeItem.color = `#${d.codeValue_01}`;
+                scheduleType.push({...scheduleTypeItem});
+            });
+
+            $('#center-event').kendoScheduler({
+                height: 'auto',
+                toolbar: {
+                    items: [ [ "today", "previous", "next" ], "current" ]
+                },
+                views: [
+                    {
+                        type: "agenda",selected: true
+                    }
+                ],
+                editable: false,
+                timezone: "Etc/UTC",
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/work/v1/scheduler/read",
+                            dataType: "json",
+                            contentType: "application/json",
+                            type: "GET"
+                        }
+                    },
+                    schema: {
+                        data: function (res) {
+                            let datas = res.data;
+                            if (Array.isArray(datas)) {
+                                datas = res.data.map(d => {
+                                    d.start = new Date(d.start);
+                                    d.end = new Date(d.end);
+                                    d.RecurrenceException = d.recurrenceException;
+                                    return d;
+                                });
+                            } else {
+                                let time_diff = 9 * 60 * 60 * 1000;
+                                datas.start = new Date(datas.start + time_diff);
+                                datas.end = new Date(datas.end + time_diff);
+                                datas.RecurrenceException = datas.recurrenceException;
+                            }
+                            return datas;
+                        },
+                        model: {
+                            id: "taskId",
+                            fields: {
+                                taskId: {from: "taskId", type: "number"},
+                                title: {from: "title", defaultValue: "", validation: {required: true}},
+                                start: {from: "start", timezone: 'Asia/Seoul', validation: {required: true}},
+                                end: {from: "end", timezone: 'Asia/Seoul', validation: {required: true}},
+                                startTimezone: {from: "startTimezone"},
+                                endTimezone: {from: "endTimezone"},
+                                description: {from: "description"},
+                                recurrenceId: {from: "recurrenceId"},
+                                recurrenceRule: {from: "recurrenceRule"},
+                                recurrenceException: {from: "recurrenceException"},
+                                schedulerType: {from: "schedulerType", validation: {required: true}},
+                                isAllDay: {type: "boolean", from: "isAllDay"}
+                            }
+                        }
+                    }
+                },
+                resources: [
+                    {
+                        field: "schedulerType",
+                        title: "스케줄타입",
+                        dataSource: scheduleType
+                    }
+                ],
+                dataBound: function(e) {
+                    $(e.sender.wrapper).find('.k-scheduler-content').css({height:'100%'});
+                    $(e.sender.wrapper).find('.k-scheduler-navigation').css({height:'50px'});
+                    //$(e.sender.wrapper).find('.k-nav-today').css({height:'68%'});
+                }
+            });
+        });
+
+
+    }
+    let startDate = new Date();
+    startDate.setMonth(startDate.getMonth() - 1);
+    let datshNoticeDataSource = new kendo.data.DataSource({
+        transport : {
+            read : {
+                url : "/board/v1/notice/select/page",
+                type : "GET",
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+            },
+
+            parameterMap : (options) =>{
+                const param = {
+                    searchType : 'Title',
+                    searchTxt : '',
+                    startDt: kendo.toString(
+                        startDate,
+                        'yyyy-MM-dd'
+                    ),
+                    endDt: kendo.toString(
+                        new Date(),
+                        'yyyy-MM-dd'
+                    ),
+                    importance: '',
+                    userId : USER_INFO.userId,
+                    deptId : USER_INFO.deptId,
+                    sortType : "",
+                    outputYn : "Y",
+                    page : options.page,
+                    totalPage : options.pageSize
+                };
+
+                return param;
+            }
+        },
+        schema: {
+            data : 'data.rows',
+            total : 'data.totalCount',
+            model : {
+                importanceNm : {type : 'string'},
+                docNm : {type : 'string'},
+                startYmd : {type : 'date'},
+                endYmd : {type : 'date'},
+                confirmPerCnt : {type : "number"},
+                rgtrDeptNm : {type : "string"},
+                rgtrNm : {type : "string"},
+                regDt : {type : "string"},
+            },
+            parse : (res) => {
+                res.data.rows.forEach((row)=>{
+                    row.regDt = kendo.toString(new Date(row.regDt), "yyyy-MM-dd HH:mm");
+                })
+                return res;
+            }
+        },
+        serverPaging: true,
+        pageSize : 20,
+        requestEnd : (e) => {
+            if(e.type === "read"){
+                message.notification({type : "info"});
+            }
+        }
+    });
+
+    function rangeSelection(e) {
+        let range = this.range();
+        let chart = $("#total-points-chart").data("kendoChart");
+        chart.dataSource.filter({
+            logic: "and",
+            filters: [
+                { field: "Date", operator: "gte", value: range.start },
+                { field: "Date", operator: "lte", value: range.end }
+            ]
+        });
+    }
+
+    function onDataBound(e) {
+        let grid = this;
+        grid.table.find("tr").each(function () {
+            let dataItem = grid.dataItem(this);
+            $(this).find(".ratingInGrid").kendoRating({
+                min: 1,
+                max: 5,
+                label: false,
+                readonly: true
+            });
+
+            kendo.bind($(this), dataItem);
+        });
+    }
+
+    function onChartChange(e) {
+        let selectedOption = e.sender.current().index();
+        let range = $("#range-selection").data("kendoDateRangePicker").range();
+        if (range) {
+            let filterByRange = {
+                logic: "and",
+                filters: [
+                    { field: "Date", operator: "gte", value: range.start },
+                    { field: "Date", operator: "lte", value: range.end }
+                ]
+            }
+            salesCountDataSource.filter(filterByRange);
+            salesRevenueDataSource.filter(filterByRange);
+        }
+
+        if (selectedOption === 1) {
+            $("#total-points-chart").data("kendoChart").setDataSource(salesCountDataSource);
+        } else {
+            $("#total-points-chart").data("kendoChart").setDataSource(salesRevenueDataSource);
+        }
+    }
+
+    function getId(id) {
+        return (id % 9) + 1;
+    }
+
+
+
+    // function getTemplate(data) {
+    //     return kendo.toString(data.value, "c");
+    // }
+
+    function getBudgetTemplate(dataItem) {
+        if (dataItem.Budget < 0) {
+            return '<span style="color: #FF6358;">-' + kendo.format("{0:c}", Math.abs(dataItem.Budget)) + "</span>";
+        } else return kendo.format("{0:c}", dataItem.Budget);
+    }
+
+    function updateCategoryAxisLabelsStep() {
+        let chart = $("#total-points-chart").data("kendoChart");
+        if (chart) {
+            if ($(window).width() <= 716) {
+                chart.setOptions({
+                    categoryAxis: {
+                        labels: {
+                            step: 2
+                        }
+                    }
+                });
+            } else {
+                chart.setOptions({
+                    categoryAxis: {
+                        labels: {
+                            step: 1
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    function callJob(){
+        new cpDataSource(METHOD.GET, `/common/v1/user/call-job`)
+            .getDataSource()
+            .fetch(function () {
+                let rows = this.view();
+                // let allType = ["Default","Reservation","EmpTransfer","CallTransfer"];
+                // let worked = rows
+                //     .filter(row => allType.indexOf(row.callType) > -1)
+                //     .reduce((a, r) => {
+                //         return a + r.cnt;
+                //     },0);
+                // $('#today-job-cnt').text(worked);
+                // let first = rows
+                //     .filter(row => ["Default","Reservation"].indexOf(row.callType) > -1)
+                //     .reduce((a, r) => {
+                //         return a + r.cnt;
+                //     },0);
+                //
+                // $('#job-first-cnt').text(first||0);
+                //
+                // let second = rows
+                //     .filter(row => ["EmpTransfer","CallTransfer"].indexOf(row.callType) > -1)
+                //     .reduce((a, r) => {
+                //         return a + r.cnt;
+                //     },0);
+                // $('#job-second-cnt').text(second);
+                //
+                // let ration = (first / worked * 100).toFixed(1);
+                // $("#gauge").data("kendoArcGauge").value(isNaN(ration) ? 0 : ration);
+
+                let dashWorked = rows
+                    .filter(row => row.callType)
+                    .map(row => {
+                        if(row.callType == "Default" || row.callType == "CallTransfer" || row.callType == "EmpTransfer"){
+                            return {
+                                colSpan: 1,
+                                rowSpan: 1,
+                                bodyTemplate: `<div class="c-info-container">
+                                            <div class="c-info-holder" style="text-align: center">
+                                                <span class="c-item-values">${row.cnt}</span>
+                                                <span class="c-text-indicator">${row.callTypeNm}</span>
+                                            </div>
+                                        </div>`
+                            }
+                        }else{
+                            return {
+                                colSpan: 1,
+                                rowSpan: 1,
+                                bodyTemplate: `<div class="c-info-container">
+                                            <div class="c-info-holder" style="text-align: center">
+                                                <span>
+                                                   <span class="c-item-values">${row.cnt}</span>/<span class="c-item-values-working-small">${row.nonProcessCnt}</span>
+                                                </span>
+                                                <span class="c-text-indicator">${row.callTypeNm}</span>
+                                            </div>
+                                        </div>`
+                            }
+                        }
+                    });
+                $("#dashboard-call-job-today-working").kendoTileLayout({
+                    containers: dashWorked,
+                    columns: 3,
+                    columnsWidth: "32%",
+                    rowsHeight: 76,
+                    width: '100%',
+                    height: 'auto',
+                    gap: {
+                        columns: 9,
+                        rows: 10
+                    }
+                });
+            });
+    }
+
+    $(document).ready(function () {
+
+        createWidgets();
+        updateCategoryAxisLabelsStep();
+        $(window).on("resize", function () {
+            kendo.resize($(".k-chart"));
+            //updateCategoryAxisLabelsStep();
+        });
+        ipron.AgentReport(USER_INFO.ctiStation, USER_INFO.ctiId, tenantName);
+
+        $('#dashboard-reset').kendoFloatingActionButton({
+            icon: 'reload',
+            align: "top end",
+            size: "small",
+            shape: 'rectangle',
+            themeColor: "error",
+            click: function () {
+                localStorage.setItem('dashboard',dashLayout);
+                $("#dash-notice-grid").data("kendoCpGrid").destroy();
+                recreateSetup(JSON.parse(dashLayout));
+                ipron.AgentReport(USER_INFO.ctiStation, USER_INFO.ctiId, tenantName);
+            }
+        });
+    });
+</script>
+
+<style>
+    .greeting {
+        font-weight: 300;
+        font-size: 28px;
+        padding: 0px 0px 0px 24px;
+       /*background: #fafafa;*/
+    }
+    .k-fab-solid-error {
+        box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12), 0px 3px 5px rgba(0, 0, 0, 0.2);
+        outline-offset: -1px;
+        border-color: #dc3545;
+        color: white;
+        background-color: #dc3545;
+        outline: 0px solid #dc3545;
+    }
+    .k-tilelayout-item-body.k-card-body:nth-child(-n + 4) {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .k-card-header {
+        border-style: none;
+    }
+
+    .k-card-title {
+        font-size: 20px;
+        color: #424242;
+    }
+
+    .template-footer {
+        font-size: 20px;
+        color: #666666;
+    }
+
+    #gauge {
+        width: 150px;
+        height: 100px;
+    }
+
+    .mkteam-header {
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+
+    .points-header {
+        padding: 23px 24px 0px 16px;
+        font-size: 20px;
+        line-height: 24px;
+        color: #000000;
+    }
+
+    .customer-photo {
+        display: inline-block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background-size: 32px 35px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 32px;
+        box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0, 0, 0, 0.2);
+        margin-left: 5px;
+    }
+
+    .customer-name {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 32px;
+        padding-left: 3px;
+    }
+
+    .k-rating-container .k-rating-item {
+        padding: 4px 0;
+    }
+
+    .k-rating-container .k-rating-item .k-icon {
+        font-size: 16px;
+    }
+
+    .ratingInGrid .k-rating-item.k-state-selected,
+    .ratingInGrid .k-rating-item.k-state-hover {
+        color: #ffa600;
+    }
+
+    .k-button.k-active {
+        background-color: #053e91;
+        color: #ffffff;
+    }
+
+    /*.k-spacer {*/
+    /*    display:none;*/
+    /*}*/
+
+    @media (max-width: 716px) {
+        #dashboard-tilelayout div.k-tilelayout-item:nth-child(-n + 7) {
+            grid-column-end: span 10 !important;
+        }
+    }
+
+    @media (min-width: 717px) and (max-width: 1065px) {
+        #dashboard-tilelayout div.k-tilelayout-item:nth-child(-n + 7) {
+            grid-column-end: span 2 !important;
+        }
+    }
+
+    .k-input {
+        width: auto;
+    }
+
+    /*.k-nav-today {*/
+    /*    line-height: 1.55;*/
+    /*}*/
+
+    #center-event .k-scheduler-content{
+        overflow: hidden; !important;
+    }
+</style>

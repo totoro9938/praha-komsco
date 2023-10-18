@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragment/popup-header" :: popupHeader></head>
+
+<body>
+<section th:id="${idName}+'-detail-layout'">
+    <div class="pop-container k-prompt-container">
+        <input type="hidden" th:id="${idName}+'-detail-doc-id'" name="docId">
+        <div style="display: flex; flex-flow: column; width: 100%;">
+            <div class="pop-k-card k-card" style="height: 70%; width: 100%;">
+                <div class="pop-k-header k-card-header">
+                    <div>
+                        <h3 th:id="${idName}+'-detail-popup-title'">게시글 상세보기</h3>
+                    </div>
+                </div>
+                <div class="k-card-body">
+                    <div class="k-card">
+                        <div class="k-card-header" style="display: flex; justify-content: space-between";>
+                            <h4 th:id="${idName}+'-detail-title'"></h4>
+                        </div>
+                        <div th:id="${idName}+'-detail-body-splitter'" class="k-card-body">
+                            <div th:id="${idName}+'-detail-body-top-section'" style="height:83%; border-bottom: 1px solid rgb(222,226,230);">
+                                <div th:id="${idName}+'-detail-contents'" style="height: 100%;"></div>
+                            </div>
+                            <div th:id="${idName}+'-detail-body-bottom-section'" style="height:15%;">
+                                <div class="c-table">
+                                    <div class="c-table-row">
+                                        <div class="c-table-cell">
+                                            <dt>등록</dt>
+                                            <dd>
+                                                <input th:id="${idName}+'-detail-reg-user-date'" />
+                                            </dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>수정</dt>
+                                            <dd>
+                                                <input th:id="${idName}+'-detail-mdf-user-date'" />
+                                            </dd>
+                                        </div>
+                                        <div class="c-table-cell">
+                                            <dt>등록부서</dt>
+                                            <dd><input th:id="${idName}+'-detail-reg-dept'" /></dd>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="k-card-footer" style="height:50px; display: flex; justify-content: space-between;">
+                    <div>
+                        <button th:id="${idName}+'-detail-file-list-btn'">첨부파일</button>
+                    </div>
+                    <div>
+                        <button sec:authorize="hasRole('ROLE_BOARD_RESOURCE_ROOM_DETAIL_DELETE')" th:id="${idName}+'-detail-delete-btn'">삭제</button>
+                        <button sec:authorize="hasRole('ROLE_BOARD_RESOURCE_ROOM_DETAIL_UPDATE')" th:id="${idName}+'-detail-update-btn'">수정</button>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 25%;">
+                <div th:id="${idName}+'-detail-comment-validator'" style="display: flex; padding: 15px; border-bottom: 1px solid rgb(222,226,230);">
+                    <input th:id="${idName}+'-detail-comment-write'" th:name="${idName}+'-detail-comment-write'" required/>
+                    <button th:id="${idName}+'-detail-comment-btn'" style="margin-left:5px;">등록</button>
+                </div>
+                <div style="border: none;" th:id="${idName}+'-detail-comment-list-view'"></div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
+
+<script type="text/x-kendo-template" th:id="${idName}+'-comment-listview'">
+    <div style="padding: 5px;">
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+            <div>
+                <span th:class="${idName}+'-comment-rgtr-name'" style="font-weight: 550; font-size: 16px;">#:mdfrNm#</span>
+                <span th:class="${idName}+'-comment-rgtr-date'" style="margin-left:5px; color: grey">#:mdfDt#</span>
+            </div>
+            <div th:id="${idName}+'-comment-btn-div1-#=docId#'">
+                <span th:id="${idName}+'-comment-update-btn-#=docId#'" class="k-icon k-i-pencil" style="cursor: pointer; font-size: 20px;"></span>
+                <span th:id="${idName}+'-comment-delete-btn-#=docId#'" class="k-icon k-i-delete" style="cursor: pointer; font-size: 20px;"></span>
+            </div>
+            <div th:id="${idName}+'-comment-btn-div2-#=docId#'" style="display: none;">
+                <span th:id="${idName}+'-comment-update-btn-ok-#=docId#'" class="k-icon k-i-check" style="cursor: pointer; font-size: 20px;"></span>
+                <span th:id="${idName}+'-comment-update-btn-cancel-#=docId#'" class="k-icon k-i-close" style="cursor: pointer; font-size: 20px;"></span>
+            </div>
+        </div>
+        <div style="border-bottom: 1px solid rgb(222,226,230);">
+            <div style="margin-bottom: 10px;">
+                <span th:id="${idName}+'-comment-contents-#=docId#'" th:class="${idName}+'-command-contents-class'">#:contents#</span>
+                <input th:id="${idName}+'-comment-contents-text-box-#=docId#'" th:class="${idName}+'-command-contents-textarea-class'" />
+            </div>
+        </div>
+    </div>
+</script>
+<script th:src="@{/js/board/resourceboard/resourceBoardDetail.js}"></script>

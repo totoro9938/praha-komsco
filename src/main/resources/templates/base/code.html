@@ -1,0 +1,59 @@
+<section id="code-layout">
+    <div id="code-splitter" class="c-splitter">
+        <div id="code-divSearch" class="pane-content">
+            <div class="c-search-box c-grid-search-box">
+                <div class="c-grid-search-row">
+                    <div class="c-grid-search-item" style="min-width: 100px;">
+                        <div id="code-search-sysYn-label"><input type="checkbox" id="code-search-sysYn" class="k-checkbox-md code-search-check-box"> 시스템 </div>
+                        <div><input type="checkbox" id="code-search-useYn" class="k-checkbox-md code-search-check-box"> 미사용 </div>
+                        <div><input type="checkbox" id="code-search-delYn" class="k-checkbox-md code-search-check-box"> 삭제 </div>
+                    </div>
+                </div>
+                <div id="code-btn-div" style="min-width: 200px;text-align: right;">
+                    <button id="code-add-button" sec:authorize="hasRole('ROLE_BASE_CODE_MGR_INSERT')" >추가</button>
+                    <button id="code-cancel-button" sec:authorize="hasRole('ROLE_BASE_CODE_MGR_UPDATE')">초기화</button>
+                    <button id="code-save-button"  sec:authorize="hasRole('ROLE_BASE_CODE_MGR_UPDATE')">저장</button>
+                </div>
+            </div>
+        </div>
+        <div id="code-divGrid" class="pane-content">
+            <div id="code-grid"></div>
+        </div>
+    </div>
+</section>
+
+<script th:src="@{/js/base/code.js}"></script>
+
+<script type="text/x-kendo-template" id="code-detail-template">
+    <div id="code-detail-splitter-#:codeGroupCd#" class="c-splitter" style="height: 520px">
+        <div id="code-detail-divSearch-#:codeGroupCd#" class="pane-content">
+            <div class="c-search-box c-grid-search-box">
+                <div class="c-grid-search-row">
+                    <div class="c-grid-search-item" style="min-width: 100px;">
+                        <div for="code-detail-search-useYn-#:codeGroupCd#"><input type="checkbox" id="code-detail-search-useYn-#:codeGroupCd#" class="k-checkbox-md code-detail-search-check-box-#:codeGroupCd#"> 미사용 </div>
+                        <div for="code-detail-search-delYn-#:codeGroupCd#"><input type="checkbox" id="code-detail-search-delYn-#:codeGroupCd#" class="k-checkbox-md code-detail-search-check-box-#:codeGroupCd#"> 삭제 </div>
+                    </div>
+                </div>
+                <div style="min-width: 200px;text-align: right;">
+                    <button id="code-detail-add-button-#:codeGroupCd#" sec:authorize="hasRole('ROLE_BASE_CODE_MGR_INSERT')" >추가</button>
+                    <button id="code-detail-cancel-button-#:codeGroupCd#" sec:authorize="hasRole('ROLE_BASE_CODE_MGR_UPDATE')">초기화</button>
+                    <button id="code-detail-save-button-#:codeGroupCd#"  sec:authorize="hasRole('ROLE_BASE_CODE_MGR_UPDATE')">저장</button>
+                </div>
+            </div>
+        </div>
+        <div class="pane-content">
+            <div id="code-detail-grid-treelist-#:codeGroupCd#"></div>
+        </div>
+    </div>
+    <input type="hidden" id="code-detail-codeGroupCd-#:codeGroupCd#" >
+    <input type="hidden" id="code-detail-maxLevel-#:codeGroupCd#" >
+</script>
+
+<style>
+    .k-column-title {
+        margin: auto;
+    }
+    .k-grid .k-hierarchy-col {
+        width: 15px;
+    }
+</style>

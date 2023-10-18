@@ -1,0 +1,33 @@
+<section id="callcat-day-layout">
+  <div id="callcat-day-splitter" class="c-splitter">
+    <div id="callcat-day-div-search" class="pane-content">
+      <div class="c-search-box c-grid-search-box">
+        <div class="c-grid-search-row">
+          <div class="c-grid-search-item" style="width: 440px;">
+            <label>기간</label>
+            <input id="callcat-day-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="callcat-day-search-date-end" style="width: 174px;margin-left: 5px;">
+          </div>
+          <div class="c-grid-search-item">
+            <label>상담분류</label>
+            <input id="callcat-day-callcat">
+          </div>
+        </div>
+        <div style="min-width: 100px;text-align: right;">
+          <button sec:authorize="hasRole('ROLE_REPORT_RECEIPT_CALLCAT_SELECT')" id="callcat-day-btn-search" title="검색"></button>
+          <button sec:authorize="hasRole('ROLE_REPORT_RECEIPT_CALLCAT_DOWN')" id="callcat-day-btn-excel" title="엑셀다운"></button>
+        </div>
+      </div>
+    </div>
+    <div class="pane-content">
+      <div id="callcat-day-grid"></div>
+    </div>
+  </div>
+</section>
+<script th:src="@{/js/analysis/reportCallcatDay.js}"></script>
+
+<style>
+  #callcat-day-grid tr td {
+    border-width: 0px 1px 1px 0px;
+    border-style: solid;
+  }
+</style>

@@ -1,0 +1,175 @@
+<section id="sms-config-layout">
+    <div id="sms-config-tile-layout"></div>
+</section>
+
+
+
+<script type="text/x-kendo-template" id="sms-config-tile-layout-config">
+    <div style="height: 100%;overflow: auto" id="sms-config-valid">
+        <div class="c-table">
+            <div class="c-table-row" style="width:100%">
+                <div class="c-table-cell" >
+                    <dt>문자대표번호 <p class="c-required">*</p></dt>
+                    <dd><input id="sms-config-number" name="smsTelNo" style="width: 100%" required></dd>
+                </div>
+                <div class="c-table-cell">
+                    <dt>동일문자적용 <p class="c-required">*</p></dt>
+                    <dd>
+                        <input id="sms-config-same-sms-config" name="sameSmsTiem" style="width: 60%" required>
+                        <span> 초 이후 적용</span>
+                    </dd>
+                </div>
+                <div class="c-table-cell" style="vertical-align: middle">
+                    <dd><label class="sms-config-label">접수알림문자</label><input id="sms-config-alram-yn" name="alramYn"></dd>
+                </div>
+            </div>
+            <div class="c-table-row" style="width:100%">
+                <div class="c-table-cell" >
+                    <dt>평일상담시간 <p class="c-required">*</p></dt>
+                    <dd>
+                        <input id="sms-config-weekday-consult-start-time" name="weekdatTimeStart" style="width: 45%" required>
+                        ~
+                        <input id="sms-config-weekday-consult-end-time" name="weekdatTimeEnd" style="width: 45%" required>
+                    </dd>
+                </div>
+                <div class="c-table-cell" >
+                    <dt>토요일상담시간</dt>
+                    <dd>
+                        <input id="sms-config-saturday-consult-start-time" style="width: 45%">
+                        ~
+                        <input id="sms-config-saturday-consult-end-time" style="width: 45%">
+                    </dd>
+                </div>
+                <div class="c-table-cell" >
+                    <dt>일요일상담시간</dt>
+                    <dd>
+                        <input id="sms-config-sunday-consult-start-time" style="width: 45%">
+                        ~
+                        <input id="sms-config-sunday-consult-end-time" style="width: 45%">
+                    </dd>
+                </div>
+            </div>
+        </div>
+        <div class="c-table">
+            <div class="c-table-row" style="width:100%">
+                <div class="c-table-cell" >
+                    <dt>시간외 접수시 알림 메세지 <span id="sms-config-1">[0 Byte]</span> <p class="c-required">*</p></dt>
+                    <dd><textarea id="sms-config-end-time-message" name="endTimeMessage" required></textarea></dd>
+                </div>
+            </div>
+            <div class="c-table-row" style="width:100%">
+                <div class="c-table-cell" >
+                    <dt>휴일 접수시 알림 메세지 <span id="sms-config-2">[0 Byte]</span> <p class="c-required">*</p></dt>
+                    <dd><textarea id="sms-config-holiday-time-message" name="endTimeMessage" required></textarea></dd>
+                </div>
+            </div>
+            <div class="c-table-row" style="width:100%">
+                <div class="c-table-cell" >
+                    <dt>평일 접수시 알림 메세지 <span id="sms-config-3">[0 Byte]</span> <p class="c-required">*</p></dt>
+                    <dd><textarea id="sms-config-weekday-time-message" name="weekdayTimeMessage" required></textarea></dd>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-kendo-template" id="sms-config-tile-layout-spam">
+    <div id="sms-config-spam-list-divSplitter" class="c-splitter conuslt-tab-splitter" style="height: 100%;width: 100%;border:0" >
+        <div id="sms-config-spam-splitter" class="pane-content" >
+            <div class="c-search-box c-grid-search-box">
+                <div class="c-grid-search-row">
+                    <div class="c-grid-search-item" style="width: 340px;">
+                        <label>등록일자</label>
+                        <input id="sms-config-search-date-start" style="width: 124px;margin-right:5px;"> ~ <input id="sms-config-search-date-end" style="width: 124px;margin-left: 5px;">
+                    </div>
+                    <div class="c-grid-search-item">
+                        <label>전화번호</label>
+                        <input id="sms-config-search-telNo">
+                    </div>
+                </div>
+                <div style="min-width: 100px;text-align: right;">
+                    <button id="sms-config-spam-btn-search"></button>
+                </div>
+            </div>
+            <div id ="sms-config-spam-list-container" class="pane-content" style="height: calc(100% - 50px);">
+                <div id="sms-config-spam-list-grid"></div>
+            </div>
+        </div>
+        <div id="sms-config-spam-list-detail" class="pane-content c-detail-view" style="border: 1px solid \#dee2e6; margin-top: 1px;">
+            <div class="c-detail-body">
+                <div class="c-detail-header">
+                    <div><h3>상세보기</h3></div>
+                    <div>
+                        <div id="sms-config-spam-list-dtailClose">
+                            <span class="k-icon k-i-close" style="cursor: pointer"></span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <input type="hidden" id="sms-config-spam-uuid">
+                    <div class="c-table">
+                        <div class="c-table-row">
+                            <div class="c-table-cell">
+                                <dt>스팸상태</dt>
+                                <dd><input id="sms-config-spam-detail-useYnNm" style="width: 100%"></dd>
+                            </div>
+                            <div class="c-table-cell">
+                                <dt>전화번호</dt>
+                                <dd><input id="sms-config-spam-detail-spamTelNo" style="width: 100%"></dd>
+                            </div>
+                            <div class="c-table-cell">
+                                <dt>등록</dt>
+                                <dd><input id="sms-config-spam-detail-reg-dtail" style="width: 100%"></dd>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-table">
+                        <div class="c-table-row">
+                            <div class="c-table-cell">
+                                <dt>등록시 접수된 문자</dt>
+                                <dd><textarea id="sms-config-spam-detail-reg-sms-content" style="width: 100%"></textarea></dd>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="c-search-btn-opened">
+                        <button sec:authorize="hasRole('ROLE_WORK_SMS_CONFIG_MGR_UPDATE')" id="sms-config-spam-release" style="margin-right: 5px;">스팸해제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/x-kendo-template" id="sms-config-tile-layout-user">
+    <div id="sms-config-divSearch" style="height: 100%;width: 100%;border:0">
+        <div class="c-search-box c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item">
+                    <label>부서</label>
+                    <input id="sms-config-search-deptTree">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="sms-config-user-btn-search"></button>
+            </div>
+        </div>
+        <div id="sms-config-user-divGrid" style="height: calc(100% - 50px);">
+            <div id="sms-config-user-grid"></div>
+        </div>
+    </div>
+</script>
+
+
+<script th:src="@{/js/work/smsConfig.js}"></script>
+
+<style>
+    .sms-config-label {
+        margin-right: 5px;
+        font-size: 13px;
+        font-weight: inherit;
+        color: #5e5e5e;
+        height: 16px;
+        line-height: 16px;
+        opacity: 0.9;
+    }
+</style>

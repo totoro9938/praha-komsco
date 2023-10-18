@@ -1,0 +1,33 @@
+<section id="report-manual-layout">
+  <div id="report-manual-splitter" class="c-splitter">
+    <div id="report-manual-div-search" class="pane-content">
+      <div class="c-search-box c-grid-search-box">
+        <div class="c-grid-search-row">
+          <div class="c-grid-search-item" style="width: 440px;">
+            <label>기간</label>
+            <input id="report-manual-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="report-manual-search-date-end" style="width: 174px;margin-left: 5px;">
+          </div>
+          <div class="c-grid-search-item">
+            <label>부서</label>
+            <input id="report-manual-department">
+          </div>
+        </div>
+        <div style="min-width: 100px;text-align: right;">
+          <button sec:authorize="hasRole('ROLE_REPORT_MANUAL_LIST_SELECT')" id="report-manual-btn-search" title="검색"></button>
+          <button sec:authorize="hasRole('ROLE_REPORT_MANUAL_LIST_DOWN')" id="report-manual-btn-excel" title="엑셀다운"></button>
+        </div>
+      </div>
+    </div>
+    <div class="pane-content">
+      <div id="report-manual-grid"></div>
+    </div>
+  </div>
+</section>
+<script th:src="@{/js/analysis/reportManual.js}"></script>
+
+<style>
+  #report-manual-grid tr td {
+    border-width: 0px 1px 1px 0px;
+    border-style: solid;
+  }
+</style>

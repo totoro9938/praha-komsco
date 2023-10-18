@@ -1,0 +1,39 @@
+<section id="notice-layout">
+
+    <div id="notice-expansion-panel">
+        <div class="c-grid-search-box">
+            <div class="c-grid-search-row">
+                <div class="c-grid-search-item" style="width: 440px;">
+                    <label>등록일시</label>
+                    <input id="notice-search-date-start" style="width: 174px;margin-right:5px;"> ~ <input id="notice-search-date-end" style="width: 174px;margin-left: 5px;">
+                </div>
+                <div class="c-grid-search-item" style="margin-right: 10px;">
+                    <label>중요도</label>
+                    <div id="notice-search-importance"></div>
+                </div>
+                <div class="c-grid-search-item c-search-txt-group">
+                    <input id="notice-search-type" style="width: 45%;">
+                    <input id="notice-search-txt" style="width: 55%;">
+                </div>
+            </div>
+            <div style="min-width: 100px;text-align: right;">
+                <button id="notice-search-button" sec:authorize="hasRole('ROLE_BOARD_NOTICE_SELECT')" title="검색"></button>
+                <button id="notice-search-reset" sec:authorize="hasRole('ROLE_BOARD_NOTICE_SELECT')" title="초기화"></button>
+            </div>
+        </div>
+    </div>
+    <div id="notice-splitter">
+        <div id="notice-splitter-main" class="c-splitter-grid">
+            <div id="notice-grid" class="c-grid"></div>
+        </div>
+        <div id="notice-splitter-detail" class="c-splitter-detail"></div>
+    </div>
+
+</section>
+
+<script type="text/x-kendo-template" id="notice-toolbar-template">
+    <button id="notice-write-button" sec:authorize="hasRole('ROLE_BOARD_NOTICE_INSERT')">글쓰기</button>
+</script>
+
+
+<script th:src="@{/js/board/notice.js}"></script>
