@@ -256,11 +256,13 @@ let userOtpCheckDataSource = new kendo.data.DataSource({
             dataType: 'json'
         },
         parameterMap: function (data, type) {
+            console.log(data)
             if (type === 'read') {
                 return JSON.stringify({
                     "companyCd": $('#companyCd').val(),
                     "userCd": $('#userCd').val(),
-                    "userPwd": $('#userPwd').val()
+                    "userPwd": $('#userPwd').val(),
+                    "reOtp":data.reOtp
                 });
             }
         }
@@ -286,6 +288,21 @@ $(document).ready(function () {
             console.debug(e);
         }
     }).data("kendoValidator");
+    const authNumber = $("#auth-number");
+    const optNumber = authNumber.kendoMaskedTextBox({
+        mask: "0  0  0  0  0  0",
+        unmaskOnPost: true,
+        promptChar:'*',
+        fillMode: "flat"
+    }).data('kendoMaskedTextBox');
+
+    authNumber.keypress(function (event) {
+        if (event.which == 13) {
+            if (validatable.validate()) {
+                login();
+            }
+        }
+    });
 
     $loginForm.keypress(function (event) {
         if (event.which == 13) {
@@ -315,17 +332,17 @@ $(document).ready(function () {
     }
 });
 
-const otpCheck = () => {
+const otpCheck = (reOtp = false) => {
+    userOtpCheckDataSource.transport.options.read.data={reOtp:reOtp}
     userOtpCheckDataSource.read().then(() => {
         const result = userOtpCheckDataSource.data();
         openWin(result);
     });
 
     function openWin(result) {
-        console.log(result);
         const row = result[0];
         let $div = $(`<div id="otp-window"></div>`);
-        if(row.save) {
+        if(row.save && row.otpUse) {
             $div.kendoWindow({
                 width: 500,
                 height: row.save ? 550 : 300,
@@ -367,8 +384,10 @@ const otpCheck = () => {
                     e.sender.destroy();
                 }
             }).data("kendoWindow").refresh().open();
-        }else{
+        }else if(!row.save && row.otpUse){
             otpView();
+        }else {
+            login(false);
         }
 
         function reg() {
@@ -387,9 +406,22 @@ const otpCheck = () => {
         }
     }
 };
-function login(){
+function login(isCheck = true){
+
     const loginForm = $('#loginForm');
-    loginForm.submit();
+    let validatable = loginForm.kendoValidator({
+        validationSummary: false,
+        validateOnBlur: true,
+        validate: function (e) {
+            console.debug(e);
+        }
+    }).data("kendoValidator");
+    if(isCheck) {
+        $('#auth-number').prop("required", true);
+    }
+    if (validatable.validate()) {
+        loginForm.submit();
+    }
 }
 function otpView() {
     $('#otpBtn').kendoButton({
@@ -401,7 +433,9 @@ function otpView() {
             login();
         }
     });
-
+    setTimeout(()=>{
+        $('#auth-number').focus();
+    },500);
     $('#login-area').hide();
     $('#otp-area').show();
 }

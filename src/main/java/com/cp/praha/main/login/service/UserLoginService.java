@@ -44,9 +44,8 @@ public class UserLoginService {
             CpUserDetail user =  GenericListType.getObjectType(new TypeReference<>() {
             }, procedureQuery.getSingleResult());
 
-            log.debug("username - {} - {} - {}", user.getUserNm(),user.getSecretKey(),command.getAuthNumber());
 
-            if(!otpAuthorize(user.getSecretKey(),command.getAuthNumber())){
+            if(user.getOtpUSeYn().equals("Y") && !otpAuthorize(user.getSecretKey(),command.getAuthNumber())){
                 log.debug("인증번호 - {} - {} - {}", user.getUserNm(),user.getSecretKey(),command.getAuthNumber());
                 throw otpException("OTP 번호 를 확인 하세요!");
             }

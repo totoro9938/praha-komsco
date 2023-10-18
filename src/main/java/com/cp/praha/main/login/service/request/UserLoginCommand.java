@@ -17,4 +17,6 @@ public class UserLoginCommand {
     private String ip;
     private String url;
     private int authNumber;
+
+    private boolean reOtp;
 }

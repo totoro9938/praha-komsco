@@ -63,14 +63,16 @@
                             <P id="err-a" style="display: none"><li id="error-text" style="display: none"></li></p>
                             <P th:if="${error != null}"><li th:text="${error}"></li></p>
                             <p> <span id="loginBtn" class="k-primary" style="width: 100%;height: 60px;">로    그     인</span></p>
+                            <p style="padding: 2rem;display: flex;justify-content: center;"> <a href="#" onclick="otpCheck(true)">OTP 재등록</a></p>
                         </div>
                         <div class="login_input_area" id="otp-area" style="display: none">
                             <p>
-                                <input type="text" id="auth-number" name="auth-number" validationMessage="OTP 를 입력하세요." placeholder="OTP 를 입력하세요." style="font-size: 14pt" />
+                                <input type="text" minlength="6" id="auth-number" name="auth-number" validationMessage="OTP 를 입력하세요." placeholder="OTP 를 입력하세요." style="font-size: 2rem;font-weight:bold;text-align: center" />
                                 <span class="k-invalid-msg" data-for="auth-number"></span>
                             </p>
                             <P th:if="${error != null}"><li th:text="${error}"></li></p>
                             <p> <span id="otpBtn" class="k-primary" style="width: 100%;height: 60px;">확인</span></p>
+                            <p style="padding: 2rem;display: flex;justify-content: center;"> <a href="/auth">로그인 창 이동</a></p>
                         </div>
                     </form>
                 </div>

@@ -23,16 +23,17 @@ public class OtpRestController {
     private final CpUserDetailService userLoginService;
 
     @PostMapping("/user-otp-check")
-    public List<OtpResponse> smsListSelectPage(@RequestBody @Valid UserLoginCommand command) {
-       return List.of(userLoginService.userOtpCheck(command));
+    public List<OtpResponse> userOtpCheck(@RequestBody @Valid UserLoginCommand command) {
+       return List.of(userLoginService.userOtpCheck(command,command.isReOtp()));
     }
 
     @PostMapping("/register")
-    public List<OtpResponse> smsListSelectPage(@RequestBody @Valid UserUptSecretCommand command) {
+    public List<OtpResponse> register(@RequestBody @Valid UserUptSecretCommand command) {
         userLoginService.userUptSecret(command);
         UserLoginCommand userLoginCommand = new UserLoginCommand();
         userLoginCommand.setUserCd(command.getUserCd());
         userLoginCommand.setUserPwd(command.getUserPwd());
-        return List.of(userLoginService.userOtpCheck(userLoginCommand));
+        return List.of(userLoginService.userOtpCheck(userLoginCommand,false));
     }
+
 }

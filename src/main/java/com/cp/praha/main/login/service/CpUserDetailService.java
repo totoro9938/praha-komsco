@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
@@ -52,12 +53,12 @@ public class CpUserDetailService implements UserDetailsService {
         HttpServletRequest request =
                 ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         String password = request.getParameter("userPwd");
-        int authNumber = Integer.parseInt(request.getParameter("auth-number"));
+        String authNumber = request.getParameter("auth-number");
         UserLoginCommand command = new UserLoginCommand();
         command.setUserCd(username);
         command.setUserPwd(password);
         command.setIp(IpUtil.getClientIP(request));
-        command.setAuthNumber(authNumber);
+        command.setAuthNumber(StringUtils.isEmpty(authNumber)? 0 :Integer.parseInt(authNumber));
         CpUserDetail userDetail = userLoginService.userLogin(command)
                 .orElseThrow(() -> usernameNotFoundException("not found m_id = " + username));
 
@@ -75,7 +76,7 @@ public class CpUserDetailService implements UserDetailsService {
         LogLogoutInsProc.procedureQuery(entityManager,command);
     }
 
-    public OtpResponse userOtpCheck(UserLoginCommand command) {
+    public OtpResponse userOtpCheck(UserLoginCommand command, boolean reOtp) {
 
         var procedureQuery = UserLoginProc.procedureQuery(entityManager, command);
 
@@ -95,9 +96,9 @@ public class CpUserDetailService implements UserDetailsService {
                 .userId(c.getUserId())
                 .userCd(c.getUserCd())
                 .qrCodeUrl(qrCodeUrl)
-                .secretKey((c.getSecretKey() == null || c.getSecretKey().isEmpty()) ? secretKey.getKey():c.getSecretKey())
+                .secretKey((c.getSecretKey() == null || c.getSecretKey().isEmpty()||reOtp) ? secretKey.getKey():c.getSecretKey())
                 .isOtpUse(c.getOtpUSeYn().equals("Y"))
-                .isSave((c.getSecretKey() == null || c.getSecretKey().isEmpty()))
+                .isSave((c.getSecretKey() == null || c.getSecretKey().isEmpty()||reOtp))
                 .build();
     }
 
